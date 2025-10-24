@@ -22,6 +22,7 @@ export interface Career {
   period: string;
   description: string;
   achievements: string[];
+  current?: boolean;
 }
 
 export interface SkillCategory {
