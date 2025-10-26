@@ -2,7 +2,7 @@
 title: "パルテノペ ナポリの宝石"
 category: "movie"
 rating: 4
-thumbnail: "/images/reviews/PARTHENOPE.jpg"
+thumbnail: "/images/reviews/movies/PARTHENOPE.jpg"
 excerpt: "イタリアの巨匠パオロ・ソレンティーノ監督が、自身の故郷である南イタリアの街ナポリを舞台に、神秘的な美しさと悲劇を背負う女性パルテノペの生涯を丹念に描いたドラマ"
 publishedAt: "2025-08-22"
 author: "パオロ・ソレンティーノ"
