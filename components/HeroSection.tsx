@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getProfileData } from '@/lib/content';
 
 export async function HeroSection() {
@@ -11,11 +12,23 @@ export async function HeroSection() {
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto max-w-4xl text-center">
-        {/* Profile Image Placeholder */}
+        {/* Profile Image */}
         <div className="mb-8 flex justify-center">
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold">
-            {profile.name.charAt(0)}
-          </div>
+          {profile.avatar ? (
+            <div className="relative w-32 h-32 rounded-full overflow-hidden shadow-xl">
+              <Image
+                src={profile.avatar}
+                alt={profile.name}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          ) : (
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl">
+              {profile.name.charAt(0)}
+            </div>
+          )}
         </div>
 
         {/* Name and Title */}

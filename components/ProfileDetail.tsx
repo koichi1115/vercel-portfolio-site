@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { ProfileData } from '@/lib/content';
 
 interface ProfileDetailProps {
@@ -11,9 +12,21 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
         <div className="flex flex-col md:flex-row gap-8 items-start">
           {/* Avatar */}
           <div className="flex-shrink-0 mx-auto md:mx-0">
-            <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-6xl font-bold shadow-xl">
-              {profile.name.charAt(0)}
-            </div>
+            {profile.avatar ? (
+              <div className="relative w-48 h-48 rounded-full overflow-hidden shadow-xl">
+                <Image
+                  src={profile.avatar}
+                  alt={profile.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : (
+              <div className="w-48 h-48 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-6xl font-bold shadow-xl">
+                {profile.name.charAt(0)}
+              </div>
+            )}
           </div>
 
           {/* Profile Information */}

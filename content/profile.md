@@ -2,6 +2,7 @@
 name: "koichi"
 title: "DX企画職"
 bio: "公共系SIerでのシステム開発を経て、現在はECサイトのDX企画職として従事しています。技術とビジネスの両面から価値創造に取り組んでいます。"
+# avatar: "/images/profile/avatar.jpg"  # 画像を配置したらコメントを外してください
 careers:
   - company: "株式会社S"
     position: "DX企画職"

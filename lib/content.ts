@@ -11,6 +11,7 @@ export interface ProfileData {
   name: string;
   title: string;
   bio: string;
+  avatar?: string;
   careers: Career[];
   skills: SkillCategory[];
   content: string;
@@ -72,6 +73,7 @@ export async function getProfileData(): Promise<ProfileData | null> {
       name: data.name,
       title: data.title,
       bio: data.bio,
+      avatar: data.avatar,
       careers: data.careers || [],
       skills: data.skills || [],
       content: contentHtml,
