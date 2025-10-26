@@ -57,6 +57,15 @@ export interface Review {
   content: string;
 }
 
+export interface Diary {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  tags?: string[];
+  content: string;
+}
+
 export async function getProfileData(): Promise<ProfileData | null> {
   try {
     const fullPath = path.join(contentDirectory, 'profile.md');
@@ -253,6 +262,74 @@ export async function getReviewBySlug(slug: string): Promise<Review | null> {
     return null;
   } catch (error) {
     console.error(`Error loading review ${slug}:`, error);
+    return null;
+  }
+}
+
+export async function getAllDiaries(): Promise<Diary[]> {
+  try {
+    const diariesDirectory = path.join(contentDirectory, 'diaries');
+
+    if (!fs.existsSync(diariesDirectory)) {
+      return [];
+    }
+
+    const fileNames = fs.readdirSync(diariesDirectory);
+    const allDiariesData = await Promise.all(
+      fileNames
+        .filter((fileName) => fileName.endsWith('.md'))
+        .map(async (fileName) => {
+          const slug = fileName.replace(/\.md$/, '');
+          const fullPath = path.join(diariesDirectory, fileName);
+          const fileContents = fs.readFileSync(fullPath, 'utf8');
+          const { data, content } = matter(fileContents);
+
+          const processedContent = await remark()
+            .use(gfm)
+            .use(html)
+            .process(content);
+          const contentHtml = processedContent.toString();
+
+          return {
+            slug,
+            title: data.title,
+            date: data.date,
+            excerpt: data.excerpt,
+            tags: data.tags || [],
+            content: contentHtml,
+          };
+        })
+    );
+
+    return allDiariesData.sort((a, b) => (a.date < b.date ? 1 : -1));
+  } catch (error) {
+    console.error('Error loading diaries:', error);
+    return [];
+  }
+}
+
+export async function getDiaryBySlug(slug: string): Promise<Diary | null> {
+  try {
+    const fullPath = path.join(contentDirectory, 'diaries', `${slug}.md`);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data, content } = matter(fileContents);
+
+    const processedContent = await remark()
+      .use(gfm)
+      .use(html)
+      .process(content);
+    const contentHtml = processedContent.toString();
+
+    return {
+      slug,
+      title: data.title,
+      date: data.date,
+      excerpt: data.excerpt,
+      tags: data.tags || [],
+      content: contentHtml,
+    };
+  } catch (error) {
+    console.error(`Error loading diary ${slug}:`, error);
     return null;
   }
 }

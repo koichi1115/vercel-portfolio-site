@@ -12,6 +12,7 @@ export function Header() {
     { href: '/profile', label: 'Profile' },
     { href: '/projects', label: 'Projects' },
     { href: '/reviews', label: 'Reviews' },
+    { href: '/diaries', label: 'Diaries' },
   ];
 
   return (

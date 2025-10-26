@@ -9,6 +9,7 @@ export function Footer() {
       { href: '/profile', label: 'Profile' },
       { href: '/projects', label: 'Projects' },
       { href: '/reviews', label: 'Reviews' },
+      { href: '/diaries', label: 'Diaries' },
     ],
     social: [
       {
@@ -43,6 +44,15 @@ export function Footer() {
               d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
               clipRule="evenodd"
             />
+          </svg>
+        ),
+      },
+      {
+        name: 'Filmarks',
+        href: 'https://filmarks.com',
+        icon: (
+          <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2H11c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1H8v8h3v-1zm2 0h1.5l2.5-3.5V15h2V7h-2l-2.5 3.5V7H13v8z" />
           </svg>
         ),
       },
