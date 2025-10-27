@@ -14,9 +14,9 @@ export function BackgroundImage({
   blur = true,
 }: BackgroundImageProps) {
   const overlayClasses = {
-    light: 'bg-white/80 dark:bg-gray-900/80',
-    dark: 'bg-gray-900/60 dark:bg-gray-950/70',
-    gradient: 'bg-gradient-to-b from-white/90 via-white/80 to-white/90 dark:from-gray-900/90 dark:via-gray-900/80 dark:to-gray-900/90',
+    light: 'bg-white/60 dark:bg-gray-900/60',
+    dark: 'bg-gray-900/40 dark:bg-gray-950/50',
+    gradient: 'bg-gradient-to-b from-white/70 via-white/50 to-white/70 dark:from-gray-900/70 dark:via-gray-900/50 dark:to-gray-900/70',
   };
 
   return (
@@ -34,7 +34,7 @@ export function BackgroundImage({
       </div>
 
       {/* Overlay */}
-      <div className={`absolute inset-0 ${overlayClasses[overlay]} backdrop-blur-sm`} />
+      <div className={`absolute inset-0 ${overlayClasses[overlay]}`} />
 
       {/* Noise texture for depth */}
       <div
