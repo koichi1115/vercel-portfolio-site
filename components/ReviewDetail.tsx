@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Review } from '@/lib/content';
+import { ThumbnailImage } from './ThumbnailImage';
 
 interface ReviewDetailProps {
   review: Review;
@@ -44,11 +45,15 @@ export function ReviewDetail({ review }: ReviewDetailProps) {
             </ol>
           </nav>
 
-          {/* Thumbnail Placeholder */}
-          <div className="aspect-[3/4] max-w-md mx-auto bg-gradient-to-br from-gray-400 to-gray-600 rounded-lg flex items-center justify-center mb-8 shadow-xl">
-            <div className="text-white text-6xl font-bold opacity-50">
-              {review.title.charAt(0)}
-            </div>
+          {/* Thumbnail */}
+          <div className="max-w-md mx-auto mb-8">
+            <ThumbnailImage
+              src={review.thumbnail}
+              alt={review.title}
+              fallbackText={review.title}
+              aspectRatio="portrait"
+              className="rounded-lg shadow-xl"
+            />
           </div>
 
           {/* Title and Meta */}
