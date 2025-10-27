@@ -25,9 +25,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <BackgroundImage
-            src="/images/backgrounds/placeholder.svg"
+            src="/images/backgrounds/main-bg.jpg"
             overlay="gradient"
-            blur={false}
+            blur={true}
           />
           <Header />
           <main className="flex-1 relative">
