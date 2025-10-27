@@ -10,7 +10,7 @@ export async function HeroSection() {
   }
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+    <section className="py-20 px-4 bg-white/40 dark:bg-gray-900/40 backdrop-blur-sm">
       <div className="container mx-auto max-w-4xl text-center">
         {/* Profile Image */}
         <div className="mb-8 flex justify-center">

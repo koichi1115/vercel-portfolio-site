@@ -10,7 +10,7 @@ export async function RecentProjects() {
   }
 
   return (
-    <section className="py-16 px-4 bg-white dark:bg-gray-900">
+    <section className="py-16 px-4 bg-gray-50/30 dark:bg-gray-800/30 backdrop-blur-sm">
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <div className="flex justify-between items-center mb-12">
