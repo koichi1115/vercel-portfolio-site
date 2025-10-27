@@ -16,10 +16,10 @@ export async function RecentProjects() {
         <div className="flex justify-between items-center mb-12">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
-              最新プロジェクト
+              個人開発一覧
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              最近取り組んだプロジェクトをご紹介します
+              最近取り組んだ個人開発（Vibe Coding）をご紹介します
             </p>
           </div>
           <Link
