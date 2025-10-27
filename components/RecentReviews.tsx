@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getAllReviews } from '@/lib/content';
+import { ThumbnailImage } from './ThumbnailImage';
 
 const categoryLabels: Record<string, string> = {
   music: '音楽',
@@ -52,12 +53,13 @@ export async function RecentReviews() {
               href={`/reviews/${review.slug}`}
               className="group block bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
             >
-              {/* Thumbnail Placeholder */}
-              <div className="aspect-[3/4] bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-                <div className="text-white text-4xl font-bold opacity-50">
-                  {review.title.charAt(0)}
-                </div>
-              </div>
+              {/* Thumbnail */}
+              <ThumbnailImage
+                src={review.thumbnail}
+                alt={review.title}
+                fallbackText={review.title}
+                aspectRatio="portrait"
+              />
 
               {/* Content */}
               <div className="p-6">
