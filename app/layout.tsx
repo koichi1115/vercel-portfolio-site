@@ -30,7 +30,7 @@ export default function RootLayout({
             blur={true}
           />
           <Header />
-          <main className="flex-1 relative">
+          <main className="flex-1 relative z-10">
             {children}
           </main>
           <Footer />

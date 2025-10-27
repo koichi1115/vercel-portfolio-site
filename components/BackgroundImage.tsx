@@ -20,7 +20,7 @@ export function BackgroundImage({
   };
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
+    <div className="fixed inset-0 z-0 overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -28,7 +28,6 @@ export function BackgroundImage({
           alt={alt}
           fill
           className={`object-cover ${blur ? 'scale-110 blur-sm' : ''}`}
-          quality={85}
           priority
           sizes="100vw"
         />
