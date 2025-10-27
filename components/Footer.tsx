@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -51,9 +52,14 @@ export function Footer() {
         name: 'Filmarks',
         href: 'https://filmarks.com',
         icon: (
-          <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2L3.5 7v10l8.5 5 8.5-5V7L12 2zm0 2.18l6.5 3.82v7l-6.5 3.82L5.5 15V8l6.5-3.82zM12 9a3 3 0 00-3 3 3 3 0 003 3 3 3 0 003-3 3 3 0 00-3-3zm0 1.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5z"/>
-          </svg>
+          <div className="relative w-6 h-6">
+            <Image
+              src="/images/logos/filmarks.jpg"
+              alt="Filmarks"
+              fill
+              className="object-contain"
+            />
+          </div>
         ),
       },
     ],
