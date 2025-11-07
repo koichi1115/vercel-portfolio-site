@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getProfileData } from '@/lib/content';
+import { Button } from '@/components/ui/Button';
+import { Heading } from '@/components/ui/Typography';
+import { Text } from '@/components/ui/Typography';
+import { Badge } from '@/components/ui/Badge';
+import { Container } from '@/components/ui/Container';
 
 export async function HeroSection() {
   const profile = await getProfileData();
@@ -10,75 +15,72 @@ export async function HeroSection() {
   }
 
   return (
-    <section className="py-20 px-4 bg-white/40 dark:bg-gray-900/40 backdrop-blur-sm">
-      <div className="container mx-auto max-w-4xl text-center">
-        {/* Profile Image */}
-        <div className="mb-8 flex justify-center">
-          {profile.avatar ? (
-            <div className="relative w-32 h-32 rounded-full overflow-hidden shadow-xl">
-              <Image
-                src={profile.avatar}
-                alt={profile.name}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          ) : (
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-xl">
-              {profile.name.charAt(0)}
+    <section className="section-spacing bg-neutral-10/40 dark:bg-dark-neutral-800/40 backdrop-blur-sm">
+      <Container>
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Profile Image */}
+          <div className="mb-8 flex justify-center">
+            {profile.avatar ? (
+              <div className="relative w-32 h-32 rounded-full overflow-hidden shadow-lg ring-4 ring-neutral-0 dark:ring-dark-neutral-900">
+                <Image
+                  src={profile.avatar}
+                  alt={profile.name}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : (
+              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-neutral-0 text-4xl font-bold shadow-lg ring-4 ring-neutral-0 dark:ring-dark-neutral-900">
+                {profile.name.charAt(0)}
+              </div>
+            )}
+          </div>
+
+          {/* Name and Title */}
+          <Heading size="h1" className="mb-4 bg-gradient-to-r from-primary-600 to-primary-400 dark:from-primary-300 dark:to-primary-100 bg-clip-text text-transparent">
+            {profile.name}
+          </Heading>
+          <Text size="xl" color="secondary" className="mb-6">
+            {profile.title}
+          </Text>
+
+          {/* Bio */}
+          <Text size="lg" color="secondary" className="mb-8 max-w-2xl mx-auto">
+            {profile.bio}
+          </Text>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/profile">
+              <Button variant="primary" size="large">
+                プロフィール詳細
+              </Button>
+            </Link>
+            <Link href="/projects">
+              <Button variant="secondary" size="large">
+                プロジェクトを見る
+              </Button>
+            </Link>
+          </div>
+
+          {/* Skills Preview */}
+          {profile.skills.length > 0 && (
+            <div className="mt-12">
+              <Text size="sm" weight="semibold" color="secondary" className="uppercase tracking-wider mb-4">
+                スキル
+              </Text>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {profile.skills[0].skills.slice(0, 6).map((skill) => (
+                  <Badge key={skill} variant="primary" size="medium">
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
             </div>
           )}
         </div>
-
-        {/* Name and Title */}
-        <h1 className="text-4xl md:text-6xl font-bold mb-4 text-gray-900 dark:text-white">
-          {profile.name}
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6">
-          {profile.title}
-        </p>
-
-        {/* Bio */}
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-          {profile.bio}
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/profile"
-            className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg shadow-lg hover:shadow-xl"
-          >
-            プロフィール詳細
-          </Link>
-          <Link
-            href="/projects"
-            className="px-8 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-lg"
-          >
-            プロジェクトを見る
-          </Link>
-        </div>
-
-        {/* Skills Preview */}
-        {profile.skills.length > 0 && (
-          <div className="mt-12">
-            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
-              スキル
-            </h3>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {profile.skills[0].skills.slice(0, 6).map((skill) => (
-                <span
-                  key={skill}
-                  className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      </Container>
     </section>
   );
 }
