@@ -22,13 +22,14 @@ careers:
 skills:
   - category: "技術スキル"
     skills:
+      - "Python"
+      - "C#"
+      - "PostgreSQL/MySQL"
+      - "Oracle/StoredProcudure"
+      - "Project Management"
+      - "AWS/GCP"
       - "COBOL"
       - "VisualBasic"
-      - "C#"
-      - "Python"
-      - "Oracle/StoredProcudure"
-      - "PostgreSQL/MySQL"
-      - "AWS/GCP"
   - category: "ビジネススキル"
     skills:
       - "プロジェクト管理"
