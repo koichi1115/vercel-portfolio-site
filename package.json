@@ -14,6 +14,7 @@
     "@next/mdx": "^15.5.6",
     "@tailwindcss/typography": "^0.5.19",
     "@types/mdx": "^2.0.13",
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "gray-matter": "^4.0.3",
     "next": "^15.0.0",
@@ -24,6 +25,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
+    "tailwind-merge": "^3.3.1",
     "unified": "^11.0.5"
   },
   "devDependencies": {
