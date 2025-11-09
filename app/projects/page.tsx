@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
               プロジェクト
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              これまでに取り組んだ開発プロジェクトの一覧です
+              これまでに取り組んだ個人開発の一覧です
             </p>
           </div>
         </div>
