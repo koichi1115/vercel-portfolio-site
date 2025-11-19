@@ -3,123 +3,30 @@
 @tailwind utilities;
 
 :root {
-  /* Atlassian Design System - Light Mode */
-  --background: #ffffff;
-  --foreground: #253858;
-  --surface: #fafbfc;
-  --border: #dfe1e6;
-  --text-primary: #253858;
-  --text-secondary: #8993a4;
-  --text-disabled: #b3bac5;
-  --primary: #0065ff;
-  --primary-hover: #0052cc;
-
-  /* Legacy compatibility */
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 全体の背景色をzinc-950に、文字色を白系に固定 */
+  --background: #09090b; 
+  --foreground: #e4e4e7;
 }
 
-.dark {
-  /* Atlassian Design System - Dark Mode */
-  --background: #0d1117;
-  --surface: #161b22;
-  --border: #42526e;
-  --text-primary: #ffffff;
-  --text-secondary: #b3bac5;
-  --text-disabled: #7a869a;
-  --primary: #2684ff;
-  --primary-hover: #4c9aff;
-
-  /* Legacy compatibility */
-  --background: #0a0a0a;
-  --foreground: #ededed;
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  /* ヘッダーが固定になるので、コンテンツが隠れないように少し下げておく */
+  padding-top: 80px; 
 }
 
-@layer base {
-  body {
-    @apply text-neutral-900 dark:text-neutral-0 bg-transparent;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  /* Typography base styles */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold text-neutral-900 dark:text-neutral-0;
-  }
-
-  h1 {
-    @apply text-4xl leading-tight;
-  }
-
-  h2 {
-    @apply text-3xl leading-tight;
-  }
-
-  h3 {
-    @apply text-2xl leading-normal;
-  }
-
-  h4 {
-    @apply text-xl leading-normal;
-  }
-
-  h5 {
-    @apply text-lg leading-normal;
-  }
-
-  h6 {
-    @apply text-base leading-normal;
-  }
-
-  p {
-    @apply text-base text-neutral-900 dark:text-neutral-0;
-  }
-
-  a {
-    @apply text-primary-500 dark:text-primary-300 hover:text-primary-600 dark:hover:text-primary-200 transition-colors;
-  }
-
-  /* Focus styles for accessibility */
-  *:focus-visible {
-    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-neutral-0 dark:ring-offset-dark-neutral-900;
-  }
+/* スクロールバーもダークにする（Chrome/Safari用） */
+::-webkit-scrollbar {
+  width: 10px;
 }
-
-@layer components {
-  /* Container utility */
-  .container-custom {
-    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
-  /* Section spacing utility */
-  .section-spacing {
-    @apply py-12 md:py-16 lg:py-24;
-  }
+::-webkit-scrollbar-track {
+  background: #09090b;
 }
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  /* Text color utilities */
-  .text-primary {
-    @apply text-neutral-900 dark:text-neutral-0;
-  }
-
-  .text-secondary {
-    @apply text-neutral-300 dark:text-neutral-100;
-  }
-
-  .text-disabled {
-    @apply text-neutral-100 dark:text-neutral-400;
-  }
-
-  /* Surface utilities */
-  .surface {
-    @apply bg-neutral-10 dark:bg-dark-neutral-800;
-  }
-
-  .surface-elevated {
-    @apply bg-neutral-0 dark:bg-dark-neutral-800 shadow-md;
-  }
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
