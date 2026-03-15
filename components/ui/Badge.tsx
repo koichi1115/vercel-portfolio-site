@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info';
+  variant?: 'default' | 'primary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'outline';
   size?: 'small' | 'medium';
   dot?: boolean;
   children?: ReactNode;
@@ -21,34 +21,41 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center gap-1 font-medium rounded-md transition-colors';
+      'inline-flex items-center gap-1.5 font-mono uppercase tracking-wider transition-colors';
 
     const variantStyles = {
       default:
-        'bg-neutral-30 text-neutral-700 dark:bg-neutral-700 dark:text-neutral-100',
+        'bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-300 border border-ink-200 dark:border-ink-700',
       primary:
-        'bg-primary-50 text-primary-600 dark:bg-primary-700 dark:text-primary-100',
+        'bg-ink dark:bg-paper text-paper dark:text-ink border border-ink dark:border-paper',
+      accent:
+        'bg-accent/10 text-accent border border-accent',
       success:
-        'bg-success-50 text-success-500 dark:bg-success-500/20 dark:text-success-400',
+        'bg-success/10 text-success border border-success',
       warning:
-        'bg-warning-50 text-warning-500 dark:bg-warning-500/20 dark:text-warning-400',
+        'bg-warning/10 text-warning border border-warning',
       error:
-        'bg-error-50 text-error-500 dark:bg-error-500/20 dark:text-error-400',
-      info: 'bg-info-50 text-info-500 dark:bg-info-500/20 dark:text-info-400',
+        'bg-error/10 text-error border border-error',
+      info:
+        'bg-info/10 text-info border border-info',
+      outline:
+        'bg-transparent text-ink dark:text-paper border border-ink dark:border-paper',
     };
 
     const sizeStyles = {
-      small: 'h-5 px-2 text-xs',
-      medium: 'h-6 px-2 text-sm',
+      small: 'h-5 px-2 text-[10px]',
+      medium: 'h-6 px-3 text-xs',
     };
 
     const dotColors = {
-      default: 'bg-neutral-500',
-      primary: 'bg-primary-500',
-      success: 'bg-success-400',
-      warning: 'bg-warning-400',
-      error: 'bg-error-400',
-      info: 'bg-info-400',
+      default: 'bg-ink-500',
+      primary: 'bg-ink dark:bg-paper',
+      accent: 'bg-accent',
+      success: 'bg-success',
+      warning: 'bg-warning',
+      error: 'bg-error',
+      info: 'bg-info',
+      outline: 'bg-ink dark:bg-paper',
     };
 
     return (

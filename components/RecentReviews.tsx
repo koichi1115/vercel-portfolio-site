@@ -44,7 +44,7 @@ export async function RecentReviews() {
             </Text>
           </div>
           <Link href="/reviews" className="hidden sm:block">
-            <Button variant="link">
+            <Button variant="ghost">
               すべて見る →
             </Button>
           </Link>
@@ -55,7 +55,7 @@ export async function RecentReviews() {
           {recentReviews.map((review) => (
             <Link key={review.slug} href={`/reviews/${review.slug}`}>
               <Card
-                elevation="raised"
+                variant="brutal"
                 clickable
                 padding="default"
                 className="h-full overflow-hidden group"
@@ -114,7 +114,7 @@ export async function RecentReviews() {
 
                   {/* Author & Year */}
                   {(review.author || review.releaseYear) && (
-                    <Text size="xs" color="disabled">
+                    <Text size="xs" color="tertiary">
                       {review.author && <span>{review.author}</span>}
                       {review.author && review.releaseYear && <span> • </span>}
                       {review.releaseYear && <span>{review.releaseYear}</span>}

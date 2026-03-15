@@ -29,7 +29,7 @@ export async function RecentDiaries() {
             </Text>
           </div>
           <Link href="/diaries" className="hidden sm:block">
-            <Button variant="link">
+            <Button variant="ghost">
               すべて見る →
             </Button>
           </Link>
@@ -40,7 +40,7 @@ export async function RecentDiaries() {
           {recentDiaries.map((diary) => (
             <Link key={diary.slug} href={`/diaries/${diary.slug}`}>
               <Card
-                elevation="raised"
+                variant="brutal"
                 clickable
                 padding="comfortable"
                 className="h-full group"
@@ -81,7 +81,7 @@ export async function RecentDiaries() {
                       </Badge>
                     ))}
                     {diary.tags.length > 3 && (
-                      <Text size="xs" color="disabled" className="self-center">
+                      <Text size="xs" color="tertiary" className="self-center">
                         +{diary.tags.length - 3}
                       </Text>
                     )}

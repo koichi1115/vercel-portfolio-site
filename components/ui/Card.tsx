@@ -2,7 +2,7 @@ import { HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  elevation?: 'flat' | 'raised' | 'elevated';
+  variant?: 'default' | 'brutal' | 'outlined' | 'ghost';
   clickable?: boolean;
   padding?: 'compact' | 'default' | 'comfortable';
   children?: ReactNode;
@@ -11,7 +11,7 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   (
     {
-      elevation = 'flat',
+      variant = 'default',
       clickable = false,
       padding = 'default',
       className,
@@ -20,23 +20,27 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     },
     ref
   ) => {
-    const baseStyles =
-      'rounded-lg border border-neutral-40 dark:border-neutral-700 bg-neutral-0 dark:bg-dark-neutral-800 transition-all duration-150';
+    const baseStyles = 'transition-all duration-300';
 
-    const elevationStyles = {
-      flat: '',
-      raised: 'shadow-sm hover:shadow-md',
-      elevated: 'shadow-md hover:shadow-lg',
+    const variantStyles = {
+      default:
+        'bg-paper dark:bg-ink-900 border-2 border-ink-200 dark:border-ink-700',
+      brutal:
+        'bg-paper dark:bg-ink-900 border-2 border-ink dark:border-paper shadow-brutal dark:shadow-[4px_4px_0_0_#FEFEFE]',
+      outlined:
+        'bg-transparent border-2 border-ink dark:border-paper',
+      ghost:
+        'bg-ink-50 dark:bg-ink-900 border-0',
     };
 
     const paddingStyles = {
-      compact: 'p-3',
-      default: 'p-4',
-      comfortable: 'p-6',
+      compact: 'p-4',
+      default: 'p-6',
+      comfortable: 'p-8',
     };
 
     const clickableStyles = clickable
-      ? 'cursor-pointer hover:border-neutral-50 dark:hover:border-neutral-600 active:scale-[0.99]'
+      ? 'cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg dark:hover:shadow-[6px_6px_0_0_#FEFEFE] active:translate-x-0.5 active:translate-y-0.5 active:shadow-brutal-sm dark:active:shadow-[2px_2px_0_0_#FEFEFE]'
       : '';
 
     return (
@@ -44,7 +48,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={cn(
           baseStyles,
-          elevationStyles[elevation],
+          variantStyles[variant],
           paddingStyles[padding],
           clickableStyles,
           className
@@ -68,7 +72,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
     return (
       <div
         ref={ref}
-        className={cn('flex flex-col gap-1 mb-4', className)}
+        className={cn('flex flex-col gap-2 mb-6', className)}
         {...props}
       >
         {children}
@@ -89,7 +93,7 @@ export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
       <h3
         ref={ref}
         className={cn(
-          'text-xl font-semibold text-neutral-900 dark:text-neutral-0',
+          'font-display text-xl font-bold tracking-tight text-ink dark:text-paper',
           className
         )}
         {...props}
@@ -111,7 +115,7 @@ export const CardSubtitle = forwardRef<HTMLParagraphElement, CardSubtitleProps>(
     return (
       <p
         ref={ref}
-        className={cn('text-sm text-neutral-300 dark:text-neutral-100', className)}
+        className={cn('text-sm text-ink-500 dark:text-ink-400', className)}
         {...props}
       >
         {children}
@@ -131,7 +135,7 @@ export const CardBody = forwardRef<HTMLDivElement, CardBodyProps>(
     return (
       <div
         ref={ref}
-        className={cn('text-base text-neutral-700 dark:text-neutral-100', className)}
+        className={cn('text-base text-ink-600 dark:text-ink-300', className)}
         {...props}
       >
         {children}
@@ -152,7 +156,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
       <div
         ref={ref}
         className={cn(
-          'flex items-center gap-2 mt-4 pt-4 border-t border-neutral-30 dark:border-neutral-700',
+          'flex items-center gap-3 mt-6 pt-6 border-t-2 border-ink-200 dark:border-ink-700',
           className
         )}
         {...props}

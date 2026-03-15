@@ -1,32 +1,356 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   CSS Custom Properties - Neo-Brutalist Design System
+   ========================================================================== */
+
 :root {
-  /* 全体の背景色をzinc-950に、文字色を白系に固定 */
-  --background: #09090b; 
-  --foreground: #e4e4e7;
+  /* Font Stacks */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Colors - Light Mode */
+  --background: #FEFEFE;
+  --foreground: #0A0A0A;
+  --accent: #FF4D4D;
+  --accent-hover: #E63939;
+  --surface: #FAF9F7;
+  --surface-elevated: #FFFFFF;
+  --border: #E5E5E5;
+  --border-strong: #0A0A0A;
+  --text-primary: #0A0A0A;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-inverse: #FEFEFE;
+
+  /* Shadows */
+  --shadow-brutal: 4px 4px 0 0 #0A0A0A;
+  --shadow-brutal-sm: 2px 2px 0 0 #0A0A0A;
+  --shadow-brutal-lg: 6px 6px 0 0 #0A0A0A;
+  --shadow-brutal-accent: 4px 4px 0 0 var(--accent);
+  --shadow-soft: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  /* Grain */
+  --grain-opacity: 0.03;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  /* ヘッダーが固定になるので、コンテンツが隠れないように少し下げておく */
-  padding-top: 80px; 
+/* Dark Mode */
+.dark {
+  --background: #0A0A0A;
+  --foreground: #FEFEFE;
+  --surface: #171717;
+  --surface-elevated: #262626;
+  --border: #404040;
+  --border-strong: #FEFEFE;
+  --text-primary: #FEFEFE;
+  --text-secondary: #A3A3A3;
+  --text-tertiary: #737373;
+  --text-inverse: #0A0A0A;
+  --shadow-brutal: 4px 4px 0 0 #FEFEFE;
+  --shadow-brutal-sm: 2px 2px 0 0 #FEFEFE;
+  --shadow-brutal-lg: 6px 6px 0 0 #FEFEFE;
+  --grain-opacity: 0.04;
 }
 
-/* スクロールバーもダークにする（Chrome/Safari用） */
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-sans text-base;
+    color: var(--foreground);
+    background: var(--background);
+    padding-top: 80px;
+    min-height: 100vh;
+  }
+
+  /* Heading styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight;
+    color: var(--text-primary);
+  }
+
+  h1 { @apply text-5xl md:text-6xl lg:text-7xl; }
+  h2 { @apply text-4xl md:text-5xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
+
+  p {
+    @apply leading-relaxed;
+    color: var(--text-secondary);
+  }
+
+  a {
+    @apply transition-colors duration-150;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--accent);
+    color: white;
+  }
+
+  ::-moz-selection {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* Focus states */
+  :focus-visible {
+    @apply outline-none ring-2 ring-offset-2;
+    ring-color: var(--accent);
+    ring-offset-color: var(--background);
+  }
+}
+
+/* ==========================================================================
+   Custom Scrollbar
+   ========================================================================== */
+
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: var(--background);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 5px;
+  background: var(--border);
+  border-radius: 0;
+  border: 2px solid var(--background);
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: var(--text-tertiary);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--background);
+}
+
+/* ==========================================================================
+   Component Styles
+   ========================================================================== */
+
+@layer components {
+  /* Neo-Brutalist Button */
+  .btn-brutal {
+    @apply inline-flex items-center justify-center px-6 py-3 font-display font-semibold text-base;
+    @apply border-2 border-current transition-all;
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .btn-brutal:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 0 currentColor;
+  }
+
+  .btn-brutal:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+
+  .btn-brutal-primary {
+    @apply bg-ink text-paper border-ink;
+    box-shadow: var(--shadow-brutal-accent);
+  }
+
+  .btn-brutal-primary:hover {
+    box-shadow: 2px 2px 0 0 var(--accent);
+  }
+
+  /* Card with brutal shadow */
+  .card-brutal {
+    @apply bg-paper border-2 border-ink p-6;
+    box-shadow: var(--shadow-brutal);
+    transition: transform var(--duration-normal) var(--ease-out-expo),
+                box-shadow var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .card-brutal:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal-lg);
+  }
+
+  /* Accent underline */
+  .accent-underline {
+    @apply relative inline-block;
+  }
+
+  .accent-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-1;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .accent-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Grain overlay */
+  .grain-overlay {
+    @apply fixed inset-0 pointer-events-none z-50;
+    background-image: url('/images/noise.png');
+    background-repeat: repeat;
+    opacity: var(--grain-opacity);
+  }
+
+  /* Section divider */
+  .section-divider {
+    @apply w-full h-px my-16 md:my-24;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--border) 20%,
+      var(--border) 80%,
+      transparent
+    );
+  }
+
+  /* Tag/Badge */
+  .tag {
+    @apply inline-flex items-center px-3 py-1 text-xs font-mono uppercase tracking-wider;
+    @apply border border-current;
+  }
+
+  .tag-accent {
+    @apply bg-accent text-white border-accent;
+  }
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+@layer utilities {
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--accent) 0%, #FF8585 100%);
+  }
+
+  /* Hover lift effect */
+  .hover-lift {
+    transition: transform var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Border animation */
+  .border-animate {
+    @apply relative;
+  }
+
+  .border-animate::before {
+    content: '';
+    @apply absolute inset-0 border-2 border-transparent;
+    transition: border-color var(--duration-normal) var(--ease-out-expo);
+  }
+
+  .border-animate:hover::before {
+    border-color: var(--accent);
+  }
+
+  /* Stagger animation delays */
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+
+  /* Hide scrollbar utility */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Aspect ratios */
+  .aspect-golden { aspect-ratio: 1.618 / 1; }
+  .aspect-cinema { aspect-ratio: 21 / 9; }
+}
+
+/* ==========================================================================
+   Animation Keyframes (supplementary)
+   ========================================================================== */
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 0%,
+    var(--surface-elevated) 50%,
+    var(--surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ==========================================================================
+   Dark Mode Specific Adjustments
+   ========================================================================== */
+
+.dark {
+  .btn-brutal-primary {
+    @apply bg-paper text-ink;
+  }
+
+  .card-brutal {
+    @apply bg-ink-900 border-paper;
+  }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    padding-top: 0 !important;
+  }
+
+  .grain-overlay,
+  header,
+  footer {
+    display: none !important;
+  }
 }

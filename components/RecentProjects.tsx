@@ -29,7 +29,7 @@ export async function RecentProjects() {
             </Text>
           </div>
           <Link href="/projects" className="hidden sm:block">
-            <Button variant="link">
+            <Button variant="ghost">
               すべて見る →
             </Button>
           </Link>
@@ -40,7 +40,7 @@ export async function RecentProjects() {
           {recentProjects.map((project) => (
             <Link key={project.slug} href={`/projects/${project.slug}`}>
               <Card
-                elevation="raised"
+                variant="brutal"
                 clickable
                 padding="default"
                 className="h-full overflow-hidden group"

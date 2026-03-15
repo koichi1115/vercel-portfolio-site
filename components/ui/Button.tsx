@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'subtle' | 'link' | 'danger';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'accent' | 'danger';
   size?: 'small' | 'medium' | 'large';
   loading?: boolean;
   fullWidth?: boolean;
@@ -28,24 +28,27 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center gap-2 font-medium rounded-md transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
+      'inline-flex items-center justify-center gap-2 font-display font-semibold border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none';
 
     const variantStyles = {
       primary:
-        'bg-primary-500 text-neutral-0 hover:bg-primary-600 active:bg-primary-700 dark:bg-primary-400 dark:hover:bg-primary-300',
+        'bg-ink dark:bg-paper text-paper dark:text-ink border-ink dark:border-paper shadow-brutal dark:shadow-[4px_4px_0_0_#FEFEFE] hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg dark:hover:shadow-[6px_6px_0_0_#FEFEFE] active:translate-x-1 active:translate-y-1 active:shadow-none',
       secondary:
-        'bg-neutral-40 text-neutral-900 hover:bg-neutral-50 active:bg-neutral-100 dark:bg-neutral-700 dark:text-neutral-0 dark:hover:bg-neutral-600',
-      subtle:
-        'bg-transparent text-neutral-700 hover:bg-neutral-20 active:bg-neutral-30 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:active:bg-neutral-700',
-      link: 'bg-transparent text-primary-500 hover:text-primary-600 hover:underline active:text-primary-700 dark:text-primary-300 dark:hover:text-primary-200',
+        'bg-paper dark:bg-ink text-ink dark:text-paper border-ink dark:border-paper hover:bg-ink-50 dark:hover:bg-ink-900',
+      outline:
+        'bg-transparent text-ink dark:text-paper border-ink dark:border-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink',
+      ghost:
+        'bg-transparent text-ink dark:text-paper border-transparent hover:border-ink-200 dark:hover:border-ink-700 hover:bg-ink-50 dark:hover:bg-ink-900',
+      accent:
+        'bg-accent text-paper border-accent shadow-brutal-accent hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_#E63939] active:translate-x-1 active:translate-y-1 active:shadow-none',
       danger:
-        'bg-error-400 text-neutral-0 hover:bg-error-500 active:bg-error-500 dark:bg-error-400 dark:hover:bg-error-500',
+        'bg-error text-paper border-error hover:bg-error/90',
     };
 
     const sizeStyles = {
-      small: 'h-8 px-3 text-sm',
-      medium: 'h-10 px-4 text-base',
-      large: 'h-12 px-5 text-lg',
+      small: 'h-9 px-4 text-sm',
+      medium: 'h-11 px-6 text-base',
+      large: 'h-14 px-8 text-lg',
     };
 
     const widthStyles = fullWidth ? 'w-full' : '';

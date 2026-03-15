@@ -5,18 +5,19 @@ import { cn } from '@/lib/utils';
 export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   size?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  accent?: boolean;
   children?: ReactNode;
 }
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
-  ({ size = 'h2', as, className, children, ...props }, ref) => {
+  ({ size = 'h2', as, accent = false, className, children, ...props }, ref) => {
     const Component = as || size;
 
     const sizeStyles = {
-      h1: 'text-4xl font-bold leading-tight',
-      h2: 'text-3xl font-semibold leading-tight',
-      h3: 'text-2xl font-semibold leading-normal',
-      h4: 'text-xl font-semibold leading-normal',
+      h1: 'text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-none',
+      h2: 'text-4xl md:text-5xl font-bold tracking-tight leading-tight',
+      h3: 'text-2xl md:text-3xl font-bold tracking-tight leading-snug',
+      h4: 'text-xl md:text-2xl font-semibold tracking-tight leading-normal',
       h5: 'text-lg font-semibold leading-normal',
       h6: 'text-base font-semibold leading-normal',
     };
@@ -25,13 +26,14 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
       <Component
         ref={ref as any}
         className={cn(
-          'text-neutral-900 dark:text-neutral-0',
+          'font-display text-ink dark:text-paper',
           sizeStyles[size],
           className
         )}
         {...props}
       >
         {children}
+        {accent && <span className="text-accent">.</span>}
       </Component>
     );
   }
@@ -43,8 +45,9 @@ Heading.displayName = 'Heading';
 export interface TextProps extends HTMLAttributes<HTMLElement> {
   size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl';
   weight?: 'normal' | 'medium' | 'semibold' | 'bold';
-  color?: 'primary' | 'secondary' | 'disabled' | 'success' | 'warning' | 'error';
+  color?: 'primary' | 'secondary' | 'tertiary' | 'accent' | 'success' | 'warning' | 'error';
   as?: 'p' | 'span' | 'div' | 'time';
+  mono?: boolean;
   children?: ReactNode;
 }
 
@@ -58,6 +61,7 @@ export const Text = forwardRef<
       weight = 'normal',
       color = 'primary',
       as = 'p',
+      mono = false,
       className,
       children,
       ...props
@@ -82,18 +86,20 @@ export const Text = forwardRef<
     };
 
     const colorStyles = {
-      primary: 'text-neutral-900 dark:text-neutral-0',
-      secondary: 'text-neutral-300 dark:text-neutral-100',
-      disabled: 'text-neutral-100 dark:text-neutral-400',
-      success: 'text-success-500 dark:text-success-400',
-      warning: 'text-warning-500 dark:text-warning-400',
-      error: 'text-error-500 dark:text-error-400',
+      primary: 'text-ink dark:text-paper',
+      secondary: 'text-ink-600 dark:text-ink-300',
+      tertiary: 'text-ink-500 dark:text-ink-400',
+      accent: 'text-accent',
+      success: 'text-success',
+      warning: 'text-warning',
+      error: 'text-error',
     };
 
     return (
       <Component
         ref={ref as any}
         className={cn(
+          mono ? 'font-mono' : 'font-sans',
           sizeStyles[size],
           weightStyles[weight],
           colorStyles[color],
@@ -108,3 +114,29 @@ export const Text = forwardRef<
 );
 
 Text.displayName = 'Text';
+
+// Label Component for forms
+export interface LabelProps extends HTMLAttributes<HTMLLabelElement> {
+  required?: boolean;
+  children?: ReactNode;
+}
+
+export const Label = forwardRef<HTMLLabelElement, LabelProps>(
+  ({ required = false, className, children, ...props }, ref) => {
+    return (
+      <label
+        ref={ref}
+        className={cn(
+          'font-mono text-xs uppercase tracking-widest text-ink-600 dark:text-ink-400',
+          className
+        )}
+        {...props}
+      >
+        {children}
+        {required && <span className="text-accent ml-1">*</span>}
+      </label>
+    );
+  }
+);
+
+Label.displayName = 'Label';

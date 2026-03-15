@@ -14,16 +14,21 @@ export default async function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Profile data not found
-        </h1>
+      <div className="min-h-screen bg-paper dark:bg-ink flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="font-display text-2xl font-bold text-ink dark:text-paper">
+            Profile data not found
+          </h1>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-paper dark:bg-ink">
+      {/* Grain overlay */}
+      <div className="grain-overlay" />
+
       <ProfileDetail profile={profile} />
       <CareerTimeline careers={profile.careers} />
       <SkillsSection skills={profile.skills} />
