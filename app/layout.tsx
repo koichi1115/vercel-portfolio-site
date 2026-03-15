@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { BackgroundImage } from "@/components/BackgroundImage";
+import Header from "@/components/Header";
 import "./globals.css";
-import Header from "@/components/Header"; // 作成したHeaderをインポート
 
 export const metadata: Metadata = {
   title: "Portfolio",
