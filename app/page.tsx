@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { StatsSection } from "@/components/StatsSection";
 
 export default function Home() {
   return (
@@ -241,6 +242,9 @@ export default function Home() {
             </motion.div>
           </div>
         </section>
+
+        {/* Stats Section */}
+        <StatsSection />
 
         {/* CTA Section */}
         <section className="py-24 bg-paper dark:bg-ink">
