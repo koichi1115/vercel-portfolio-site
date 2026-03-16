@@ -109,7 +109,7 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
                 <span>GitHub</span>
               </a>
               <a
-                href="mailto:ko1115.product.jp@gmail.com"
+                href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-transparent text-ink dark:text-paper font-display font-semibold text-sm border-2 border-ink dark:border-paper transition-all duration-300 hover:bg-accent hover:border-accent hover:text-paper"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

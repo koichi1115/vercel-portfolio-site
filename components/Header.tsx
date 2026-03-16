@@ -10,6 +10,7 @@ const navItems = [
   { name: "Projects", path: "/projects" },
   { name: "Reviews", path: "/reviews" },
   { name: "Diaries", path: "/diaries" },
+  { name: "Contact", path: "/contact" },
 ];
 
 export default function Header() {
