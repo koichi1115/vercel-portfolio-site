@@ -98,7 +98,9 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
             {/* Contact/Social Links placeholder */}
             <div className="flex flex-wrap gap-4">
               <a
-                href="#"
+                href="https://github.com/koichi1115"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-6 py-3 bg-ink dark:bg-paper text-paper dark:text-ink font-display font-semibold text-sm border-2 border-ink dark:border-paper transition-all duration-300 hover:translate-x-1 hover:-translate-y-1 shadow-brutal dark:shadow-[4px_4px_0_0_#FEFEFE]"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -107,7 +109,7 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
                 <span>GitHub</span>
               </a>
               <a
-                href="#"
+                href="mailto:ko1115.product.jp@gmail.com"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-transparent text-ink dark:text-paper font-display font-semibold text-sm border-2 border-ink dark:border-paper transition-all duration-300 hover:bg-accent hover:border-accent hover:text-paper"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
