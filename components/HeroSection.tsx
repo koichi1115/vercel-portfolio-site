@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 interface HeroSectionProps {
   name: string;
@@ -12,11 +13,49 @@ interface HeroSectionProps {
   skills?: { category: string; skills: string[] }[];
 }
 
-export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionProps) {
+// Character animation component
+function AnimatedText({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
+  const characters = text.split("");
+
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-paper dark:bg-ink">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
+    <span className={className}>
+      {characters.map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: delay + index * 0.03,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="inline-block"
+          style={{ display: char === " " ? "inline" : "inline-block" }}
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
+
+export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax effects
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const avatarY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  return (
+    <section ref={sectionRef} className="relative min-h-[90vh] flex items-center overflow-hidden bg-paper dark:bg-ink">
+      {/* Background decorative elements with parallax */}
+      <motion.div className="absolute inset-0 pointer-events-none" style={{ y: backgroundY }}>
         <div className="absolute top-20 right-10 w-64 h-64 border-2 border-ink-200 dark:border-ink-800 opacity-20" />
         <div className="absolute bottom-40 left-20 w-32 h-32 bg-accent/10" />
         <motion.div
@@ -29,9 +68,19 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
           animate={{ scaleY: [1, 1.5, 1] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
-      </div>
+        {/* Additional decorative elements */}
+        <motion.div
+          className="absolute top-1/2 left-10 w-px h-32 bg-accent/50"
+          animate={{ scaleY: [0, 1, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        />
+        <div className="absolute bottom-20 right-1/4 w-8 h-8 border border-ink-300 dark:border-ink-600 rotate-45" />
+      </motion.div>
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <motion.div
+        className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
+        style={{ y: textY, opacity }}
+      >
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left column - Text content */}
           <div className="lg:col-span-7 space-y-8">
@@ -46,22 +95,24 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
               </span>
             </motion.div>
 
-            {/* Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-ink dark:text-paper leading-none"
-            >
-              {name}
-              <span className="text-accent">.</span>
-            </motion.h1>
+            {/* Name with character animation */}
+            <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-ink dark:text-paper leading-none">
+              <AnimatedText text={name} delay={0.1} />
+              <motion.span
+                className="text-accent"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 + name.length * 0.03 + 0.2 }}
+              >
+                .
+              </motion.span>
+            </h1>
 
             {/* Title */}
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-2xl md:text-3xl text-ink-500 dark:text-ink-400"
             >
               {title}
@@ -71,7 +122,7 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="text-lg text-ink-600 dark:text-ink-300 max-w-xl leading-relaxed"
             >
               {bio}
@@ -81,7 +132,7 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-wrap gap-4 pt-4"
             >
               <Link
@@ -106,7 +157,7 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
                 className="pt-8 border-t border-ink-200 dark:border-ink-800"
               >
                 <span className="font-mono text-xs uppercase tracking-widest text-ink-500 dark:text-ink-400 mb-4 block">
@@ -118,7 +169,8 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
                       key={skill}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.4, delay: 0.6 + index * 0.05 }}
+                      transition={{ duration: 0.4, delay: 0.8 + index * 0.05 }}
+                      whileHover={{ scale: 1.05, borderColor: "var(--accent)" }}
                       className="px-3 py-1 font-mono text-xs border border-ink-300 dark:border-ink-600 text-ink-700 dark:text-ink-300 hover:border-accent hover:text-accent transition-colors cursor-default"
                     >
                       {skill}
@@ -129,20 +181,35 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
             )}
           </div>
 
-          {/* Right column - Avatar */}
+          {/* Right column - Avatar with parallax */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, x: 50 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 flex justify-center lg:justify-end"
+            style={{ y: avatarY }}
           >
             <div className="relative">
               {/* Decorative frame */}
-              <div className="absolute -inset-4 border-2 border-ink dark:border-paper translate-x-4 translate-y-4" />
-              <div className="absolute -inset-4 border-2 border-accent -translate-x-2 -translate-y-2" />
+              <motion.div
+                className="absolute -inset-4 border-2 border-ink dark:border-paper"
+                initial={{ x: 0, y: 0 }}
+                animate={{ x: 16, y: 16 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              />
+              <motion.div
+                className="absolute -inset-4 border-2 border-accent"
+                initial={{ x: 0, y: 0 }}
+                animate={{ x: -8, y: -8 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              />
 
               {/* Avatar container */}
-              <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-hidden border-4 border-ink dark:border-paper bg-ink-100 dark:bg-ink-900">
+              <motion.div
+                className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-hidden border-4 border-ink dark:border-paper bg-ink-100 dark:bg-ink-900"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
                 {avatar ? (
                   <Image
                     src={avatar}
@@ -156,16 +223,22 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
                     {name.charAt(0)}
                   </div>
                 )}
-              </div>
+              </motion.div>
 
               {/* Status indicator */}
-              <div className="absolute -bottom-6 -right-6 px-4 py-2 bg-accent text-paper font-mono text-xs uppercase tracking-wider">
+              <motion.div
+                className="absolute -bottom-6 -right-6 px-4 py-2 bg-accent text-paper font-mono text-xs uppercase tracking-wider"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 1 }}
+                whileHover={{ scale: 1.1 }}
+              >
                 Available
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
@@ -173,6 +246,7 @@ export function HeroSection({ name, title, bio, avatar, skills }: HeroSectionPro
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        style={{ opacity }}
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

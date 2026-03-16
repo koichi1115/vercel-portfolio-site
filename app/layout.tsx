@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
+import { Providers } from "@/components/Providers";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,13 +15,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <body>
-        {/* ここにヘッダーを追加 */}
-        <Header />
-        
-        {/* メインコンテンツ */}
-        {children}
+        <Providers>
+          <ScrollProgress />
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

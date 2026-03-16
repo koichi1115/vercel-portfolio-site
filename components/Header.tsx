@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -71,19 +72,30 @@ export default function Header() {
                 </motion.div>
               );
             })}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navItems.length * 0.1, duration: 0.5 }}
+              className="ml-2"
+            >
+              <ThemeToggle />
+            </motion.div>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden relative w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-paper"
-            aria-label="Menu"
-          >
-            <div className="flex flex-col gap-1.5">
-              <span className="w-5 h-0.5 bg-ink dark:bg-paper" />
-              <span className="w-5 h-0.5 bg-ink dark:bg-paper" />
-              <span className="w-3 h-0.5 bg-accent" />
-            </div>
-          </button>
+          {/* Mobile: Theme Toggle + Menu Button */}
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              className="relative w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-paper"
+              aria-label="Menu"
+            >
+              <div className="flex flex-col gap-1.5">
+                <span className="w-5 h-0.5 bg-ink dark:bg-paper" />
+                <span className="w-5 h-0.5 bg-ink dark:bg-paper" />
+                <span className="w-3 h-0.5 bg-accent" />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
