@@ -517,7 +517,7 @@ export default function EchoNoteLandingPage() {
       </section>
 
       {/* ───────── Final CTA ───────── */}
-      <section className="bg-ink dark:bg-paper">
+      <section className="bg-gradient-to-br from-ink-100 via-paper to-ink-50 dark:from-ink-900 dark:via-ink dark:to-ink-800">
         <div className="max-w-4xl mx-auto px-6 py-24 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -526,12 +526,17 @@ export default function EchoNoteLandingPage() {
             transition={{ duration: 0.5 }}
             className="flex justify-center mb-8"
           >
-            <Image
-              src="/images/echonote/2_otter_tablet.png"
-              alt="EchoNote"
-              width={200}
-              height={200}
-            />
+            <div className="relative">
+              <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl scale-110" />
+              <div className="relative bg-paper dark:bg-ink-800 rounded-full p-4 border-2 border-ink dark:border-paper shadow-brutal">
+                <Image
+                  src="/images/echonote/2_otter_tablet.png"
+                  alt="EchoNote"
+                  width={200}
+                  height={200}
+                />
+              </div>
+            </div>
           </motion.div>
 
           <motion.h2
@@ -540,7 +545,7 @@ export default function EchoNoteLandingPage() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={0}
-            className="font-display text-4xl md:text-6xl font-bold text-paper dark:text-ink mb-6 leading-tight"
+            className="font-display text-4xl md:text-6xl font-bold text-ink dark:text-paper mb-6 leading-tight"
           >
             声を、文字に。
             <br />
@@ -553,7 +558,7 @@ export default function EchoNoteLandingPage() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={1}
-            className="text-paper-400 dark:text-ink-600 text-lg mb-10"
+            className="text-ink-500 dark:text-ink-400 text-lg mb-10"
           >
             App Store 公開準備中 ・ 公開と同時にダウンロード可能になります
           </motion.p>
@@ -568,13 +573,13 @@ export default function EchoNoteLandingPage() {
           >
             <button
               disabled
-              className="inline-flex items-center gap-2 bg-paper-400 text-ink-500 dark:bg-ink-600 dark:text-paper-400 border-2 border-paper dark:border-ink font-display font-bold h-14 px-8 text-lg cursor-not-allowed"
+              className="inline-flex items-center gap-2 bg-ink-100 text-ink-400 dark:bg-ink-700 dark:text-ink-500 border-2 border-ink-300 dark:border-ink-600 font-display font-bold h-14 px-8 text-lg cursor-not-allowed"
             >
               📱 App Store で入手 (準備中)
             </button>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-accent font-display font-bold h-14 px-8 text-lg shadow-[4px_4px_0_0_#FEFEFE] dark:shadow-[4px_4px_0_0_#0A0A0A] hover:translate-x-0.5 hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-8 text-lg shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all"
             >
               ← ポートフォリオに戻る
             </Link>
@@ -586,15 +591,15 @@ export default function EchoNoteLandingPage() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={3}
-            className="flex flex-wrap justify-center gap-6 text-sm text-paper-500 dark:text-ink-500 pt-8 border-t border-paper-700 dark:border-ink-300"
+            className="flex flex-wrap justify-center gap-6 text-sm text-ink-500 dark:text-ink-400 pt-8 border-t border-ink-200 dark:border-ink-700"
           >
-            <Link href="/legal/echonote/privacy" className="hover:text-paper dark:hover:text-ink underline">
+            <Link href="/legal/echonote/privacy" className="hover:text-accent underline">
               プライバシーポリシー
             </Link>
-            <Link href="/legal/echonote/terms" className="hover:text-paper dark:hover:text-ink underline">
+            <Link href="/legal/echonote/terms" className="hover:text-accent underline">
               利用規約
             </Link>
-            <a href="mailto:ko1115.product.jp@gmail.com" className="hover:text-paper dark:hover:text-ink underline">
+            <a href="mailto:ko1115.product.jp@gmail.com" className="hover:text-accent underline">
               お問い合わせ
             </a>
           </motion.div>
