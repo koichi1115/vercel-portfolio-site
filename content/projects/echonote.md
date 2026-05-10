@@ -1,7 +1,7 @@
 ---
-title: "KoeNote（コエノート）"
+title: "EchoNote（エコーノート）"
 description: "録音するだけで根拠付きの高精度ノートを自動生成するiOSアプリ。懇談会・講演・授業の音声を、エビデンス付き構造化ノート+TODOリストに変換。"
-thumbnail: "/images/projects/koenote-thumb.svg"
+thumbnail: "/images/projects/echonote-thumb.svg"
 technologies:
   - "React Native"
   - "Expo"
@@ -12,12 +12,12 @@ technologies:
   - "Zustand"
 category: "iOS Application"
 date: "2026-04-22"
-demoUrl: "/koenote"
+demoUrl: "/echonote"
 ---
 
-# KoeNote（コエノート）
+# EchoNote（エコーノート）
 
-**声がノートに変わる。** 録音するだけで、根拠付きの高精度ノートが完成するiOSアプリです。
+**声が反響し、ノートになる。** 録音するだけで、根拠付きの高精度ノートが完成するiOSアプリです。
 
 ## 解決する課題
 

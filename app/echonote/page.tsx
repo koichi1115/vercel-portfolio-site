@@ -73,7 +73,7 @@ const FLOW_STEPS = [
   { step: '04', title: '完成', desc: 'エビデンス付きノート + TODO', icon: '✨' },
 ];
 
-export default function KoeNoteLandingPage() {
+export default function EchoNoteLandingPage() {
   return (
     <div className="min-h-screen bg-paper dark:bg-ink">
       {/* Hero */}
@@ -90,18 +90,18 @@ export default function KoeNoteLandingPage() {
                 iOS App
               </div>
               <h1 className="font-display text-5xl md:text-7xl font-bold text-ink dark:text-paper leading-[0.95] tracking-tight mb-6">
-                Koe
+                Echo
                 <span className="text-accent">Note</span>
               </h1>
               <p className="font-display text-xl md:text-2xl text-ink dark:text-paper mb-2">
-                コエノート
+                エコーノート
               </p>
               <p className="text-lg text-ink-600 dark:text-ink-400 leading-relaxed mb-8 max-w-lg">
                 録音するだけで、根拠付きの高精度ノートが完成。
                 <br />
                 懇談会の要点整理も、講演の学びの振り返りも、
                 <br />
-                <strong className="text-ink dark:text-paper">声がノートに変わる。</strong>
+                <strong className="text-ink dark:text-paper">声が反響し、ノートになる。</strong>
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
@@ -358,7 +358,7 @@ export default function KoeNoteLandingPage() {
             custom={0}
             className="font-display text-3xl md:text-5xl font-bold text-paper dark:text-ink mb-6"
           >
-            声が、ノートに変わる。
+            声が反響し、ノートになる。
           </motion.h2>
           <motion.p
             initial="hidden"
@@ -383,6 +383,34 @@ export default function KoeNoteLandingPage() {
             >
               ← ポートフォリオに戻る
             </Link>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={3}
+            className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-ink-400 dark:text-ink-600"
+          >
+            <Link
+              href="/legal/echonote/privacy"
+              className="underline hover:text-paper dark:hover:text-ink"
+            >
+              プライバシーポリシー
+            </Link>
+            <Link
+              href="/legal/echonote/terms"
+              className="underline hover:text-paper dark:hover:text-ink"
+            >
+              利用規約
+            </Link>
+            <a
+              href="mailto:ko1115.product.jp@gmail.com"
+              className="underline hover:text-paper dark:hover:text-ink"
+            >
+              お問い合わせ
+            </a>
           </motion.div>
         </div>
       </section>
