@@ -33,13 +33,13 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
 
           {/* Thumbnail */}
           {project.thumbnail ? (
-            <div className="aspect-video relative rounded-lg overflow-hidden mb-8 shadow-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center">
+            <div className="relative rounded-lg overflow-hidden mb-8 shadow-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center min-h-[420px] md:min-h-[560px] py-10">
               <Image
                 src={project.thumbnail}
                 alt={project.title}
-                fill
-                className="object-contain p-6"
-                sizes="(max-width: 768px) 100vw, 800px"
+                width={600}
+                height={836}
+                className="object-contain max-h-[480px] md:max-h-[640px] w-auto"
                 priority
               />
             </div>
