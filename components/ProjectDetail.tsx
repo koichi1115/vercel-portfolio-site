@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Project } from '@/lib/content';
 
 interface ProjectDetailProps {
@@ -30,12 +31,25 @@ export function ProjectDetail({ project }: ProjectDetailProps) {
             </ol>
           </nav>
 
-          {/* Thumbnail Placeholder */}
-          <div className="aspect-video bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mb-8 shadow-xl">
-            <div className="text-white text-6xl font-bold opacity-50">
-              {project.title.charAt(0)}
+          {/* Thumbnail */}
+          {project.thumbnail ? (
+            <div className="aspect-video relative rounded-lg overflow-hidden mb-8 shadow-xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center">
+              <Image
+                src={project.thumbnail}
+                alt={project.title}
+                fill
+                className="object-contain p-6"
+                sizes="(max-width: 768px) 100vw, 800px"
+                priority
+              />
             </div>
-          </div>
+          ) : (
+            <div className="aspect-video bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mb-8 shadow-xl">
+              <div className="text-white text-6xl font-bold opacity-50">
+                {project.title.charAt(0)}
+              </div>
+            </div>
+          )}
 
           {/* Title and Meta */}
           <div className="mb-8">

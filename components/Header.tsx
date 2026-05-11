@@ -31,7 +31,7 @@ export default function Header() {
             href="/"
             className="group relative font-display text-2xl font-bold tracking-tight text-ink dark:text-paper"
           >
-            <span className="relative z-10">Koichi</span>
+            <span className="relative z-10">Portfolio</span>
             <span className="text-accent">.</span>
             <motion.span
               className="absolute -bottom-1 left-0 h-1 bg-accent"
