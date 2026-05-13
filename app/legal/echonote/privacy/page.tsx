@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
           </Text>
 
           <Text color="secondary" className="mb-4">
-            最終更新日: 2026年5月6日
+            最終更新日: 2026年5月14日
           </Text>
 
           <section className="mb-8">
@@ -39,14 +39,33 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              2. 取得する情報
+              2. 収集するデータと収集方法
             </Heading>
-            <Text className="mb-4">本アプリは以下の情報を取得します。</Text>
+            <Text className="mb-4">
+              本アプリは、以下のデータを以下の方法により収集します。
+            </Text>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>ユーザーが録音した音声データ</li>
-              <li>ユーザーがカメラで撮影した文書画像</li>
-              <li>音声から自動生成された文字起こしテキスト・ノート・要約・TODOリスト</li>
-              <li>ユーザーが作成・編集した用語メモリ、ブックマーク、セッションタイトル等</li>
+              <li>
+                <strong>録音音声</strong>：アプリ内のマイクを通じて、
+                ユーザーが録音操作を行った場合に収集します。
+              </li>
+              <li>
+                <strong>文字起こしテキスト</strong>：録音音声を後述の第三者AIサービスで
+                処理した結果として生成・収集します。
+              </li>
+              <li>
+                <strong>スキャン画像および OCR テキスト</strong>：アプリ内のカメラにより
+                ユーザーが撮影した文書画像、および当該画像から抽出されたテキストを収集します。
+              </li>
+              <li>
+                <strong>用語（ターム）</strong>：ユーザーがアプリ内で入力・編集した用語、
+                および文字起こしテキスト等から自動抽出された用語を収集します。
+              </li>
+              <li>
+                <strong>ノート</strong>：ユーザーがアプリ内で入力・編集したノート、
+                および文字起こし結果から自動生成されたノート・要約・タイトル・ToDo
+                リスト等を収集します。
+              </li>
             </ul>
             <Text className="mt-4">
               氏名・メールアドレス・電話番号・住所等の個人を識別する情報、
@@ -78,63 +97,88 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              4. 第三者への提供
+              4. データの利用目的
             </Heading>
             <Text className="mb-4">
-              本アプリは、AI処理（音声の文字起こし・テキスト補正・ノート生成等）のために、
-              ユーザーの音声データやテキストデータを以下の第三者サービスに送信します。
-              送信されたデータは処理結果の取得のためにのみ利用され、
-              本アプリ開発者のサーバーには保存されません。
+              本アプリは、収集したデータを以下の目的のためにのみ利用します。
             </Text>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>
-                <strong>xAI（Grok STT）</strong>：音声の文字起こしに使用します。
+                <strong>録音音声の利用</strong>：音声をテキストに変換する（文字起こし）
+                ために利用します。
+              </li>
+              <li>
+                <strong>文字起こしテキスト・OCRテキスト・ノート等の利用</strong>：
+                以下の処理のために利用します。
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>テキストの補正（誤認識の修正・整形）</li>
+                  <li>要約の生成</li>
+                  <li>ノートの生成</li>
+                  <li>タイトルの生成</li>
+                  <li>用語の抽出</li>
+                  <li>ToDo（タスク）の抽出</li>
+                </ul>
+              </li>
+            </ul>
+            <Text className="mt-4">
+              これらの目的以外のためにデータを利用することはありません。
+              また、広告配信や行動分析のための利用も行いません。
+            </Text>
+          </section>
+
+          <section className="mb-8">
+            <Heading size="h2" className="mb-4">
+              5. 第三者への提供（送信先）
+            </Heading>
+            <Text className="mb-4">
+              前項の目的を達成するために、本アプリは収集したデータ（録音音声、
+              文字起こしテキスト、スキャン画像、OCR テキスト、用語、ノート等）を、
+              以下の第三者サービスに送信します。送信されたデータは、処理結果の取得の
+              ためにのみ利用され、本アプリ開発者のサーバーには永続的に保存されません。
+            </Text>
+            <ul className="list-disc pl-6 space-y-4 text-gray-700 dark:text-gray-300">
+              <li>
+                <strong>xAI Inc.（Grok API）</strong>
+                <br />
+                所在地: 米国カリフォルニア州 パロアルト
+                （1450 Page Mill Road, Palo Alto, CA 94304, USA）
+                <br />
+                利用目的: 録音音声の文字起こし、およびテキストの補正・要約・
+                ノート生成・タイトル生成・用語抽出・ToDo 抽出
+                <br />
                 <a
                   href="https://x.ai/legal/privacy-policy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline ml-1"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
                 >
-                  xAI のプライバシーポリシー
+                  xAI Privacy Policy
                 </a>
               </li>
               <li>
-                <strong>OpenAI（Whisper API）</strong>：xAI が利用できない場合の
-                フォールバック先として、音声の文字起こしに使用します。
+                <strong>Anthropic, PBC（Claude API）</strong>
+                <br />
+                所在地: 米国カリフォルニア州 サンフランシスコ
+                （548 Market Street, PMB 90375, San Francisco, CA 94104, USA）
+                <br />
+                利用目的: テキストの補正・要約・ノート生成・タイトル生成・
+                用語抽出・ToDo 抽出、および画像の OCR
+                <br />
                 <a
-                  href="https://openai.com/policies/privacy-policy"
+                  href="https://www.anthropic.com/legal/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline ml-1"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
                 >
-                  OpenAI のプライバシーポリシー
-                </a>
-              </li>
-              <li>
-                <strong>Anthropic（Claude API）</strong>：テキスト補正・ノート生成・
-                用語抽出・OCR・タイトル生成等に使用します。
-                <a
-                  href="https://www.anthropic.com/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline ml-1"
-                >
-                  Anthropic のプライバシーポリシー
-                </a>
-              </li>
-              <li>
-                <strong>Cloudflare（Workers）</strong>：上記各APIの呼び出しを中継するために
-                通信を経由します。リクエストおよびレスポンスの永続的なログは取得しません。
-                <a
-                  href="https://www.cloudflare.com/privacypolicy/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline ml-1"
-                >
-                  Cloudflare のプライバシーポリシー
+                  Anthropic Privacy Policy
                 </a>
               </li>
             </ul>
+            <Text className="mt-4">
+              当社は、各社との利用契約により、お客様のデータが各社のセキュリティおよび
+              プライバシー保護基準に従って取り扱われることを確認しています。また、各社との
+              契約により、お客様のデータをAIモデルの学習目的では使用しません。
+            </Text>
             <Text className="mt-4">
               上記以外の第三者へのデータ提供は、法令に基づく場合を除き行いません。
               広告配信ネットワークや解析サービス（Google Analytics 等）は使用していません。
@@ -143,7 +187,33 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              5. 必要な権限と利用目的
+              6. データの保持期間と削除
+            </Heading>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+              <li>
+                <strong>端末内のローカルデータ</strong>：録音音声、文字起こしテキスト、
+                スキャン画像、OCR テキスト、用語、ノート等のすべてのユーザーデータは、
+                ユーザーが削除する、または本アプリをアンインストールするまで、
+                お使いの端末（iPhone および Apple Watch）の内部にのみ保存されます。
+                本アプリ開発者がこれらのデータを保持することはありません。
+              </li>
+              <li>
+                <strong>第三者送信先における保持</strong>：第三者AIサービス（xAI Inc.、
+                Anthropic, PBC）に送信されたデータの処理後の保持・削除については、
+                各社の API 利用規約およびプライバシーポリシーに従って取り扱われます。
+              </li>
+              <li>
+                <strong>削除方法</strong>：個別のセッション（録音・ノート等）は、
+                アプリ内の一覧画面から削除できます。すべてのデータを一括で削除する
+                場合は、iOS の標準操作により本アプリを端末からアンインストールして
+                ください。アプリと共にすべてのローカルデータが削除されます。
+              </li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <Heading size="h2" className="mb-4">
+              7. 必要な権限と利用目的
             </Heading>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>
@@ -168,27 +238,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              6. データの削除
-            </Heading>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>
-                個別のセッション（録音・ノート）は、アプリ内のセッション一覧から削除できます。
-              </li>
-              <li>
-                すべてのデータを削除するには、iOS の標準操作により本アプリを
-                端末からアンインストールしてください。アプリと共にすべてのローカルデータが
-                削除されます。
-              </li>
-              <li>
-                第三者APIに送信した処理リクエストの取り扱いについては、
-                各APIプロバイダのプライバシーポリシーをご確認ください。
-              </li>
-            </ul>
-          </section>
-
-          <section className="mb-8">
-            <Heading size="h2" className="mb-4">
-              7. セキュリティ
+              8. セキュリティ
             </Heading>
             <Text>
               本アプリと第三者APIとの通信は、すべて HTTPS（TLS）により暗号化されています。
@@ -200,7 +250,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              8. お子様のプライバシー
+              9. お子様のプライバシー
             </Heading>
             <Text>
               本アプリは13歳未満のお子様を対象としたサービスではありません。
@@ -210,7 +260,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              9. プライバシーポリシーの変更
+              10. プライバシーポリシーの変更
             </Heading>
             <Text>
               本プライバシーポリシーは予告なく変更される場合があります。
@@ -220,7 +270,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              10. お問い合わせ
+              11. お問い合わせ
             </Heading>
             <Text>
               プライバシーに関するご質問やご懸念がございましたら、
