@@ -1,6 +1,6 @@
 ---
 title: "EchoNote（エコーノート）"
-description: "録音するだけで根拠付きの高精度ノートを自動生成するiOSアプリ。懇談会・講演・授業の音声を、エビデンス付き構造化ノート+TODOリストに変換。"
+description: "録音するだけで根拠付きの高精度ノートを自動生成するiOSアプリ。懇談会・講演・授業の音声を、エビデンス付き構造化ノート+TODOリストに変換。App Storeで公開中。"
 thumbnail: "/images/echonote/1_otter_large.png"
 technologies:
   - "React Native"
@@ -13,13 +13,15 @@ technologies:
   - "Cloudflare Workers"
   - "Zustand"
 category: "iOS Application"
-date: "2026-05-11"
+date: "2026-05-20"
 demoUrl: "/echonote"
 ---
 
 # EchoNote（エコーノート）
 
 **声が反響し、ノートになる。** 録音するだけで、根拠付きの高精度ノートが完成するiOSアプリです。
+
+🎉 **App Storeで公開中** — [今すぐダウンロード](https://apps.apple.com/jp/app/echonote-%E3%82%A8%E3%82%B3%E3%83%BC%E3%83%8E%E3%83%BC%E3%83%88/id6764349230)
 
 ## 解決する課題
 

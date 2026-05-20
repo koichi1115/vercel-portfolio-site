@@ -90,7 +90,7 @@ export default function EchoNoteLandingPage() {
             <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
               <div className="inline-flex items-center gap-2 bg-accent text-paper text-xs font-display font-bold px-4 py-1.5 border-2 border-ink shadow-brutal-sm mb-6">
                 <span className="w-2 h-2 bg-paper rounded-full animate-pulse" />
-                iOS App ・ Apple Watch 対応
+                App Store 公開中 ・ Apple Watch 対応
               </div>
 
               <Image
@@ -115,21 +115,23 @@ export default function EchoNoteLandingPage() {
 
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="#features"
+                  href="https://apps.apple.com/jp/app/echonote-%E3%82%A8%E3%82%B3%E3%83%BC%E3%83%8E%E3%83%BC%E3%83%88/id6764349230"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-ink shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all font-display font-bold h-14 px-7 text-base"
                 >
-                  機能を見る ↓
+                  📱 App Store で入手 →
                 </a>
                 <a
-                  href="#use-cases"
+                  href="#features"
                   className="inline-flex items-center gap-2 bg-transparent text-ink dark:text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-7 text-base hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-all"
                 >
-                  活用シーン →
+                  機能を見る ↓
                 </a>
               </div>
 
               <p className="text-xs text-ink-500 dark:text-ink-500 mt-6">
-                ※ App Store 審査中 ・ 公開後すぐにダウンロード可能
+                ✨ App Store で公開中 ・ 無料でダウンロードできます
               </p>
             </motion.div>
 
@@ -560,7 +562,7 @@ export default function EchoNoteLandingPage() {
             custom={1}
             className="text-ink-500 dark:text-ink-400 text-lg mb-10"
           >
-            App Store 公開準備中 ・ 公開と同時にダウンロード可能になります
+            App Store で公開中 ・ 無料でダウンロードできます
           </motion.p>
 
           <motion.div
@@ -571,15 +573,17 @@ export default function EchoNoteLandingPage() {
             custom={2}
             className="flex flex-wrap justify-center gap-4 mb-10"
           >
-            <button
-              disabled
-              className="inline-flex items-center gap-2 bg-ink-100 text-ink-400 dark:bg-ink-700 dark:text-ink-500 border-2 border-ink-300 dark:border-ink-600 font-display font-bold h-14 px-8 text-lg cursor-not-allowed"
+            <a
+              href="https://apps.apple.com/jp/app/echonote-%E3%82%A8%E3%82%B3%E3%83%BC%E3%83%8E%E3%83%BC%E3%83%88/id6764349230"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-8 text-lg shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all"
             >
-              📱 App Store で入手 (準備中)
-            </button>
+              📱 App Store で入手 →
+            </a>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-8 text-lg shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all"
+              className="inline-flex items-center gap-2 bg-transparent text-ink dark:text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-8 text-lg hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-all"
             >
               ← ポートフォリオに戻る
             </Link>
