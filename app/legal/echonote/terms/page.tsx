@@ -22,7 +22,7 @@ export default function TermsOfServicePage() {
           </Text>
 
           <Text color="secondary" className="mb-4">
-            最終更新日: 2026年5月6日
+            最終更新日: 2026年6月2日
           </Text>
 
           <section className="mb-8">
@@ -31,8 +31,9 @@ export default function TermsOfServicePage() {
             </Heading>
             <Text>
               本アプリは、ユーザーが録音した音声に対し、AI（人工知能）による文字起こし、
-              テキスト補正、ノート生成、用語抽出、TODO抽出、要約生成等を行う iOS 用アプリケーションです。
-              Apple Watch から録音を開始することもできます。
+              テキスト補正、ノート生成、用語抽出、TODO抽出、要約生成等を行う iOS 用
+              アプリケーションです。プレミアムプランでは、複数の話者を識別する話者分離
+              機能も利用できます。Apple Watch から録音を開始することもできます。
               本規約は、本アプリの利用条件を定めるものです。
               本アプリをダウンロードまたは使用された時点で、本規約に同意したものとみなします。
             </Text>
@@ -86,8 +87,10 @@ export default function TermsOfServicePage() {
             </Heading>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>
-                文字起こしや AI 補正、ノート生成の結果は、AI モデルの性質上、
-                誤りや不正確な内容を含む可能性があります。
+                文字起こしや AI 補正、ノート生成、話者分離の結果は、AI モデルの性質上、
+                誤りや不正確な内容を含む可能性があります。特に話者分離については、
+                録音環境（雑音、複数話者の同時発話、音量差等）により精度が低下する
+                場合があります。
               </li>
               <li>
                 医療・法務・財務等の重要な意思決定には、本アプリの出力を単独で根拠とせず、
@@ -121,23 +124,94 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              7. 料金
+              7. 料金・サブスクリプション
             </Heading>
-            <Text>
-              本アプリは現在、無料で提供されています。
-              将来的に有料機能やサブスクリプションを追加する場合には、
-              事前にアプリ内およびストア説明にて告知します。
+            <Text className="mb-4">
+              本アプリは、無料プランと有料のプレミアムプランの 2 種類で提供されます。
             </Text>
+
+            <Heading size="h3" className="mb-2">
+              7.1 プラン構成
+            </Heading>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300 mb-4">
+              <li>
+                <strong>無料プラン</strong>：月あたり録音 1 時間、OCR スキャン 5 回までの
+                上限のもと、すべての基本機能をご利用いただけます。
+              </li>
+              <li>
+                <strong>プレミアムプラン</strong>：月あたり録音 5 時間、OCR スキャン
+                実質無制限、および話者分離機能をご利用いただけます。料金は以下のとおりです
+                （いずれも自動更新サブスクリプション）。
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>月額プラン: ¥780 / 月</li>
+                  <li>年額プラン: ¥5,800 / 年（月額換算 約 ¥484、約 38% お得）</li>
+                </ul>
+              </li>
+            </ul>
+            <Text className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+              ※ 料金は予告なく改定される場合があります。改定する場合には、改定前に
+              アプリ内またはストア説明にて告知します。既存のサブスクリプション期間中の
+              料金は、当該期間の終了まで改定の影響を受けません。
+            </Text>
+
+            <Heading size="h3" className="mb-2">
+              7.2 課金・自動更新
+            </Heading>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300 mb-4">
+              <li>
+                プレミアムプランの料金は、購入確定時にお客様の Apple ID アカウントに
+                請求されます。
+              </li>
+              <li>
+                サブスクリプションは、現在の期間終了の少なくとも 24 時間前までに自動更新を
+                オフにしない限り、自動的に同じ期間・同じ料金で更新されます。
+              </li>
+              <li>
+                更新料は、現在の期間終了の 24 時間以内にお客様の Apple ID アカウントに
+                請求されます。
+              </li>
+              <li>
+                サブスクリプションの管理および自動更新のオフ操作は、購入後に iOS の
+                「設定」アプリ &gt; お客様のアカウント名 &gt; 「サブスクリプション」から
+                行えます。
+              </li>
+            </ul>
+
+            <Heading size="h3" className="mb-2">
+              7.3 解約・返金
+            </Heading>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+              <li>
+                解約はいつでも可能です。解約された場合、現在の課金期間の終了まで
+                プレミアム機能をご利用いただけ、その後は自動的に無料プランへ移行します。
+              </li>
+              <li>
+                既に支払い済みの料金については、原則として日割り計算による返金は
+                行いません。返金請求は、Apple App Store の返金ポリシーに従い、
+                Apple へ直接お申し込みください。開発者は個別の返金処理を行いません。
+              </li>
+              <li>
+                未使用分の無料試用期間がある場合、有料サブスクリプションの購入時点で
+                残りの期間は失効します。
+              </li>
+            </ul>
           </section>
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
               8. サービスの中断・終了
             </Heading>
-            <Text>
+            <Text className="mb-4">
               開発者は、メンテナンス、技術的問題、第三者APIの仕様変更、その他の事情により、
               事前の通知なく本アプリの一部または全部のサービスを中断または終了することがあります。
-              これにより生じた損害について、開発者は責任を負いません。
+              短期の中断（メンテナンス、第三者 API の一時障害等）について、開発者は
+              責任を負いません。
+            </Text>
+            <Text>
+              本サービス全体を恒久的に終了する場合は、開発者は合理的な事前通知期間
+              （原則として 30 日以上）をもってアプリ内またはストア説明にて告知します。
+              この場合、有料サブスクリプションの未利用期間相当額の返金については、
+              Apple App Store の返金ポリシーに従い Apple へお申し込みください。
             </Text>
           </section>
 

@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
           </Text>
 
           <Text color="secondary" className="mb-4">
-            最終更新日: 2026年5月14日
+            最終更新日: 2026年6月2日
           </Text>
 
           <section className="mb-8">
@@ -66,10 +66,23 @@ export default function PrivacyPolicyPage() {
                 および文字起こし結果から自動生成されたノート・要約・タイトル・ToDo
                 リスト等を収集します。
               </li>
+              <li>
+                <strong>アプリ内識別子（deviceId）</strong>：本アプリは初回起動時に
+                <code>dev-</code> から始まる擬似ランダム文字列を生成し、端末内に
+                永続化します。この識別子は、本アプリのバックエンド（後述の Cloudflare
+                Workers）における利用量の集計、サブスクリプション状態の管理、および
+                RevenueCat へのユーザー識別に使用されます。Apple 提供の IDFA / IDFV
+                等の OS レベルのデバイス識別子は取得しません。
+              </li>
+              <li>
+                <strong>サブスクリプション状態と利用量</strong>：プラン区分（無料/
+                プレミアム）、月次の録音時間、OCR スキャン回数を、上記 deviceId に
+                紐付けてバックエンドで集計します。
+              </li>
             </ul>
             <Text className="mt-4">
               氏名・メールアドレス・電話番号・住所等の個人を識別する情報、
-              位置情報、デバイス識別子は取得しません。アカウント登録は不要です。
+              位置情報は取得しません。アカウント登録は不要です。
             </Text>
           </section>
 
@@ -89,8 +102,15 @@ export default function PrivacyPolicyPage() {
                 バックアップの有効/無効は iOS の設定で制御できます。
               </li>
               <li>
-                <strong>本アプリ開発者のサーバー</strong>：データの永続的な保存は行いません
-                （詳細は「4. 第三者への提供」を参照）。
+                <strong>本アプリ開発者のバックエンド（Cloudflare Workers）</strong>：
+                録音音声・文字起こしテキスト・ノート等の本体データは保存しません。
+                ただし、利用量の集計と不正利用の防止を目的として、deviceId に紐付く
+                以下の状態情報のみ Cloudflare KV に保存されます。
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>サブスクリプション区分（無料/プレミアム）と有効期限</li>
+                  <li>当月の録音時間（秒）と OCR スキャン回数</li>
+                  <li>日次の API リクエスト数（不正利用検知のため、毎日リセット）</li>
+                </ul>
               </li>
             </ul>
           </section>
@@ -104,8 +124,11 @@ export default function PrivacyPolicyPage() {
             </Text>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>
-                <strong>録音音声の利用</strong>：音声をテキストに変換する（文字起こし）
-                ために利用します。
+                <strong>録音音声の利用</strong>：以下の処理のために利用します。
+                <ul className="list-disc pl-6 mt-2 space-y-1">
+                  <li>音声をテキストに変換する（文字起こし）</li>
+                  <li>話者分離（プレミアムプランのみ。発話者ごとにラベル付けする処理）</li>
+                </ul>
               </li>
               <li>
                 <strong>文字起こしテキスト・OCRテキスト・ノート等の利用</strong>：
@@ -118,6 +141,10 @@ export default function PrivacyPolicyPage() {
                   <li>用語の抽出</li>
                   <li>ToDo（タスク）の抽出</li>
                 </ul>
+              </li>
+              <li>
+                <strong>deviceId・利用量の利用</strong>：プラン区分の判定、月次の利用上限
+                管理、不正利用の検知のために利用します。
               </li>
             </ul>
             <Text className="mt-4">
@@ -173,6 +200,63 @@ export default function PrivacyPolicyPage() {
                   Anthropic Privacy Policy
                 </a>
               </li>
+              <li>
+                <strong>OpenAI, L.L.C.（Whisper API）</strong>
+                <br />
+                所在地: 米国カリフォルニア州 サンフランシスコ
+                （3180 18th Street, San Francisco, CA 94110, USA）
+                <br />
+                利用目的: 録音音声の文字起こし（おおむね 20 秒を超える録音について、
+                xAI Grok の代替として利用）
+                <br />
+                <a
+                  href="https://openai.com/policies/row-privacy-policy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  OpenAI Privacy Policy
+                </a>
+              </li>
+              <li>
+                <strong>Replicate, Inc.（speaker diarization モデル）</strong>
+                <br />
+                所在地: 米国カリフォルニア州 サンフランシスコ
+                （2261 Market Street #4707, San Francisco, CA 94114, USA）
+                <br />
+                利用目的: 録音音声の話者分離処理（プレミアムプランのみ）。本機能の
+                技術的制約により、録音音声を Replicate のファイルストレージに一時
+                アップロードしたうえで処理に渡します。アップロードされた音声は
+                Replicate により <strong>24 時間以内に自動削除</strong>されます。
+                <br />
+                <a
+                  href="https://replicate.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Replicate Privacy Policy
+                </a>
+              </li>
+              <li>
+                <strong>RevenueCat, Inc.（サブスクリプション管理）</strong>
+                <br />
+                所在地: 米国カリフォルニア州 サンフランシスコ
+                （1 Letterman Drive, Building C, Suite 3-300, San Francisco, CA 94129, USA）
+                <br />
+                利用目的: プレミアムプランの購入・解約状態の同期、サブスクリプション
+                ライフサイクルイベントの受信。本サービスには deviceId と Apple ID の
+                取引情報（個人を特定しない範囲）が送信されます。
+                <br />
+                <a
+                  href="https://www.revenuecat.com/privacy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  RevenueCat Privacy Policy
+                </a>
+              </li>
             </ul>
             <Text className="mt-4">
               当社は、各社との利用契約により、お客様のデータが各社のセキュリティおよび
@@ -199,8 +283,18 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <strong>第三者送信先における保持</strong>：第三者AIサービス（xAI Inc.、
-                Anthropic, PBC）に送信されたデータの処理後の保持・削除については、
-                各社の API 利用規約およびプライバシーポリシーに従って取り扱われます。
+                Anthropic, PBC、OpenAI L.L.C.、Replicate Inc.、RevenueCat Inc.）に
+                送信されたデータの処理後の保持・削除については、各社の API 利用規約
+                およびプライバシーポリシーに従って取り扱われます。特に Replicate に
+                アップロードされた録音音声は、Replicate のファイルストレージにおいて
+                24 時間以内に自動削除される運用となっています。
+              </li>
+              <li>
+                <strong>バックエンドにおける保持期間（Cloudflare Workers KV）</strong>：
+                サブスクリプション区分は、解約・期限切れ時に「無料」に戻されます。
+                月次の利用量カウンタは、最後の更新から 65 日後に自動削除されます。
+                日次の API リクエスト数は 24 時間で自動削除されます。
+                これらの状態情報の削除をご希望の場合は、お問い合わせ先までご連絡ください。
               </li>
               <li>
                 <strong>削除方法</strong>：個別のセッション（録音・ノート等）は、
