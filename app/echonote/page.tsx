@@ -79,6 +79,18 @@ const USE_CASES = [
   },
 ];
 
+// Reusable eyebrow that pairs a section index with a label. Gives the page
+// a sense of forward motion without changing existing section structure.
+function SectionEyebrow({ index, label }: { index: string; label: string }) {
+  return (
+    <p className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3 inline-flex items-center gap-3">
+      <span className="text-ink-400 dark:text-ink-500 tabular-nums">{index}</span>
+      <span className="w-6 h-px bg-accent/40" />
+      <span>{label}</span>
+    </p>
+  );
+}
+
 const PRICING_ROWS: Array<{ label: string; free: string; premium: string; highlight?: boolean }> = [
   { label: '文字起こし', free: '◯', premium: '◯' },
   { label: 'AI ノート生成', free: '◯', premium: '◯' },
@@ -180,9 +192,7 @@ export default function EchoNoteLandingPage() {
             custom={0}
             className="text-center max-w-2xl mx-auto mb-14"
           >
-            <p className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3">
-              こんなこと、ありませんか?
-            </p>
+            <SectionEyebrow index="01" label="こんなこと、ありませんか?" />
             <h2 className="font-display text-3xl md:text-5xl font-bold text-ink dark:text-paper leading-tight">
               聞いていたはずなのに、
               <br />
@@ -221,9 +231,7 @@ export default function EchoNoteLandingPage() {
             custom={0}
             className="text-center max-w-2xl mx-auto mb-16"
           >
-            <p className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3">
-              How it works
-            </p>
+            <SectionEyebrow index="02" label="How it works" />
             <h2 className="font-display text-3xl md:text-5xl font-bold text-ink dark:text-paper leading-tight">
               3ステップで、
               <br />
@@ -269,9 +277,7 @@ export default function EchoNoteLandingPage() {
             custom={0}
             className="text-center max-w-2xl mx-auto mb-16"
           >
-            <p className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3">
-              Features
-            </p>
+            <SectionEyebrow index="03" label="Features" />
             <h2 className="font-display text-3xl md:text-5xl font-bold text-ink dark:text-paper leading-tight">
               ただの録音アプリでは、
               <br />
@@ -392,9 +398,7 @@ export default function EchoNoteLandingPage() {
             custom={0}
             className="text-center max-w-2xl mx-auto mb-14"
           >
-            <p className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3">
-              Use Cases
-            </p>
+            <SectionEyebrow index="05" label="Use Cases" />
             <h2 className="font-display text-3xl md:text-5xl font-bold text-ink dark:text-paper leading-tight">
               こんな人に、使われています。
             </h2>
@@ -424,8 +428,28 @@ export default function EchoNoteLandingPage() {
       </section>
 
       {/* ───────── Pricing ───────── */}
-      <section id="pricing" className="border-b-2 border-ink dark:border-paper">
-        <div className="max-w-5xl mx-auto px-6 py-20">
+      <section id="pricing" className="relative overflow-hidden border-b-2 border-ink dark:border-paper">
+        {/* Subtle floating decorations — gives the Pricing section a touch
+            more weight than the regular sections without overpowering. */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute top-16 left-[8%] w-16 h-16 border-2 border-accent/30 hidden md:block"
+            animate={{ rotate: [0, 90, 0], y: [0, -10, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-[10%] w-3 h-3 bg-accent/60 rounded-full hidden md:block"
+            animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute top-1/2 right-[5%] w-10 h-1 bg-ink/30 dark:bg-paper/30 hidden lg:block"
+            animate={{ scaleX: [1, 1.6, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </div>
+
+        <div className="relative max-w-5xl mx-auto px-6 py-24">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -434,9 +458,7 @@ export default function EchoNoteLandingPage() {
             custom={0}
             className="text-center max-w-2xl mx-auto mb-14"
           >
-            <p className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3">
-              Pricing
-            </p>
+            <SectionEyebrow index="06" label="Pricing" />
             <h2 className="font-display text-3xl md:text-5xl font-bold text-ink dark:text-paper leading-tight mb-4">
               無料で始めて、
               <br />
@@ -448,14 +470,15 @@ export default function EchoNoteLandingPage() {
           </motion.div>
 
           {/* Plan cards */}
-          <div className="grid md:grid-cols-2 gap-6 mb-10">
+          <div className="grid md:grid-cols-2 gap-6 mb-10 items-stretch">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               custom={0}
-              className="bg-paper dark:bg-ink border-2 border-ink dark:border-paper shadow-brutal p-7"
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="bg-paper dark:bg-ink border-2 border-ink dark:border-paper shadow-brutal p-7 transition-shadow hover:shadow-brutal-lg flex flex-col"
             >
               <div className="font-display text-sm font-bold text-ink-600 dark:text-ink-400 mb-2">
                 無料プラン
@@ -464,7 +487,7 @@ export default function EchoNoteLandingPage() {
                 ¥0
                 <span className="text-lg font-normal text-ink-500 dark:text-ink-500"> / 月</span>
               </div>
-              <p className="text-ink-600 dark:text-ink-400 text-sm leading-relaxed">
+              <p className="text-ink-600 dark:text-ink-400 text-sm leading-relaxed flex-1">
                 録音 1 時間 / 月、OCR 5 回 / 月の上限で、コア機能をすべて利用できます。
                 まずは試してみたい方はこちらから。
               </p>
@@ -476,9 +499,11 @@ export default function EchoNoteLandingPage() {
               viewport={{ once: true }}
               variants={fadeUp}
               custom={1}
-              className="bg-accent text-paper border-2 border-ink shadow-brutal-lg p-7 relative"
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="bg-accent text-paper border-2 border-ink shadow-brutal-lg p-7 relative flex flex-col"
             >
-              <div className="absolute -top-3 right-6 bg-ink text-paper text-xs font-display font-bold px-3 py-1 border-2 border-ink">
+              <div className="absolute -top-3 right-6 bg-ink text-paper text-xs font-display font-bold px-3 py-1 border-2 border-ink flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
                 おすすめ
               </div>
               <div className="font-display text-sm font-bold text-paper/80 mb-2">
@@ -493,7 +518,7 @@ export default function EchoNoteLandingPage() {
               <div className="font-display text-sm text-paper/90 mb-4">
                 または ¥4,800 / 年（¥400 / 月相当、約 33% お得）
               </div>
-              <p className="text-paper/90 text-sm leading-relaxed">
+              <p className="text-paper/90 text-sm leading-relaxed flex-1">
                 録音 5 時間 / 月、OCR 実質無制限、そして話者分離機能。会議・授業・
                 インタビュー等を本格的に使う方向け。
               </p>
@@ -631,54 +656,6 @@ export default function EchoNoteLandingPage() {
               </div>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* ───────── Pricing ───────── */}
-      <section className="border-b-2 border-ink dark:border-paper">
-        <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-          <motion.p
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={0}
-            className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3"
-          >
-            Pricing
-          </motion.p>
-          <motion.h2
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={1}
-            className="font-display text-4xl md:text-6xl font-bold text-ink dark:text-paper mb-6"
-          >
-            無料で、すぐに。
-          </motion.h2>
-          <motion.p
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={2}
-            className="text-ink-600 dark:text-ink-400 text-lg max-w-xl mx-auto mb-10"
-          >
-            Phase 1 では全機能を無料で提供しています。
-            アカウント登録もクレジットカード入力も不要。
-          </motion.p>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={3}
-            className="inline-block bg-ink-50 dark:bg-ink-900 border-2 border-ink dark:border-paper shadow-brutal px-10 py-8"
-          >
-            <div className="font-display text-7xl font-bold text-accent mb-2">¥0</div>
-            <div className="text-ink-500 dark:text-ink-400 text-sm">すべての機能 · 広告なし · 期間制限なし</div>
-          </motion.div>
         </div>
       </section>
 
