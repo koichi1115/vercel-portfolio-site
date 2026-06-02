@@ -79,6 +79,17 @@ const USE_CASES = [
   },
 ];
 
+const PRICING_ROWS: Array<{ label: string; free: string; premium: string; highlight?: boolean }> = [
+  { label: '文字起こし', free: '◯', premium: '◯' },
+  { label: 'AI ノート生成', free: '◯', premium: '◯' },
+  { label: 'TODO の自動抽出', free: '◯', premium: '◯' },
+  { label: '要レビュー箇所のハイライト', free: '◯', premium: '◯' },
+  { label: 'Apple Watch 連携', free: '◯', premium: '◯' },
+  { label: '月あたりの録音時間', free: '1 時間', premium: '5 時間' },
+  { label: '月あたりの OCR スキャン', free: '5 回', premium: '無制限' },
+  { label: '話者分離（誰が話したか自動ラベル）', free: '—', premium: '◯', highlight: true },
+];
+
 export default function EchoNoteLandingPage() {
   return (
     <div className="min-h-screen bg-paper dark:bg-ink">
@@ -409,6 +420,159 @@ export default function EchoNoteLandingPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ───────── Pricing ───────── */}
+      <section id="pricing" className="border-b-2 border-ink dark:border-paper">
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0}
+            className="text-center max-w-2xl mx-auto mb-14"
+          >
+            <p className="font-display text-sm font-bold text-accent uppercase tracking-widest mb-3">
+              Pricing
+            </p>
+            <h2 className="font-display text-3xl md:text-5xl font-bold text-ink dark:text-paper leading-tight mb-4">
+              無料で始めて、
+              <br />
+              必要になったら Premium に。
+            </h2>
+            <p className="text-ink-600 dark:text-ink-400 text-base md:text-lg">
+              アカウント登録不要。いつでも解約できます。
+            </p>
+          </motion.div>
+
+          {/* Plan cards */}
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              custom={0}
+              className="bg-paper dark:bg-ink border-2 border-ink dark:border-paper shadow-brutal p-7"
+            >
+              <div className="font-display text-sm font-bold text-ink-600 dark:text-ink-400 mb-2">
+                無料プラン
+              </div>
+              <div className="font-display text-4xl md:text-5xl font-bold text-ink dark:text-paper mb-4">
+                ¥0
+                <span className="text-lg font-normal text-ink-500 dark:text-ink-500"> / 月</span>
+              </div>
+              <p className="text-ink-600 dark:text-ink-400 text-sm leading-relaxed">
+                録音 1 時間 / 月、OCR 5 回 / 月の上限で、コア機能をすべて利用できます。
+                まずは試してみたい方はこちらから。
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              custom={1}
+              className="bg-accent text-paper border-2 border-ink shadow-brutal-lg p-7 relative"
+            >
+              <div className="absolute -top-3 right-6 bg-ink text-paper text-xs font-display font-bold px-3 py-1 border-2 border-ink">
+                おすすめ
+              </div>
+              <div className="font-display text-sm font-bold text-paper/80 mb-2">
+                Premium プラン
+              </div>
+              <div className="flex items-baseline gap-3 mb-1">
+                <div className="font-display text-4xl md:text-5xl font-bold">
+                  ¥600
+                  <span className="text-lg font-normal opacity-80"> / 月</span>
+                </div>
+              </div>
+              <div className="font-display text-sm text-paper/90 mb-4">
+                または ¥4,800 / 年（¥400 / 月相当、約 33% お得）
+              </div>
+              <p className="text-paper/90 text-sm leading-relaxed">
+                録音 5 時間 / 月、OCR 実質無制限、そして話者分離機能。会議・授業・
+                インタビュー等を本格的に使う方向け。
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Comparison table */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={2}
+            className="border-2 border-ink dark:border-paper shadow-brutal overflow-hidden bg-paper dark:bg-ink"
+          >
+            <table className="w-full text-left">
+              <thead>
+                <tr className="bg-ink-50 dark:bg-ink-900 border-b-2 border-ink dark:border-paper">
+                  <th className="font-display font-bold text-ink dark:text-paper px-5 py-4 text-sm md:text-base">
+                    機能
+                  </th>
+                  <th className="font-display font-bold text-ink dark:text-paper px-5 py-4 text-sm md:text-base text-center w-24 md:w-32">
+                    無料
+                  </th>
+                  <th className="font-display font-bold text-ink dark:text-paper px-5 py-4 text-sm md:text-base text-center w-28 md:w-36 bg-accent/10">
+                    Premium
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {PRICING_ROWS.map((row, i) => (
+                  <tr
+                    key={row.label}
+                    className={`border-b border-ink/15 dark:border-paper/15 last:border-b-0 ${
+                      row.highlight ? 'bg-accent/5' : ''
+                    }`}
+                  >
+                    <td className="text-ink dark:text-paper px-5 py-3 text-sm md:text-base">
+                      {row.label}
+                      {row.highlight && (
+                        <span className="ml-2 inline-block bg-accent text-paper text-[10px] font-display font-bold px-2 py-0.5 align-middle">
+                          NEW
+                        </span>
+                      )}
+                    </td>
+                    <td className="text-ink-600 dark:text-ink-400 px-5 py-3 text-sm md:text-base text-center font-display">
+                      {row.free}
+                    </td>
+                    <td className="text-ink dark:text-paper px-5 py-3 text-sm md:text-base text-center font-display font-bold bg-accent/5">
+                      {row.premium}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={3}
+            className="text-center mt-10"
+          >
+            <a
+              href="https://apps.apple.com/jp/app/echonote-%E3%82%A8%E3%82%B3%E3%83%BC%E3%83%8E%E3%83%BC%E3%83%88/id6764349230"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-ink shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all font-display font-bold h-14 px-7 text-base"
+            >
+              📱 App Store で入手 →
+            </a>
+            <p className="text-xs text-ink-500 dark:text-ink-500 mt-4">
+              Premium へのアップグレードはアプリ内から行えます。
+              <br className="hidden md:block" />
+              サブスクリプションは Apple ID 経由で管理され、いつでも解約可能です。
+            </p>
+          </motion.div>
         </div>
       </section>
 
