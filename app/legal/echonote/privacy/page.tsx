@@ -201,13 +201,31 @@ export default function PrivacyPolicyPage() {
                 </a>
               </li>
               <li>
+                <strong>Groq, Inc.（Whisper Large V3 Turbo API）</strong>
+                <br />
+                所在地: 米国カリフォルニア州 マウンテンビュー
+                （400 Castro Street, Mountain View, CA 94041, USA）
+                <br />
+                利用目的: 録音音声の文字起こし（おおむね 20 秒を超える録音は、
+                xAI Grok ではなく Groq に送信されます）
+                <br />
+                <a
+                  href="https://groq.com/privacy-policy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Groq Privacy Policy
+                </a>
+              </li>
+              <li>
                 <strong>OpenAI, L.L.C.（Whisper API）</strong>
                 <br />
                 所在地: 米国カリフォルニア州 サンフランシスコ
                 （3180 18th Street, San Francisco, CA 94110, USA）
                 <br />
-                利用目的: 録音音声の文字起こし（おおむね 20 秒を超える録音について、
-                xAI Grok の代替として利用）
+                利用目的: 録音音声の文字起こし（Groq への送信が失敗した場合の
+                フォールバックとして利用）
                 <br />
                 <a
                   href="https://openai.com/policies/row-privacy-policy/"
@@ -283,7 +301,7 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <strong>第三者送信先における保持</strong>：第三者AIサービス（xAI Inc.、
-                Anthropic, PBC、OpenAI L.L.C.、Replicate Inc.、RevenueCat Inc.）に
+                Anthropic, PBC、Groq, Inc.、OpenAI L.L.C.、Replicate Inc.、RevenueCat Inc.）に
                 送信されたデータの処理後の保持・削除については、各社の API 利用規約
                 およびプライバシーポリシーに従って取り扱われます。特に Replicate に
                 アップロードされた録音音声は、Replicate のファイルストレージにおいて
