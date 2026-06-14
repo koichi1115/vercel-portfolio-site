@@ -15,6 +15,7 @@ technologies:
   - "Vercel"
 category: "Web Application"
 date: "2026-06-10"
+demoUrl: "https://fable5-vs-humans.vercel.app/"
 githubUrl: "https://github.com/koichi1115/fable5-vs-humans"
 ---
 
