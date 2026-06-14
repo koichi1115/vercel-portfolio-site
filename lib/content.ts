@@ -40,6 +40,7 @@ export interface Project {
   category: string;
   date: string;
   demoUrl?: string;
+  demoLabel?: string;
   githubUrl?: string;
   content: string;
 }
@@ -126,6 +127,7 @@ export async function getAllProjects(): Promise<Project[]> {
             category: data.category,
             date: data.date,
             demoUrl: data.demoUrl,
+            demoLabel: data.demoLabel,
             githubUrl: data.githubUrl,
             content: contentHtml,
           };
@@ -160,6 +162,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
       category: data.category,
       date: data.date,
       demoUrl: data.demoUrl,
+      demoLabel: data.demoLabel,
       githubUrl: data.githubUrl,
       content: contentHtml,
     };
