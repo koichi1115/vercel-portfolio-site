@@ -16,7 +16,9 @@ technologies:
   - "SQLite"
 category: "iOS Application"
 date: "2026-06-20"
-demoUrl: "https://github.com/koichi1115/otayori-ai"
+demoUrl: "https://apps.apple.com/jp/app/id6782348124"
+demoLabel: "App Store で入手"
+githubUrl: "https://github.com/koichi1115/otayori-ai"
 ---
 
 # ぷりかん！

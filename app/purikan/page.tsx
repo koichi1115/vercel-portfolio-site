@@ -65,7 +65,7 @@ export default function PurikanLandingPage() {
             <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
               <div className="inline-flex items-center gap-2 bg-accent text-paper text-xs font-display font-bold px-4 py-1.5 border-2 border-ink shadow-brutal-sm mb-6">
                 <span className="w-2 h-2 bg-paper rounded-full animate-pulse" />
-                iOSアプリ ・ App Store 審査提出中
+                iOSアプリ ・ App Store で公開中
               </div>
 
               <h1 className="font-display text-6xl md:text-7xl font-bold text-ink dark:text-paper leading-none mb-4">
@@ -87,18 +87,24 @@ export default function PurikanLandingPage() {
 
               <div className="flex flex-wrap gap-3">
                 <a
-                  href="#features"
+                  href="https://apps.apple.com/jp/app/id6782348124"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-ink shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all font-display font-bold h-14 px-7 text-base"
+                >
+                  📱 App Store で入手 →
+                </a>
+                <a
+                  href="#features"
+                  className="inline-flex items-center gap-2 bg-transparent text-ink dark:text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-7 text-base hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-all"
                 >
                   機能を見る ↓
                 </a>
-                <Link
-                  href="/legal/purikan/privacy"
-                  className="inline-flex items-center gap-2 bg-transparent text-ink dark:text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-7 text-base hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-all"
-                >
-                  プライバシーポリシー →
-                </Link>
               </div>
+
+              <p className="text-xs text-ink-500 dark:text-ink-500 mt-6">
+                ✨ 無料でダウンロードできます ・ ログイン不要ですぐ使えます
+              </p>
             </motion.div>
 
             {/* Mascot */}
@@ -285,7 +291,7 @@ export default function PurikanLandingPage() {
             custom={1}
             className="text-ink-500 dark:text-ink-400 text-lg mb-10"
           >
-            ぷりかん！ ・ iOSアプリ ・ App Store 審査提出中
+            App Store で公開中 ・ 無料でダウンロードできます
           </motion.p>
 
           <motion.div
@@ -294,6 +300,24 @@ export default function PurikanLandingPage() {
             viewport={{ once: true }}
             variants={fadeUp}
             custom={2}
+            className="flex flex-wrap justify-center gap-4 mb-10"
+          >
+            <a
+              href="https://apps.apple.com/jp/app/id6782348124"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-accent text-paper border-2 border-ink dark:border-paper font-display font-bold h-14 px-8 text-lg shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all"
+            >
+              📱 App Store で入手 →
+            </a>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={3}
             className="flex flex-wrap justify-center gap-6 text-sm text-ink-500 dark:text-ink-400 pt-8 border-t border-ink-200 dark:border-ink-700"
           >
             <Link href="/legal/purikan/privacy" className="hover:text-accent underline">
