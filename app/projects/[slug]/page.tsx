@@ -1,5 +1,6 @@
 import { getProjectBySlug, getAllProjects } from '@/lib/content';
 import { ProjectDetail } from '@/components/ProjectDetail';
+import { Footer } from '@/components/Footer';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -41,8 +42,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
+      <div className="grain-overlay" />
       <ProjectDetail project={project} />
+      <Footer />
     </div>
   );
 }

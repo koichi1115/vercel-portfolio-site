@@ -14,7 +14,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-10 h-10 border-2 border-ink dark:border-paper" />
+      <div className="w-10 h-10 rounded-full border hairline" />
     );
   }
 
@@ -23,7 +23,7 @@ export function ThemeToggle() {
   return (
     <motion.button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-paper bg-paper dark:bg-ink overflow-hidden transition-colors"
+      className="relative w-10 h-10 flex items-center justify-center rounded-full border hairline text-abyss dark:text-bone hover:border-volt-600 dark:hover:border-volt/60 overflow-hidden transition-colors"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label={isDark ? "ライトモードに切り替え" : "ダークモードに切り替え"}
@@ -36,7 +36,7 @@ export function ThemeToggle() {
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
             exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.2 }}
-            className="w-5 h-5 text-paper"
+            className="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -55,7 +55,7 @@ export function ThemeToggle() {
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
             exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.2 }}
-            className="w-5 h-5 text-ink"
+            className="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

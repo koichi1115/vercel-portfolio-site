@@ -12,9 +12,9 @@ interface ProjectsListProps {
 export function ProjectsList({ projects }: ProjectsListProps) {
   if (projects.length === 0) {
     return (
-      <section className="py-24 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="font-mono text-lg text-ink-500 dark:text-ink-400">
+      <section className="px-5 py-24">
+        <div className="mx-auto max-w-7xl text-center">
+          <p className="font-mono text-sm tracking-widest text-abyss-400 dark:text-bone-400">
             プロジェクトがまだ登録されていません。
           </p>
         </div>
@@ -23,91 +23,78 @@ export function ProjectsList({ projects }: ProjectsListProps) {
   }
 
   return (
-    <section className="py-16 bg-ink-50 dark:bg-ink-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section className="py-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <motion.div
               key={project.slug}
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: (index % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
                 href={`/projects/${project.slug}`}
-                className="group block bg-paper dark:bg-ink-900 border-2 border-ink dark:border-paper overflow-hidden transition-all duration-300 hover:-translate-x-1 hover:-translate-y-1 shadow-brutal dark:shadow-[4px_4px_0_0_#FEFEFE] hover:shadow-brutal-lg dark:hover:shadow-[6px_6px_0_0_#FEFEFE]"
+                className="panel panel-hover group block overflow-hidden"
               >
                 {/* Thumbnail */}
-                <div className="relative aspect-video bg-ink-100 dark:bg-ink-800 overflow-hidden">
+                <div className="relative aspect-video overflow-hidden">
                   {project.thumbnail ? (
                     <Image
                       src={project.thumbnail}
                       alt={project.title}
                       fill
-                      className="object-cover transition-all duration-500 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-accent to-accent-600">
-                      <span className="font-display text-6xl font-bold text-paper/50">
+                    <div className="flex h-full w-full items-center justify-center bg-abyss-700/10 dark:bg-bone/5">
+                      <span className="font-syne text-6xl font-extrabold text-aurora">
                         {project.title.charAt(0)}
                       </span>
                     </div>
                   )}
 
-                  {/* Category overlay */}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 font-mono text-[10px] uppercase tracking-widest bg-ink dark:bg-paper text-paper dark:text-ink">
-                      {project.category}
-                    </span>
-                  </div>
+                  <span className="absolute left-4 top-4 rounded-full bg-abyss/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-bone backdrop-blur-sm">
+                    {project.category}
+                  </span>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
-                  {/* Title */}
-                  <h3 className="font-display text-xl font-bold text-ink dark:text-paper mb-3 group-hover:text-accent transition-colors">
-                    {project.title}
-                  </h3>
+                  <div className="mb-3 flex items-baseline justify-between gap-4">
+                    <h3 className="font-syne text-xl font-bold tracking-tight transition-colors duration-300 group-hover:text-volt-600 dark:group-hover:text-volt">
+                      {project.title}
+                    </h3>
+                    <span className="shrink-0 font-mono text-[10px] tracking-widest text-abyss-400 dark:text-bone-400">
+                      /{String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
 
-                  {/* Description */}
-                  <p className="text-ink-600 dark:text-ink-300 mb-6 line-clamp-2 text-sm">
+                  <p className="mb-5 line-clamp-2 text-sm leading-relaxed text-abyss-500 dark:text-bone-400">
                     {project.description}
                   </p>
 
-                  {/* Technologies */}
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.slice(0, 3).map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-1 font-mono text-[10px] uppercase tracking-wider border border-ink-200 dark:border-ink-700 text-ink-600 dark:text-ink-400"
+                        className="rounded-full border hairline px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-abyss-500 dark:text-bone-400"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.technologies.length > 3 && (
-                      <span className="px-2 py-1 font-mono text-[10px] uppercase tracking-wider border border-ink-200 dark:border-ink-700 text-ink-600 dark:text-ink-400">
+                      <span className="rounded-full border hairline px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-volt-700 dark:text-volt">
                         +{project.technologies.length - 3}
                       </span>
                     )}
                   </div>
 
-                  {/* View link */}
-                  <div className="mt-6 pt-4 border-t-2 border-ink-100 dark:border-ink-800 flex items-center gap-2 text-accent font-display font-semibold text-sm">
-                    <span>View Project</span>
-                    <svg
-                      className="w-4 h-4 transition-transform group-hover:translate-x-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
+                  <div className="mt-6 flex items-center gap-2 border-t hairline pt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-volt-700 dark:text-volt">
+                    View project
+                    <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
                   </div>
                 </div>
               </Link>

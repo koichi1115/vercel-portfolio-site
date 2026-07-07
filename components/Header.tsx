@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
@@ -16,91 +17,163 @@ const navItems = [
 
 export default function Header() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // close menu on navigation + lock scroll while open
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-50"
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="group relative font-display text-2xl font-bold tracking-tight text-ink dark:text-paper"
-          >
-            <span className="relative z-10">Portfolio</span>
-            <span className="text-accent">.</span>
-            <motion.span
-              className="absolute -bottom-1 left-0 h-1 bg-accent"
-              initial={{ width: 0 }}
-              whileHover={{ width: "100%" }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            />
-          </Link>
+    <>
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "backdrop-blur-xl bg-bone/75 dark:bg-abyss/70 border-b hairline"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="flex items-center justify-between h-[72px]">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="group flex items-baseline gap-1 font-syne text-xl font-extrabold tracking-tight text-abyss dark:text-bone"
+              aria-label="Home"
+            >
+              KOICHI
+              <span className="inline-block h-2 w-2 rounded-full bg-volt transition-transform duration-300 group-hover:scale-150" />
+            </Link>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navItems.map((item, index) => {
-              const isActive = pathname === item.path;
-              return (
-                <motion.div
-                  key={item.path}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                >
+            {/* Desktop nav */}
+            <nav className="hidden md:flex items-center gap-1">
+              {navItems.map((item) => {
+                const isActive =
+                  item.path === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.path);
+                return (
                   <Link
+                    key={item.path}
                     href={item.path}
-                    className={`relative px-4 py-2 font-display text-sm font-medium tracking-wide uppercase transition-all duration-200 ${
+                    className={`relative rounded-full px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors duration-200 ${
                       isActive
-                        ? "text-accent"
-                        : "text-ink-500 dark:text-ink-300 hover:text-ink dark:hover:text-paper"
+                        ? "text-volt-ink dark:text-volt"
+                        : "text-abyss-500 dark:text-bone-400 hover:text-abyss dark:hover:text-bone"
                     }`}
                   >
-                    {item.name}
                     {isActive && (
                       <motion.span
-                        layoutId="activeNav"
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-full bg-volt/90 dark:bg-volt/10 dark:ring-1 dark:ring-volt/40"
+                        transition={{ type: "spring", stiffness: 400, damping: 32 }}
                       />
                     )}
+                    <span className="relative z-10">{item.name}</span>
                   </Link>
-                </motion.div>
-              );
-            })}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navItems.length * 0.1, duration: 0.5 }}
-              className="ml-2"
-            >
-              <ThemeToggle />
-            </motion.div>
-          </nav>
-
-          {/* Mobile: Theme Toggle + Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
-            <button
-              className="relative w-10 h-10 flex items-center justify-center border-2 border-ink dark:border-paper"
-              aria-label="Menu"
-            >
-              <div className="flex flex-col gap-1.5">
-                <span className="w-5 h-0.5 bg-ink dark:bg-paper" />
-                <span className="w-5 h-0.5 bg-ink dark:bg-paper" />
-                <span className="w-3 h-0.5 bg-accent" />
+                );
+              })}
+              <div className="ml-3">
+                <ThemeToggle />
               </div>
-            </button>
+            </nav>
+
+            {/* Mobile controls */}
+            <div className="md:hidden flex items-center gap-3">
+              <ThemeToggle />
+              <button
+                onClick={() => setMenuOpen((v) => !v)}
+                aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
+                aria-expanded={menuOpen}
+                className="relative flex h-10 w-10 items-center justify-center rounded-full border hairline"
+              >
+                <span
+                  className={`absolute h-0.5 w-4 bg-current transition-all duration-300 ${
+                    menuOpen ? "rotate-45" : "-translate-y-[3px]"
+                  }`}
+                />
+                <span
+                  className={`absolute h-0.5 w-4 bg-current transition-all duration-300 ${
+                    menuOpen ? "-rotate-45" : "translate-y-[3px]"
+                  }`}
+                />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.header>
 
-      {/* Bottom border line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-ink-200 dark:via-ink-700 to-transparent" />
-    </motion.header>
+      {/* Mobile full-screen menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 md:hidden bg-bone dark:bg-abyss aurora-glow"
+          >
+            <div className="grid-lines absolute inset-0" />
+            <nav className="relative flex h-full flex-col justify-center gap-2 px-10">
+              {navItems.map((item, i) => {
+                const isActive =
+                  item.path === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.path);
+                return (
+                  <motion.div
+                    key={item.path}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.08 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <Link
+                      href={item.path}
+                      onClick={() => setMenuOpen(false)}
+                      className={`group flex items-baseline gap-4 py-2 font-syne text-4xl font-bold tracking-tight ${
+                        isActive
+                          ? "text-aurora"
+                          : "text-abyss dark:text-bone"
+                      }`}
+                    >
+                      <span className="font-mono text-xs tracking-[0.3em] text-abyss-400 dark:text-bone-400">
+                        0{i + 1}
+                      </span>
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="absolute bottom-12 left-10 font-mono text-[11px] uppercase tracking-[0.3em] text-abyss-400 dark:text-bone-400"
+              >
+                DX Strategist & Engineer
+              </motion.p>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
