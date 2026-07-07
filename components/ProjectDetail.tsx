@@ -7,7 +7,7 @@ interface ProjectDetailProps {
 }
 
 const PROSE_CLASS =
-  'prose prose-lg max-w-none dark:prose-invert prose-headings:font-syne prose-headings:tracking-tight prose-p:leading-loose prose-p:text-abyss-500 dark:prose-p:text-bone-300 prose-a:text-volt-600 dark:prose-a:text-volt prose-a:no-underline hover:prose-a:underline prose-strong:text-abyss dark:prose-strong:text-bone prose-code:text-abyss dark:prose-code:text-bone prose-pre:bg-abyss-800 prose-pre:text-bone prose-li:text-abyss-500 dark:prose-li:text-bone-300 prose-blockquote:border-volt';
+  'prose prose-lg max-w-none dark:prose-invert prose-headings:font-syne prose-headings:tracking-tight prose-p:leading-loose prose-p:text-abyss-500 dark:prose-p:text-bone-300 prose-a:text-volt-600 dark:prose-a:text-volt prose-a:no-underline hover:prose-a:underline prose-strong:text-abyss dark:prose-strong:text-bone prose-code:text-abyss dark:prose-code:text-bone prose-pre:bg-abyss-800 prose-pre:text-bone [&_pre_code]:!text-bone prose-li:text-abyss-500 dark:prose-li:text-bone-300 prose-blockquote:border-volt';
 
 export function ProjectDetail({ project }: ProjectDetailProps) {
   return (
