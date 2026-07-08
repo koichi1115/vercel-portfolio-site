@@ -115,7 +115,7 @@ export function HomeClient({ projects, diaries, reviews }: HomeClientProps) {
       <main className="relative">
         {/* ============================== HERO ============================== */}
         <section className="relative -mt-20 flex min-h-[100svh] flex-col overflow-hidden bg-bone dark:bg-abyss">
-          <div className="aurora-glow absolute inset-0" />
+          <div className="nebula-glow absolute inset-0" />
           {mounted && <HeroCanvas mode={mode} />}
 
           {/* gradient scrim so type stays readable over the canvas */}
@@ -126,7 +126,7 @@ export function HomeClient({ projects, diaries, reviews }: HomeClientProps) {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: easeExpo }}
-              className="mb-8 flex items-center gap-4"
+              className="mb-8 flex flex-wrap items-center gap-4"
             >
               <span className="inline-flex items-center gap-2 rounded-full border hairline px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.25em] backdrop-blur-sm">
                 <span className="h-2 w-2 rounded-full bg-volt animate-pulse-dot" />
@@ -137,33 +137,43 @@ export function HomeClient({ projects, diaries, reviews }: HomeClientProps) {
               </span>
             </motion.div>
 
-            <h1 className="font-syne font-extrabold leading-[0.92] tracking-tight">
+            {/* subtle identity line */}
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.08, ease: easeExpo }}
+              className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-abyss-500 dark:text-bone-300"
+            >
+              Koichi<span className="text-volt-600 dark:text-volt"> ✦ </span>DX
+              Strategist &amp; Engineer
+            </motion.p>
+
+            <h1 className="font-syne font-extrabold leading-[1.02] tracking-tight">
               <motion.span
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.1, ease: easeExpo }}
-                className="block text-[clamp(3rem,13.5vw,11rem)]"
+                transition={{ duration: 0.9, delay: 0.16, ease: easeExpo }}
+                className="block text-[clamp(2.5rem,7.5vw,6rem)]"
               >
-                KOICHI
+                Engineering ideas
               </motion.span>
               <motion.span
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.22, ease: easeExpo }}
-                className="block text-[clamp(2rem,6vw,4.5rem)]"
+                transition={{ duration: 0.9, delay: 0.28, ease: easeExpo }}
+                className="block text-[clamp(2.5rem,7.5vw,6rem)]"
               >
-                <span className="text-outline">DX Strategist</span>{" "}
-                <span className="text-aurora">&amp; Engineer</span>
+                <span className="text-aurora">into orbit.</span>
               </motion.span>
             </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.38, ease: easeExpo }}
+              transition={{ duration: 0.8, delay: 0.42, ease: easeExpo }}
               className="mt-8 max-w-xl text-base leading-loose text-abyss-500 dark:text-bone-300 sm:text-lg"
             >
-              技術とビジネスの両面から、
+              アイデアを軌道に乗せる。技術とビジネスの両面から、
               <span className="font-semibold text-abyss dark:text-bone">
                 本質的な価値創造
               </span>
