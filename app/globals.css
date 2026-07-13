@@ -215,10 +215,10 @@
     transform-origin: left;
   }
 
-  /* Grain overlay */
+  /* Grain overlay (inline SVG noise — no asset request) */
   .grain-overlay {
     @apply fixed inset-0 pointer-events-none z-50;
-    background-image: url('/images/noise.png');
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");
     background-repeat: repeat;
     opacity: var(--grain-opacity);
   }
@@ -301,6 +301,176 @@
   /* Aspect ratios */
   .aspect-golden { aspect-ratio: 1.618 / 1; }
   .aspect-cinema { aspect-ratio: 21 / 9; }
+}
+
+/* ==========================================================================
+   Obsidian Aurora — 2026 Redesign Layer
+   New portfolio surface. Legacy tokens above are kept for product LPs
+   (echonote / purikan / legal).
+   ========================================================================== */
+
+@layer utilities {
+  /* Aurora gradient text: volt -> ion */
+  .text-aurora {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(100deg, #c9f73f 0%, #a7f06a 40%, #5fe9ff 100%);
+  }
+
+  .text-aurora-soft {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(100deg, #8cb512 0%, #4f9c6a 50%, #149fb8 100%);
+  }
+
+  /* Hairline borders that read on both themes */
+  .hairline {
+    border-color: rgba(19, 22, 12, 0.12);
+  }
+  .dark .hairline {
+    border-color: rgba(243, 241, 234, 0.1);
+  }
+
+  /* Outlined display type (hollow headline) */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(9, 11, 18, 0.35);
+  }
+  .dark .text-outline {
+    -webkit-text-stroke: 1.5px rgba(243, 241, 234, 0.3);
+  }
+
+  /* Radial aurora glow backdrop */
+  .aurora-glow {
+    background:
+      radial-gradient(38% 42% at 72% 24%, rgba(95, 233, 255, 0.14) 0%, transparent 100%),
+      radial-gradient(46% 52% at 22% 78%, rgba(201, 247, 63, 0.12) 0%, transparent 100%);
+  }
+
+  /* Deep-space nebula backdrop (hero) */
+  .nebula-glow {
+    background:
+      radial-gradient(42% 48% at 74% 34%, rgba(139, 108, 255, 0.1) 0%, transparent 100%),
+      radial-gradient(36% 40% at 62% 60%, rgba(95, 233, 255, 0.09) 0%, transparent 100%),
+      radial-gradient(30% 34% at 18% 22%, rgba(201, 247, 63, 0.05) 0%, transparent 100%);
+  }
+  .dark .nebula-glow {
+    background:
+      radial-gradient(46% 52% at 74% 34%, rgba(139, 108, 255, 0.2) 0%, transparent 100%),
+      radial-gradient(38% 44% at 62% 62%, rgba(95, 233, 255, 0.13) 0%, transparent 100%),
+      radial-gradient(60% 70% at 50% 110%, rgba(13, 16, 26, 0.9) 0%, transparent 100%),
+      radial-gradient(32% 36% at 16% 18%, rgba(201, 247, 63, 0.06) 0%, transparent 100%);
+  }
+
+  /* Fine blueprint grid */
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, rgba(127, 137, 111, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(127, 137, 111, 0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .dark .grid-lines {
+    background-image:
+      linear-gradient(to right, rgba(243, 241, 234, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(243, 241, 234, 0.045) 1px, transparent 1px);
+  }
+}
+
+@layer components {
+  /* Frosted panel */
+  .panel {
+    @apply rounded-2xl border backdrop-blur-md;
+    border-color: rgba(19, 22, 12, 0.1);
+    background: rgba(255, 255, 255, 0.55);
+  }
+  .dark .panel {
+    border-color: rgba(243, 241, 234, 0.08);
+    background: rgba(20, 24, 38, 0.45);
+  }
+
+  .panel-hover {
+    transition:
+      transform 0.4s var(--ease-out-expo),
+      border-color 0.4s var(--ease-out-expo),
+      box-shadow 0.4s var(--ease-out-expo);
+  }
+  .panel-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(140, 181, 18, 0.55);
+    box-shadow: 0 18px 50px -18px rgba(24, 28, 12, 0.25);
+  }
+  .dark .panel-hover:hover {
+    border-color: rgba(201, 247, 63, 0.45);
+    box-shadow: 0 0 44px rgba(201, 247, 63, 0.12);
+  }
+
+  /* Primary pill button (volt) */
+  .btn-volt {
+    @apply inline-flex items-center justify-center gap-3 rounded-full font-syne font-bold tracking-wide;
+    background: #c9f73f;
+    color: #131c00;
+    transition:
+      transform 0.35s var(--ease-out-expo),
+      box-shadow 0.35s var(--ease-out-expo),
+      background 0.35s var(--ease-out-expo);
+  }
+  .btn-volt:hover {
+    transform: translateY(-2px);
+    background: #dffb85;
+    box-shadow: 0 0 44px rgba(201, 247, 63, 0.4);
+  }
+  .btn-volt:active {
+    transform: translateY(0);
+  }
+
+  /* Ghost pill button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-3 rounded-full border font-syne font-semibold tracking-wide;
+    border-color: rgba(19, 22, 12, 0.25);
+    color: inherit;
+    transition:
+      border-color 0.35s var(--ease-out-expo),
+      background 0.35s var(--ease-out-expo),
+      transform 0.35s var(--ease-out-expo);
+  }
+  .btn-ghost:hover {
+    transform: translateY(-2px);
+    border-color: rgba(140, 181, 18, 0.8);
+    background: rgba(201, 247, 63, 0.08);
+  }
+  .dark .btn-ghost {
+    border-color: rgba(243, 241, 234, 0.25);
+  }
+  .dark .btn-ghost:hover {
+    border-color: rgba(201, 247, 63, 0.7);
+    background: rgba(201, 247, 63, 0.08);
+  }
+
+  /* Mono overline chip */
+  .overline-chip {
+    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.28em];
+    color: #7c9a12;
+  }
+  .dark .overline-chip {
+    color: #c9f73f;
+  }
+  .overline-chip::before {
+    content: '';
+    @apply inline-block h-px w-8;
+    background: currentColor;
+  }
+
+  /* Marquee */
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-slow,
+  .animate-spin-slow {
+    animation: none !important;
+  }
 }
 
 /* ==========================================================================

@@ -10,6 +10,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // === Obsidian Aurora Palette (2026 redesign) ===
+        abyss: {
+          DEFAULT: '#06070C',
+          900: '#090B12',
+          800: '#0D101A',
+          700: '#141826',
+          600: '#1C2133',
+          500: '#2A3049',
+          400: '#3E4666',
+        },
+        bone: {
+          DEFAULT: '#F3F1EA',
+          50: '#FBFAF6',
+          100: '#F3F1EA',
+          200: '#E9E6DA',
+          300: '#D9D4C3',
+          400: '#B7B19B',
+        },
+        volt: {
+          DEFAULT: '#C9F73F',
+          300: '#DFFB85',
+          400: '#C9F73F',
+          500: '#AFDD1E',
+          600: '#8CB512',
+          700: '#5F7C0B',
+          800: '#3D5106',
+          ink: '#131C00',
+        },
+        ion: {
+          DEFAULT: '#5FE9FF',
+          300: '#9DF2FF',
+          400: '#5FE9FF',
+          500: '#25CBE8',
+          600: '#149FB8',
+          700: '#0E6E80',
+        },
         // Neo-Brutalist Palette
         accent: {
           DEFAULT: '#FF4D4D',
@@ -68,6 +104,9 @@ const config: Config = {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace'],
+        // 2026 redesign
+        syne: ['var(--font-syne)', 'system-ui', 'sans-serif'],
+        zen: ['var(--font-zen)', 'var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         // Dramatic type scale
@@ -105,6 +144,11 @@ const config: Config = {
         'glow-lg': '0 0 40px rgba(255, 77, 77, 0.4)',
         'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
         'soft-lg': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 30px -5px rgba(0, 0, 0, 0.04)',
+        'glow-volt': '0 0 32px rgba(201, 247, 63, 0.28)',
+        'glow-volt-lg': '0 0 64px rgba(201, 247, 63, 0.35)',
+        'glow-ion': '0 0 32px rgba(95, 233, 255, 0.25)',
+        'card-abyss': '0 24px 60px -20px rgba(0, 0, 0, 0.6)',
+        'card-bone': '0 20px 50px -20px rgba(24, 28, 12, 0.18)',
       },
       borderRadius: {
         'none': '0',
@@ -127,8 +171,20 @@ const config: Config = {
         'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
         'grain': 'grain 8s steps(10) infinite',
+        'marquee': 'marquee 32s linear infinite',
+        'marquee-slow': 'marquee 48s linear infinite',
+        'spin-slow': 'spin 14s linear infinite',
+        'pulse-dot': 'pulseDot 2.4s ease-in-out infinite',
       },
       keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        pulseDot: {
+          '0%, 100%': { opacity: '1', boxShadow: '0 0 0 0 rgba(201, 247, 63, 0.5)' },
+          '50%': { opacity: '0.7', boxShadow: '0 0 0 6px rgba(201, 247, 63, 0)' },
+        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },

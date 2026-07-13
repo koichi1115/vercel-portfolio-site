@@ -58,25 +58,25 @@ function SkillBar({ skill, index }: { skill: string; index: number }) {
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className="group"
     >
-      <div className="flex justify-between items-center mb-1">
-        <span className="font-mono text-xs uppercase tracking-wider text-ink-700 dark:text-ink-300 group-hover:text-accent transition-colors">
+      <div className="flex justify-between items-center mb-1.5">
+        <span className="font-mono text-xs uppercase tracking-wider text-abyss-500 dark:text-bone-300 group-hover:text-volt-600 dark:group-hover:text-volt transition-colors">
           {skill}
         </span>
         <motion.span
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.4, delay: index * 0.05 + 0.3 }}
-          className="font-mono text-xs text-ink-500 dark:text-ink-400"
+          className="font-mono text-xs text-abyss-400 dark:text-bone-400"
         >
           {level}%
         </motion.span>
       </div>
-      <div className="h-2 bg-ink-100 dark:bg-ink-800 border border-ink-200 dark:border-ink-700 overflow-hidden">
+      <div className="h-1.5 overflow-hidden rounded-full bg-abyss-500/10 dark:bg-bone/10">
         <motion.div
           initial={{ width: 0 }}
           animate={isInView ? { width: `${level}%` } : {}}
           transition={{ duration: 0.8, delay: index * 0.05 + 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="h-full bg-accent group-hover:bg-ink dark:group-hover:bg-paper transition-colors"
+          className="h-full rounded-full bg-gradient-to-r from-volt to-ion"
         />
       </div>
     </motion.div>
@@ -117,7 +117,7 @@ function SkillRadar({ skills }: { skills: string[] }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="0.5"
-            className="text-ink-200 dark:text-ink-700"
+            className="text-abyss-500/20 dark:text-bone/15"
           />
         ))}
 
@@ -133,7 +133,7 @@ function SkillRadar({ skills }: { skills: string[] }) {
               y2={centerY + Math.sin(angle) * radius}
               stroke="currentColor"
               strokeWidth="0.5"
-              className="text-ink-200 dark:text-ink-700"
+              className="text-abyss-500/20 dark:text-bone/15"
             />
           );
         })}
@@ -145,7 +145,7 @@ function SkillRadar({ skills }: { skills: string[] }) {
           fillOpacity="0.2"
           stroke="currentColor"
           strokeWidth="2"
-          className="text-accent"
+          className="text-volt-600 dark:text-volt"
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -160,7 +160,7 @@ function SkillRadar({ skills }: { skills: string[] }) {
             cx={point.x}
             cy={point.y}
             r="4"
-            className="fill-accent"
+            className="fill-volt-600 dark:fill-volt"
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -173,7 +173,7 @@ function SkillRadar({ skills }: { skills: string[] }) {
       {points.map((point, i) => (
         <motion.div
           key={i}
-          className="absolute font-mono text-xs text-ink-600 dark:text-ink-400 whitespace-nowrap"
+          className="absolute font-mono text-xs text-abyss-500 dark:text-bone-400 whitespace-nowrap"
           style={{
             left: `${point.labelX}%`,
             top: `${point.labelY}%`,
@@ -199,21 +199,20 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
   }
 
   return (
-    <section className="py-24 bg-paper dark:bg-ink">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-24">
+      <div className="grid-lines pointer-events-none absolute inset-0 opacity-60" />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16"
         >
-          <span className="inline-block font-mono text-sm uppercase tracking-widest text-accent border-l-4 border-accent pl-4 mb-6">
-            Expertise
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-ink dark:text-paper">
-            Skills<span className="text-accent">.</span>
+          <p className="overline-chip mb-4">Expertise</p>
+          <h2 className="font-syne text-5xl font-extrabold tracking-tight text-abyss dark:text-bone sm:text-6xl">
+            Skills
           </h2>
         </motion.div>
 
@@ -226,10 +225,10 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                 <motion.button
                   key={index}
                   onClick={() => setActiveCategory(index)}
-                  className={`px-4 py-2 font-mono text-sm uppercase tracking-wider border-2 transition-all duration-300 ${
+                  className={`rounded-full px-5 py-2 font-mono text-xs uppercase tracking-[0.18em] transition-all duration-300 ${
                     activeCategory === index
-                      ? 'bg-ink dark:bg-paper text-paper dark:text-ink border-ink dark:border-paper'
-                      : 'bg-transparent text-ink dark:text-paper border-ink-200 dark:border-ink-700 hover:border-accent'
+                      ? 'bg-volt text-volt-ink shadow-glow-volt'
+                      : 'border hairline text-abyss-500 dark:text-bone-300 hover:border-volt-600 dark:hover:border-volt/60'
                   }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -245,7 +244,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="bg-ink-50 dark:bg-ink-900 border-2 border-ink dark:border-paper p-8"
+              className="panel p-8"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {skills[activeCategory].skills.map((skill, index) => (
@@ -263,8 +262,8 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
             transition={{ duration: 0.8 }}
             className="lg:col-span-4"
           >
-            <div className="bg-ink-50 dark:bg-ink-900 border-2 border-ink dark:border-paper p-6 sticky top-24">
-              <h3 className="font-mono text-xs uppercase tracking-widest text-ink-500 dark:text-ink-400 mb-4 text-center">
+            <div className="panel sticky top-24 p-6">
+              <h3 className="font-mono text-xs uppercase tracking-[0.25em] text-abyss-400 dark:text-bone-400 mb-4 text-center">
                 Top Skills Overview
               </h3>
               <SkillRadar

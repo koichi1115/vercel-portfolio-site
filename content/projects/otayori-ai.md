@@ -16,7 +16,9 @@ technologies:
   - "SQLite"
 category: "iOS Application"
 date: "2026-06-20"
-demoUrl: "https://github.com/koichi1115/otayori-ai"
+demoUrl: "https://apps.apple.com/jp/app/id6782348124"
+demoLabel: "App Store で入手"
+githubUrl: "https://github.com/koichi1115/otayori-ai"
 ---
 
 # ぷりかん！
@@ -31,6 +33,8 @@ demoUrl: "https://github.com/koichi1115/otayori-ai"
 - プリントのファイル名を手動で整理するのが大変
 
 ## コア機能
+
+> ※ Google連携（カレンダー / タスク / Drive）は実装済みですが、App Store配信のv1.0ではAppleガイドライン4.8対応のため無効化しています（今後Sign in with Apple併用で再有効化予定）。
 
 ### 1. AI自動解析
 PDFや写真を取り込むだけで、高精度AIが内容を分析。イベント（運動会、遠足）、TODO（同意書提出、申込み）、持ち物（水着、弁当）を自動で抽出・分類します。

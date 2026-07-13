@@ -22,7 +22,7 @@ export default function TermsOfServicePage() {
           </Text>
 
           <Text color="secondary" className="mb-4">
-            最終更新日: 2026年6月23日
+            最終更新日: 2026年7月2日
           </Text>
 
           <section className="mb-8">
@@ -32,8 +32,8 @@ export default function TermsOfServicePage() {
             <Text>
               本アプリは、保育園・学校・習い事等から配布されるプリント（PDF・画像ファイル）を
               AI（人工知能）で解析し、イベント・TODO・持ち物等の情報を自動抽出するiOS用
-              アプリケーションです。抽出した情報はGoogleカレンダー・Google Tasks・Google Drive
-              と連携でき、LINEへの通知機能も備えています。
+              アプリケーションです。抽出した情報は、LINEへの通知・事前リマインダー機能で
+              活用できます。
               本規約は、本アプリの利用条件を定めるものです。
               本アプリをダウンロードまたは使用された時点で、本規約に同意したものとみなします。
             </Text>
@@ -45,8 +45,7 @@ export default function TermsOfServicePage() {
             </Heading>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>iOS 17 以降を搭載した iPhone</li>
-              <li>AI解析およびGoogle・LINE連携を行うためのインターネット接続</li>
-              <li>Google連携を利用する場合はGoogleアカウント</li>
+              <li>AI解析およびLINE通知を行うためのインターネット接続</li>
               <li>LINE通知を利用する場合はLINEアカウント</li>
             </ul>
           </section>
@@ -76,32 +75,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              4. Google連携について
-            </Heading>
-            <Text className="mb-4">
-              本アプリはGoogleアカウントとの連携機能を提供します。
-              連携により以下のサービスにアクセスします。
-            </Text>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
-              <li>
-                <strong>Google Drive</strong>：スキャンしたプリントファイルの保存
-              </li>
-              <li>
-                <strong>Googleカレンダー</strong>：抽出したイベントの登録
-              </li>
-              <li>
-                <strong>Google Tasks</strong>：抽出したTODO・持ち物の登録
-              </li>
-            </ul>
-            <Text className="mt-4">
-              Google連携は任意であり、連携しなくても基本的な解析機能はご利用いただけます。
-              連携は設定画面からいつでも解除できます。
-            </Text>
-          </section>
-
-          <section className="mb-8">
-            <Heading size="h2" className="mb-4">
-              5. LINE通知について
+              4. LINE通知について
             </Heading>
             <Text>
               本アプリはLINE公式アカウントを通じた通知機能を提供します。
@@ -112,7 +86,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              6. プリントの取扱いについて
+              5. プリントの取扱いについて
             </Heading>
             <Text>
               本アプリで取り込むプリントには、お子様やご家庭に関する個人情報が含まれる
@@ -126,7 +100,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              7. 禁止事項
+              6. 禁止事項
             </Heading>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>本アプリの逆コンパイル、リバースエンジニアリング、改変</li>
@@ -138,7 +112,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              8. 免責事項
+              7. 免責事項
             </Heading>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>
@@ -146,7 +120,7 @@ export default function TermsOfServicePage() {
                 正確性、完全性、信頼性、継続性について一切保証しません。
               </li>
               <li>
-                AI解析結果の誤り、Google・LINEサービスとの連携不具合、
+                AI解析結果の誤り、LINEサービスとの連携不具合、
                 通知の遅延・未達等に起因する損害について、開発者は責任を負いません。
               </li>
               <li>
@@ -158,7 +132,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              9. サービスの変更・終了
+              8. サービスの変更・終了
             </Heading>
             <Text>
               開発者は、事前の通知なく、本アプリの機能の追加・変更・削除、
@@ -168,7 +142,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              10. 利用規約の変更
+              9. 利用規約の変更
             </Heading>
             <Text>
               本利用規約は予告なく変更される場合があります。
@@ -178,7 +152,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              11. 準拠法と管轄
+              10. 準拠法と管轄
             </Heading>
             <Text>
               本規約は日本法に準拠し、本規約に関する一切の紛争については、
@@ -188,7 +162,7 @@ export default function TermsOfServicePage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              12. お問い合わせ
+              11. お問い合わせ
             </Heading>
             <Text>
               本規約に関するご質問がございましたら、下記までお問い合わせください。

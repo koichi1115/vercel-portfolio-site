@@ -46,8 +46,8 @@ export default function PrivacyPolicyPage() {
             </Text>
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>
-                <strong>プリントファイル（PDF・画像）</strong>：ユーザーがアプリ内で選択した
-                ファイルを、AI解析およびGoogle Driveへのアップロードのために使用します。
+                <strong>プリントファイル（PDF・画像）</strong>：ユーザーがアプリ内で選択、
+                またはカメラで撮影したファイルを、AI解析のために使用します。
               </li>
               <li>
                 <strong>解析結果</strong>：AIが抽出したイベント、TODO、持ち物、要約等の
@@ -58,13 +58,8 @@ export default function PrivacyPolicyPage() {
                 クラス名・施設名等。AI解析の精度向上のために使用されます。
               </li>
               <li>
-                <strong>Googleアカウント情報</strong>：OAuth認証により取得するアクセストークン。
-                Google Drive、Googleカレンダー、Google Tasksへのアクセスに使用します。
-                パスワードは取得しません。
-              </li>
-              <li>
-                <strong>LINE ユーザーID</strong>：LINE公式アカウントとの連携により取得する
-                LINEユーザー識別子。通知送信のために使用します。
+                <strong>LINE ルームID</strong>：LINE公式アカウントを友だち追加した際に
+                取得できる識別子。ユーザーが任意で入力し、通知送信のために使用します。
               </li>
               <li>
                 <strong>リマインダー情報</strong>：TODO・持ち物の期限と通知日程。
@@ -87,20 +82,12 @@ export default function PrivacyPolicyPage() {
                 子供・施設情報、設定情報等は、端末内のSQLiteデータベースにのみ保存されます。
               </li>
               <li>
-                <strong>Google Drive</strong>：ユーザーがGoogle連携を有効にしている場合、
-                スキャンしたプリントファイルがユーザーのGoogle Driveに保存されます。
-              </li>
-              <li>
-                <strong>Googleカレンダー・Google Tasks</strong>：ユーザーの操作により、
-                抽出されたイベント・TODO・持ち物がユーザーのGoogleアカウントに登録されます。
-              </li>
-              <li>
                 <strong>開発者サーバー（Vercel + Upstash Redis）</strong>：
                 LINEリマインダー通知のために、以下の情報のみサーバーに保存されます。
                 <ul className="list-disc pl-6 mt-2 space-y-1">
-                  <li>LINE ユーザーID</li>
+                  <li>LINE ルームID</li>
                   <li>TODO・持ち物のタイトル、期限日、対象者名</li>
-                  <li>元資料の件名およびGoogle DriveファイルID</li>
+                  <li>元資料の件名</li>
                   <li>通知予定日</li>
                 </ul>
                 これらのデータは期限日の翌日に自動削除されます。
@@ -116,10 +103,6 @@ export default function PrivacyPolicyPage() {
               <li>
                 <strong>プリントファイルの解析</strong>：AIサービスに送信し、
                 イベント・TODO・持ち物・要約等を自動抽出するために利用します。
-              </li>
-              <li>
-                <strong>Google連携</strong>：抽出した情報をユーザーのカレンダー・タスク・
-                Driveに登録するために利用します。
               </li>
               <li>
                 <strong>LINE通知</strong>：解析結果の通知およびリマインダー通知を
@@ -164,24 +147,6 @@ export default function PrivacyPolicyPage() {
                 </a>
               </li>
               <li>
-                <strong>Google LLC（Drive API, Calendar API, Tasks API）</strong>
-                <br />
-                所在地: 米国カリフォルニア州マウンテンビュー
-                <br />
-                利用目的: ファイルの保存、カレンダーイベントの登録、タスクの登録
-                <br />
-                送信データ: プリントファイル、抽出されたイベント・TODO・持ち物の情報
-                <br />
-                <a
-                  href="https://policies.google.com/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                  Google Privacy Policy
-                </a>
-              </li>
-              <li>
                 <strong>LINEヤフー株式会社（LINE Messaging API）</strong>
                 <br />
                 所在地: 日本国東京都千代田区
@@ -220,10 +185,6 @@ export default function PrivacyPolicyPage() {
                 自動削除されます。
               </li>
               <li>
-                <strong>Google上のデータ</strong>：ユーザーのGoogleアカウント内に
-                保存され、ユーザー自身がGoogleの各サービスから削除できます。
-              </li>
-              <li>
                 <strong>削除方法</strong>：アプリ内の各画面から個別のデータを削除できます。
                 すべてのローカルデータを削除する場合は、本アプリをアンインストールしてください。
               </li>
@@ -237,7 +198,7 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
               <li>
                 <strong>カメラアクセス</strong>：プリントを撮影してスキャンするために
-                使用します（将来実装予定）。
+                使用します。
               </li>
               <li>
                 <strong>ファイルアクセス</strong>：端末内のPDF・画像ファイルを選択して
@@ -322,8 +283,7 @@ export default function PrivacyPolicyPage() {
             <Text>
               本アプリと外部サービスとの通信は、すべてHTTPS（TLS）により暗号化されています。
               ローカルに保存されたデータはiOSのアプリサンドボックスにより他のアプリから
-              隔離されています。Google連携にはOAuth 2.0（PKCE）を使用し、
-              パスワードを本アプリが直接取り扱うことはありません。
+              隔離されています。
             </Text>
           </section>
 
