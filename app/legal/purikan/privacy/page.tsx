@@ -22,7 +22,7 @@ export default function PrivacyPolicyPage() {
           </Text>
 
           <Text color="secondary" className="mb-4">
-            最終更新日: 2026年6月23日
+            最終更新日: 2026年7月13日
           </Text>
 
           <section className="mb-8">
@@ -248,7 +248,76 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              8. セキュリティ
+              8. Googleユーザーデータの取り扱い
+            </Heading>
+            <Text className="mb-4">
+              本アプリがGoogle APIを通じて取得するユーザーデータについて、以下のとおり
+              取り扱います。
+            </Text>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 dark:text-gray-300">
+              <li>
+                <strong>アクセスするデータ</strong>：Google Drive上のアプリ専用ファイル
+                （drive.file スコープ）、Googleカレンダーのイベント情報、Google Tasksの
+                タスク情報。アクセスは本アプリの機能提供に必要な最小限のスコープに限定されます。
+              </li>
+              <li>
+                <strong>データの使用目的</strong>：スキャンしたプリントのGoogle Driveへの保存、
+                抽出された予定のGoogleカレンダーへの登録、抽出されたTODO・持ち物のGoogle Tasksへの
+                登録のみに使用します。
+              </li>
+              <li>
+                <strong>第三者への提供</strong>：Google APIを通じて取得したユーザーデータを
+                第三者に販売、転送、または提供することはありません。
+              </li>
+              <li>
+                <strong>データの保護</strong>：Googleとの通信はすべてHTTPS（TLS）で暗号化されます。
+                OAuthアクセストークンは端末内に安全に保存され、Google APIへのアクセスにのみ使用されます。
+              </li>
+              <li>
+                <strong>データの保持と削除</strong>：Google上のデータはユーザーのGoogleアカウント内に
+                保存されます。本アプリはユーザーの指示なくGoogleアカウント上のデータを削除しません。
+                ユーザーはいつでもGoogleの各サービスからデータを削除できます。
+              </li>
+            </ul>
+            <Text className="mt-4 font-semibold">
+              Google API Limited Use Policy への準拠
+            </Text>
+            <Text className="mt-2">
+              本アプリによるGoogle Workspace APIから受信した情報の使用および他のアプリへの転送は、
+              使用制限の要件を含む{' '}
+              <a
+                href="https://developers.google.com/terms/api-services-user-data-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Google API Services User Data Policy
+              </a>
+              {' '}に準拠します。具体的に、本アプリは以下を遵守します：
+            </Text>
+            <ul className="list-disc pl-6 mt-2 space-y-2 text-gray-700 dark:text-gray-300">
+              <li>
+                Googleユーザーデータは、ユーザー向けの機能の提供・改善以外の目的で使用しません。
+              </li>
+              <li>
+                Googleユーザーデータを広告配信、ターゲティング、または融資判断に使用しません。
+              </li>
+              <li>
+                Googleユーザーデータをデータブローカーや広告主を含む第三者に販売・転送しません。
+              </li>
+              <li>
+                Googleユーザーデータを、特定ユーザー向けのパーソナライズされたモデルを超えて、
+                AI/MLモデルの開発・改善・訓練に使用しません。
+              </li>
+              <li>
+                Googleユーザーデータを、AI/MLモデルの訓練に使用する第三者サービスに転送しません。
+              </li>
+            </ul>
+          </section>
+
+          <section className="mb-8">
+            <Heading size="h2" className="mb-4">
+              9. セキュリティ
             </Heading>
             <Text>
               本アプリと外部サービスとの通信は、すべてHTTPS（TLS）により暗号化されています。
@@ -260,7 +329,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              9. お子様のプライバシー
+              10. お子様のプライバシー
             </Heading>
             <Text>
               本アプリは保護者向けのサービスであり、13歳未満のお子様が直接利用することを
@@ -271,7 +340,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              10. プライバシーポリシーの変更
+              11. プライバシーポリシーの変更
             </Heading>
             <Text>
               本プライバシーポリシーは予告なく変更される場合があります。
@@ -281,7 +350,7 @@ export default function PrivacyPolicyPage() {
 
           <section className="mb-8">
             <Heading size="h2" className="mb-4">
-              11. お問い合わせ
+              12. お問い合わせ
             </Heading>
             <Text>
               プライバシーに関するご質問やご懸念がございましたら、
