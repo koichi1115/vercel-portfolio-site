@@ -4,12 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/profile", label: "Profile" },
-  { href: "/projects", label: "Projects" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/diaries", label: "Diaries" },
-  { href: "/contact", label: "Contact" },
+  { href: "/projects", label: "作品" },
+  { href: "/profile", label: "プロフィール" },
+  { href: "/diaries", label: "日記" },
+  { href: "/contact", label: "問い合わせ" },
 ];
 
 const social = [
