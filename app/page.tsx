@@ -18,6 +18,8 @@ export default async function Home() {
         technologies: p.technologies,
         category: p.category,
         date: p.date,
+        demoUrl: p.demoUrl,
+        demoLabel: p.demoLabel,
       }))}
       diaries={diaries.slice(0, 3).map((d) => ({
         slug: d.slug,
@@ -26,13 +28,16 @@ export default async function Home() {
         excerpt: d.excerpt,
         tags: d.tags,
       }))}
-      reviews={reviews.slice(0, 4).map((r) => ({
-        slug: r.slug,
-        title: r.title,
-        category: r.category,
-        rating: r.rating,
-        thumbnail: r.thumbnail,
-      }))}
+      reviews={reviews
+        .filter((r) => r.title !== "工事中")
+        .slice(0, 4)
+        .map((r) => ({
+          slug: r.slug,
+          title: r.title,
+          category: r.category,
+          rating: r.rating,
+          thumbnail: r.thumbnail,
+        }))}
     />
   );
 }
