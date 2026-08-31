@@ -7,12 +7,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "Profile", path: "/profile" },
-  { name: "Projects", path: "/projects" },
-  { name: "Reviews", path: "/reviews" },
-  { name: "Diaries", path: "/diaries" },
-  { name: "Contact", path: "/contact" },
+  { name: "作品", path: "/projects" },
+  { name: "プロフィール", path: "/profile" },
+  { name: "日記", path: "/diaries" },
+  { name: "問い合わせ", path: "/contact" },
 ];
 
 export default function Header() {
