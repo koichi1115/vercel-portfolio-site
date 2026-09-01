@@ -57,7 +57,7 @@ export default function Header() {
               className="group flex items-baseline gap-1 font-syne text-xl font-extrabold tracking-tight text-abyss dark:text-bone"
               aria-label="Home"
             >
-              KOICHI
+              SAI
               <span className="inline-block h-2 w-2 rounded-full bg-volt transition-transform duration-300 group-hover:scale-150" />
             </Link>
 

@@ -27,7 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Koichi — DX Strategist & Engineer",
+  title: "Sai — DX Strategist & Engineer",
   description:
     "技術とビジネスの両面から本質的な価値創造に取り組むDXストラテジスト/エンジニアのポートフォリオ。開発実績、日記、レビューを掲載。",
 };

@@ -5,7 +5,7 @@ import { Footer } from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Reviews | Koichi — DX Strategist & Engineer',
+  title: 'Reviews | Sai — DX Strategist & Engineer',
   description: 'Reviews of music, movies, manga, and books',
 };
 

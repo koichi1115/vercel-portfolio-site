@@ -50,7 +50,7 @@ public/images/profile/avatar.jpg
 **ステップ2**: `content/profile.md` を編集
 ```markdown
 ---
-name: "koichi"
+name: "Sai"
 title: "DX企画職"
 bio: "..."
 avatar: "/images/profile/avatar.jpg"  # この行を追加・有効化

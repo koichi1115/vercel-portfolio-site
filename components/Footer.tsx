@@ -135,7 +135,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col gap-4 border-t hairline pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-mono text-[11px] tracking-widest text-abyss-400 dark:text-bone-400">
-            © {currentYear} KOICHI — Crafted with Next.js × Three.js
+            © {currentYear} SAI — Crafted with Next.js × Three.js
           </p>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

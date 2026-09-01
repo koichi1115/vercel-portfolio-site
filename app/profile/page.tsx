@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Profile | Koichi — DX Strategist & Engineer',
+  title: 'Profile | Sai — DX Strategist & Engineer',
   description: 'Professional profile, career history, and technical skills',
 };
 

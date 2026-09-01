@@ -63,7 +63,7 @@ export function Hero({ featured }: HeroProps) {
               transition={{ duration: 0.7, delay: 0.08, ease: easeExpo }}
               className="mb-5 font-mono text-xs uppercase tracking-[0.3em] text-abyss-500 dark:text-bone-300"
             >
-              Koichi<span className="text-volt-600 dark:text-volt"> ✦ </span>DX
+              Sai<span className="text-volt-600 dark:text-volt"> ✦ </span>DX
               Strategist &amp; Engineer
             </motion.p>
 
