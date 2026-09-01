@@ -13,7 +13,7 @@ const navigation = [
 const social = [
   {
     name: "GitHub",
-    href: "https://github.com/koichi1115",
+    href: "https://github.com/ko1115productjp-hub",
     icon: (
       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
         <path

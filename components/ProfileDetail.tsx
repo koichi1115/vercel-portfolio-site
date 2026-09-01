@@ -90,7 +90,7 @@ export function ProfileDetail({ profile }: ProfileDetailProps) {
 
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://github.com/koichi1115"
+                href="https://github.com/ko1115productjp-hub"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-volt px-7 py-3.5 text-sm"
