@@ -1,119 +1,136 @@
 import { NextResponse } from 'next/server';
+import {
+  DEFAULT_FROM_ADDRESS,
+  renderHtml,
+  renderSubject,
+  renderText,
+  type ContactSubmission,
+} from '@/lib/contact/email';
+import { checkRateLimit, clientKeyFromRequest } from '@/lib/contact/rate-limit';
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  company?: string;
-  subject: string;
-  message: string;
+const MAX_LENGTHS = {
+  name: 100,
+  email: 254,
+  company: 100,
+  subject: 50,
+  message: 5000,
+} as const;
+
+// Deliberately strict: rejects anything that could smuggle a mail header or a
+// second address into reply_to.
+const EMAIL_PATTERN = /^[^\s@<>"',;]+@[^\s@<>"',;]+\.[^\s@<>"',;]{2,}$/;
+
+interface MailConfig {
+  apiKey: string;
+  toEmail: string;
+  fromAddress: string;
 }
 
-const subjectLabels: Record<string, string> = {
-  consulting: 'AI導入コンサルティング',
-  development: '開発のご依頼',
-  collaboration: 'コラボレーション',
-  interview: '取材・登壇依頼',
-  other: 'その他',
-};
+function readMailConfig(): { config: MailConfig } | { missing: string[] } {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const toEmail = process.env.CONTACT_EMAIL?.trim();
+
+  if (!apiKey || !toEmail) {
+    const missing: string[] = [];
+    if (!apiKey) missing.push('RESEND_API_KEY');
+    if (!toEmail) missing.push('CONTACT_EMAIL');
+    return { missing };
+  }
+
+  return {
+    config: {
+      apiKey,
+      toEmail,
+      fromAddress: process.env.CONTACT_FROM_EMAIL?.trim() || DEFAULT_FROM_ADDRESS,
+    },
+  };
+}
+
+function parseSubmission(body: unknown): ContactSubmission | null {
+  if (typeof body !== 'object' || body === null) return null;
+  const raw = body as Record<string, unknown>;
+
+  const field = (key: keyof typeof MAX_LENGTHS): string | null => {
+    const value = raw[key];
+    if (value === undefined || value === null) return '';
+    if (typeof value !== 'string') return null;
+    const trimmed = value.trim();
+    return trimmed.length > MAX_LENGTHS[key] ? null : trimmed;
+  };
+
+  const name = field('name');
+  const email = field('email');
+  const company = field('company');
+  const subject = field('subject');
+  const message = field('message');
+
+  if (name === null || email === null || company === null || subject === null || message === null) {
+    return null;
+  }
+  if (!name || !email || !subject || !message) return null;
+  if (!EMAIL_PATTERN.test(email)) return null;
+
+  return { name, email, company: company || undefined, subject, message };
+}
 
 export async function POST(request: Request) {
-  try {
-    const data: ContactFormData = await request.json();
+  // Rate limit first: it must also cover malformed and unauthenticated traffic.
+  const limit = checkRateLimit(clientKeyFromRequest(request));
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: '送信回数の上限に達しました。しばらく時間をおいて再度お試しください' },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfterSeconds) } }
+    );
+  }
 
-    // Validate required fields
-    if (!data.name || !data.email || !data.subject || !data.message) {
+  try {
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json({ error: 'リクエストの形式が不正です' }, { status: 400 });
+    }
+
+    const submission = parseSubmission(body);
+    if (!submission) {
+      return NextResponse.json({ error: '必須項目を正しく入力してください' }, { status: 400 });
+    }
+
+    const mail = readMailConfig();
+    if ('missing' in mail) {
+      // Never report success when we cannot actually deliver the message.
+      console.error('Contact form is not configured. Missing env:', mail.missing.join(', '));
       return NextResponse.json(
-        { error: '必須項目を入力してください' },
-        { status: 400 }
+        { error: 'お問い合わせ機能が利用できません。時間をおいて再度お試しください' },
+        { status: 503 }
       );
     }
 
-    // Check if Resend API key is configured
-    const resendApiKey = process.env.RESEND_API_KEY;
-    const toEmail = process.env.CONTACT_EMAIL || 'ko1115.product.jp@gmail.com';
-
-    if (!resendApiKey) {
-      // Development mode: log to console
-      console.log('=== Contact Form Submission ===');
-      console.log('Name:', data.name);
-      console.log('Email:', data.email);
-      console.log('Company:', data.company || 'N/A');
-      console.log('Subject:', subjectLabels[data.subject] || data.subject);
-      console.log('Message:', data.message);
-      console.log('==============================');
-
-      return NextResponse.json({ success: true, mode: 'development' });
-    }
-
-    // Send email via Resend
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${resendApiKey}`,
+        'Authorization': `Bearer ${mail.config.apiKey}`,
       },
       body: JSON.stringify({
-        from: 'Portfolio Contact <onboarding@resend.dev>',
-        to: [toEmail],
-        reply_to: data.email,
-        subject: `[お問い合わせ] ${subjectLabels[data.subject] || data.subject} - ${data.name}様`,
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #1a1a1a; border-bottom: 2px solid #FF4500; padding-bottom: 10px;">
-              新しいお問い合わせ
-            </h2>
-
-            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; width: 120px;">お名前</td>
-                <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.name}</td>
-              </tr>
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">メール</td>
-                <td style="padding: 10px; border-bottom: 1px solid #eee;">
-                  <a href="mailto:${data.email}">${data.email}</a>
-                </td>
-              </tr>
-              ${data.company ? `
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">会社名</td>
-                <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.company}</td>
-              </tr>
-              ` : ''}
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">種別</td>
-                <td style="padding: 10px; border-bottom: 1px solid #eee;">${subjectLabels[data.subject] || data.subject}</td>
-              </tr>
-            </table>
-
-            <div style="background: #f9f9f9; padding: 20px; margin: 20px 0;">
-              <h3 style="margin-top: 0; color: #333;">お問い合わせ内容</h3>
-              <p style="white-space: pre-wrap; line-height: 1.6;">${data.message}</p>
-            </div>
-
-            <p style="color: #666; font-size: 12px;">
-              このメールはポートフォリオサイトのお問い合わせフォームから送信されました。
-            </p>
-          </div>
-        `,
+        from: mail.config.fromAddress,
+        to: [mail.config.toEmail],
+        reply_to: submission.email,
+        subject: renderSubject(submission),
+        html: renderHtml(submission),
+        text: renderText(submission),
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Resend API error:', errorData);
-      return NextResponse.json(
-        { error: 'メール送信に失敗しました' },
-        { status: 500 }
-      );
+      const errorData = await response.text().catch(() => '');
+      console.error('Resend API error:', response.status, errorData);
+      return NextResponse.json({ error: 'メール送信に失敗しました' }, { status: 502 });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, remaining: limit.remaining });
   } catch (error) {
     console.error('Contact form error:', error);
-    return NextResponse.json(
-      { error: 'サーバーエラーが発生しました' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }
