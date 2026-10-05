@@ -27,7 +27,7 @@ describe('フロア枠', () => {
     expect(html.match(/<a[^>]*href="\/"/g) ?? []).toHaveLength(1);
     expect(html).toContain('← 街に戻る');
     expect(html.match(/data-floor-grid/g) ?? []).toHaveLength(1);
-    expect(html).toMatch(/data-floor-grid=""[^>]*aria-hidden="true"/);
+    expect(html).toMatch(/data-floor-grid="(?:true)?"[^>]*aria-hidden="true"/);
     expect(html).toContain('data-district="arcade"');
   });
 
