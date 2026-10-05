@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import urawa from '@/data/town/urawa.json';
 import { parseTownConfig } from '@/lib/town/schema';
 import {
+  centroid,
   minRenderedPx,
+  quadrantOf,
   readingOrder,
   rectsIntersect,
   toPercentBox,
@@ -57,5 +59,20 @@ describe('urawa.json の当たり判定', () => {
       expect(r.x >= 0 && r.y >= 0, id).toBe(true);
       expect(r.x + r.w <= town.viewBox.w && r.y + r.h <= town.viewBox.h, id).toBe(true);
     }
+  });
+});
+
+describe('p2 構図（中央駅と四周区画）', () => {
+  it('駅の屋根がどの区画とも交差しない', () => {
+    for (const b of town.buildings) {
+      expect(rectsIntersect(town.station.roof, b.bounds), b.id).toBe(false);
+    }
+  });
+
+  it('4区画の重心が駅中心の四象限に1つずつ', () => {
+    const center = centroid(town.station.roof);
+    const quads = town.buildings.map((b) => quadrantOf(centroid(b.bounds), center));
+    expect(new Set(quads).size).toBe(4);
+    expect(quads.sort()).toEqual(['ne', 'nw', 'se', 'sw']);
   });
 });
