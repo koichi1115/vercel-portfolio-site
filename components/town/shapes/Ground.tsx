@@ -1,21 +1,21 @@
 /**
  * 斜め見下ろしの菱形タイル地面と、区画ごとの台座。
- * pattern の パターン参照 参照は機械検査で禁じているため、菱形を並べて敷く。
+ * SVG pattern 参照は機械検査で禁じているため、菱形を並べて敷く。
  */
 import type { Building, TownConfig } from '@/lib/town/schema';
-import { diamondCell, lotPlate } from '@/lib/town/geometry';
+import { diamondCell, lotPlate, tileGrassKey } from '@/lib/town/geometry';
 import { TOWN_PALETTE } from '@/lib/town/palette';
 import { LINE } from './common';
 
 type Props = { config: TownConfig; buildings: Building[] };
 
 function TileField({ viewBox, tile }: { viewBox: TownConfig['viewBox']; tile: TownConfig['tile'] }) {
-  const [main] = diamondCell(tile);
+  const main = diamondCell(tile);
   const cells: { x: number; y: number; fill: string }[] = [];
-  for (let y = 0; y < viewBox.h; y += tile.h) {
-    for (let x = 0; x < viewBox.w; x += tile.w) {
-      const odd = ((x / tile.w) + (y / tile.h)) % 2 === 0;
-      cells.push({ x, y, fill: odd ? TOWN_PALETTE.tile.grassA : TOWN_PALETTE.tile.grassB });
+  for (let y = 0, row = 0; y < viewBox.h; y += tile.h, row += 1) {
+    for (let x = 0, col = 0; x < viewBox.w; x += tile.w, col += 1) {
+      const key = tileGrassKey(col, row);
+      cells.push({ x, y, fill: TOWN_PALETTE.tile[key] });
     }
   }
   return (

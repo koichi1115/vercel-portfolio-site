@@ -19,18 +19,16 @@ function parsePoints(points: string): { x: number; y: number }[] {
 }
 
 describe('diamondCell', () => {
-  it('菱形2枚の points を返し、すべて tile の範囲内', () => {
-    const cells = diamondCell(TILE);
-    expect(cells).toHaveLength(2);
-    for (const points of cells) {
-      for (const p of parsePoints(points)) {
-        expect(p.x).toBeGreaterThanOrEqual(0);
-        expect(p.x).toBeLessThanOrEqual(TILE.w);
-        expect(p.y).toBeGreaterThanOrEqual(0);
-        expect(p.y).toBeLessThanOrEqual(TILE.h);
-      }
-      expect(parsePoints(points)).toHaveLength(4);
+  it('菱形1枚の points を返し、すべて tile の範囲内', () => {
+    const points = diamondCell(TILE);
+    expect(typeof points).toBe('string');
+    for (const p of parsePoints(points)) {
+      expect(p.x).toBeGreaterThanOrEqual(0);
+      expect(p.x).toBeLessThanOrEqual(TILE.w);
+      expect(p.y).toBeGreaterThanOrEqual(0);
+      expect(p.y).toBeLessThanOrEqual(TILE.h);
     }
+    expect(parsePoints(points)).toHaveLength(4);
   });
 });
 

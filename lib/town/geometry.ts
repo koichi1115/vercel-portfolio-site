@@ -38,13 +38,19 @@ export function readingOrder(buildings: Building[]): string[] {
     .map((b) => b.id);
 }
 
-/** pattern 1タイル分の菱形2枚（主タイルと半ずらし）の points 文字列 */
-export function diamondCell(tile: ViewBox): [string, string] {
+/** 1タイル分の菱形（points 文字列）。地面はこれを並べて敷く */
+export function diamondCell(tile: ViewBox): string {
   const { w, h } = tile;
-  const main = `${w / 2},0 ${w},${h / 2} ${w / 2},${h} 0,${h / 2}`;
-  // 半タイルずらした菱形を、タイル矩形の右下に収まるよう切り出した形
-  const shifted = `${w / 2},${h / 2} ${w},${h / 2} ${w},${h} ${w / 2},${h}`;
-  return [main, shifted];
+  return `${w / 2},0 ${w},${h / 2} ${w / 2},${h} 0,${h / 2}`;
+}
+
+/**
+ * 市松の偶奇。列+行が偶数なら grassA、奇数なら grassB。
+ * （見た目は従来どおり。変数名の誤りの是正用）
+ */
+export function tileGrassKey(col: number, row: number): 'grassA' | 'grassB' {
+  const even = (col + row) % 2 === 0;
+  return even ? 'grassA' : 'grassB';
 }
 
 /** 区画の足元の台座（わずかに斜めの平行四辺形） */
