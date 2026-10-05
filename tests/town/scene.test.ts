@@ -1,17 +1,16 @@
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
-import { createElement } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import urawa from '@/data/town/urawa.json';
-import { parseTownConfig } from '@/lib/town/schema';
-import { TownScene } from '@/components/town/TownScene';
+import { parseTownConfig, type TownConfig } from '@/lib/town/schema';
+import { EMPTY_DEVELOPMENT } from '@/lib/town/development';
 import { REPO_ROOT, readRepoFile } from './helpers/read-file';
+import { renderScene } from './helpers/render-scene';
 
 const town = parseTownConfig(urawa);
 
-function render(): string {
-  return renderToStaticMarkup(createElement(TownScene, { config: town }));
+function withMode(mode: TownConfig['settings']['clickMode']): TownConfig {
+  return { ...town, settings: { ...town.settings, clickMode: mode } };
 }
 
 function listTsx(dir: string): string[] {
@@ -22,42 +21,62 @@ function listTsx(dir: string): string[] {
   });
 }
 
-describe('街の絵（TownScene）', () => {
-  it('建物の数だけ <a href> があり、行き先は JSON の href と同じ順', () => {
-    const hrefs = [...render().matchAll(/<a [^>]*href="([^"]+)"/g)].map((m) => m[1]);
-    expect(hrefs).toEqual(town.buildings.map((b) => b.href));
+describe('TownScene 未発展（初期描画）', () => {
+  it('区画の <a href> は0、<button type="button"> が4で aria-expanded=false', () => {
+    const html = renderScene(town);
+    expect(html.match(/<a [^>]*href="/g) ?? []).toHaveLength(0);
+    const buttons = html.match(/<button type="button"[^>]*>/g) ?? [];
+    expect(buttons).toHaveLength(4);
+    for (const b of buttons) expect(b).toContain('aria-expanded="false"');
   });
 
-  it('各リンクの中にメニュー名が実テキストで入る', () => {
-    const anchors = [...render().matchAll(/<a [^>]*>([\s\S]*?)<\/a>/g)].map((m) => m[1]);
-    town.buildings.forEach((b, i) => expect(anchors[i]).toContain(b.label));
+  it('各 button に label と data-building、集合は id と一致', () => {
+    const html = renderScene(town);
+    const ids = [...html.matchAll(/data-building="([^"]+)"/g)].map((m) => m[1]).sort();
+    expect(ids).toEqual([...town.buildings.map((b) => b.id)].sort());
+    for (const b of town.buildings) expect(html).toContain(`>${b.label}<`);
   });
 
-  it('svg は1枚だけで aria-hidden', () => {
-    const svgs = render().match(/<svg[^>]*>/g) ?? [];
+  it('駅は svg 内に1回だけで、data-building="station" は無い', () => {
+    const html = renderScene(town);
+    expect(html.match(/data-kind="station"/g) ?? []).toHaveLength(1);
+    expect(html).not.toContain('data-building="station"');
+    const svgs = html.match(/<svg[^>]*>/g) ?? [];
     expect(svgs).toHaveLength(1);
     expect(svgs[0]).toContain('aria-hidden="true"');
+    expect(html.match(/<pattern[^>]*>/g) ?? []).toHaveLength(1);
   });
+});
 
-  it('画像を参照しない', () => {
-    expect(render()).not.toMatch(/<image|<img|\/images\//);
+describe('TownScene 全発展', () => {
+  it('<a href> が JSON と同順で label・detail・enterLabel を含む', () => {
+    const developed = { developed: town.buildings.map((b) => b.id) };
+    const html = renderScene(town, developed);
+    const hrefs = [...html.matchAll(/<a [^>]*href="([^"]+)"/g)].map((m) => m[1]);
+    expect(hrefs).toEqual(town.buildings.map((b) => b.href));
+    for (const b of town.buildings) {
+      expect(html).toContain(b.label);
+      expect(html).toContain(b.detail);
+    }
+    expect(html).toContain(town.settings.enterLabel);
+    expect(html.match(/data-stage="developed"/g)?.length).toBe(4);
   });
+});
 
-  it('全建物の種類の絵を描く（kind ごとに data-kind が出る）', () => {
-    const html = render();
-    for (const b of town.buildings) expect(html).toContain(`data-kind="${b.kind}"`);
-    expect(html).toContain('data-kind="station"');
+describe('TownScene direct モード', () => {
+  it('最初から a が4・button 0・detail 無し', () => {
+    const html = renderScene(withMode('direct'), EMPTY_DEVELOPMENT);
+    expect(html.match(/<a [^>]*href="/g) ?? []).toHaveLength(4);
+    expect(html.match(/<button /g) ?? []).toHaveLength(0);
+    for (const b of town.buildings) expect(html).not.toContain(b.detail);
   });
+});
 
-  it('線は vector-effect="non-scaling-stroke" で幅2', () => {
-    const html = render();
-    expect(html).toContain('vector-effect="non-scaling-stroke"');
-    expect(html).toMatch(/stroke-width="2"/);
-  });
-
-  it('components/town/**/*.tsx に色の hex を直書きしない', () => {
-    const files = listTsx('components/town');
-    expect(files.length).toBeGreaterThan(0);
-    for (const f of files) expect(readRepoFile(f), f).not.toMatch(/#[0-9a-fA-F]{3,6}\b/);
+describe('TownScene 共通制約', () => {
+  it('画像参照なし、tsx に hex 直書きなし', () => {
+    expect(renderScene(town)).not.toMatch(/<image|<img|\/images\//);
+    for (const f of listTsx('components/town')) {
+      expect(readRepoFile(f), f).not.toMatch(/#[0-9a-fA-F]{3,6}\b/);
+    }
   });
 });

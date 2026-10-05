@@ -1,43 +1,22 @@
-/**
- * 映画館: 縦長の箱、三角屋根、張り出した看板（電球つき）。
- */
 import { TOWN_PALETTE } from '@/lib/town/palette';
-import { LINE, SignLight, fillOf, type ShapeProps } from './common';
+import { IsoBox, LINE, SignLight, fillOf, type ShapeProps } from './common';
 
-function Marquee({ x, y, w }: { x: number; y: number; w: number }) {
-  const bulbs = Array.from({ length: 6 }, (_, i) => x + 12 + (i * (w - 24)) / 5);
-  return (
-    <g>
-      <rect x={x} y={y} width={w} height={30} rx={4} fill={TOWN_PALETTE.window} {...LINE} />
-      {bulbs.map((bx) => (
-        <circle key={bx} cx={bx} cy={y + 15} r={3} fill={TOWN_PALETTE.buildings.cinema} {...LINE} />
-      ))}
-    </g>
-  );
-}
-
-function FilmPoster({ x, y }: { x: number; y: number }) {
-  return (
-    <g>
-      <rect x={x} y={y} width={26} height={36} fill={TOWN_PALETTE.window} {...LINE} />
-      <path d={`M${x + 9} ${y + 11} L${x + 19} ${y + 18} L${x + 9} ${y + 25} Z`} fill={TOWN_PALETTE.outline} />
-    </g>
-  );
-}
-
+/** 発展後の映画館: 縦長＋三角屋根＋張り出し看板＋別棟 */
 export function Cinema({ bounds, color }: ShapeProps) {
   const { x, y, w, h } = bounds;
-  const bodyX = x + 14;
-  const bodyW = w - 28;
-  const roof = `M${bodyX - 4} ${y + 52} L${x + w / 2} ${y + 22} L${bodyX + bodyW + 4} ${y + 52} Z`;
+  const fill = fillOf(color);
+  const bx = x + 24;
+  const by = y + 55;
+  const bw = w - 48;
+  const roof = `${bx - 4},${by} ${x + w / 2},${by - 24} ${bx + bw + 4},${by}`;
   return (
     <g data-kind="cinema">
-      <rect x={bodyX} y={y + 52} width={bodyW} height={h - 56} fill={fillOf(color)} {...LINE} />
-      <path d={roof} fill={fillOf(color)} {...LINE} />
-      <Marquee x={x + 2} y={y + 64} w={w - 4} />
-      <FilmPoster x={bodyX + 8} y={y + 106} />
-      <rect x={bodyX + bodyW - 34} y={y + h - 46} width={26} height={42} fill={TOWN_PALETTE.window} {...LINE} />
-      <SignLight cx={x + w / 2} cy={y + 40} />
+      <IsoBox x={bx} y={by} w={bw} h={h * 0.48} depth={9} fill={fill} />
+      <polygon points={roof} fill={fill} {...LINE} />
+      <rect x={x + 8} y={by + 14} width={w - 16} height={26} rx={3} fill={TOWN_PALETTE.window} {...LINE} />
+      <rect x={bx + 8} y={by + 52} width={22} height={30} fill={TOWN_PALETTE.window} {...LINE} />
+      <IsoBox x={x + w - 40} y={y + h - 58} w={24} h={28} depth={5} fill={fill} />
+      <SignLight cx={x + w / 2} cy={by - 10} />
     </g>
   );
 }

@@ -1,5 +1,5 @@
 /**
- * トップの街メニュー。データ（config）→ 絵（TownScene）→ 逃げ道のリンク一覧（TownLinkList）。
+ * トップの街メニュー。データ → 絵 → 逃げ道のリンク一覧。
  */
 import type { TownConfig } from '@/lib/town/schema';
 import { TownLinkList } from './TownLinkList';
@@ -18,6 +18,7 @@ export function Town({ config, signFontClassName }: Props) {
       <p className="mt-3 text-center text-xs opacity-70">
         浦和駅周辺のイメージ（{config.terrainNote}）
       </p>
+      <p className="mt-1 text-center text-xs opacity-70">{config.settings.hint}</p>
       <TownLinkList buildings={config.buildings} extraLinks={config.extraLinks} />
     </section>
   );

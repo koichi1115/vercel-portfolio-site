@@ -1,30 +1,26 @@
+'use client';
+
 /**
- * 街の絵。aria-hidden の SVG 1枚に建物を描き、その上に建物ごとのリンクを重ねる。
- * 建物の割当・座標・ラベルはすべて config（data/town/*.json）から来る。ここには持たない。
+ * 街の絵（クライアント）。初回は必ず未発展で描き、sessionStorage の復元はマウント後。
  */
-import type { CSSProperties, ComponentType } from 'react';
-import Link from 'next/link';
-import type { Building, BuildingKind, TownConfig } from '@/lib/town/schema';
-import { toPercentBox } from '@/lib/town/geometry';
+import type { CSSProperties } from 'react';
+import { useMemo } from 'react';
+import type { DevelopmentState } from '@/lib/town/development';
+import { stageOf } from '@/lib/town/development';
+import type { TownConfig } from '@/lib/town/schema';
 import { TOWN_PALETTE } from '@/lib/town/palette';
-import { Arcade } from './shapes/Arcade';
-import { Backdrop } from './shapes/Backdrop';
-import { Cinema } from './shapes/Cinema';
-import { HomePark } from './shapes/HomePark';
-import { Livehouse } from './shapes/Livehouse';
+import { BuildingLot } from './BuildingLot';
+import { useDevelopment } from './useDevelopment';
+import { Ground } from './shapes/Ground';
 import { Station } from './shapes/Station';
-import type { ShapeProps } from './shapes/common';
+import { LOOKS } from './shapes/looks';
 import styles from './town.module.css';
 
-/** 建物の種類 → 絵。どの建物をどのメニューにするかは JSON 側で決める */
-const SHAPES: Record<BuildingKind, ComponentType<ShapeProps>> = {
-  arcade: Arcade,
-  'home-park': HomePark,
-  cinema: Cinema,
-  livehouse: Livehouse,
+type Props = {
+  config: TownConfig;
+  signFontClassName?: string;
+  initialDevelopment?: DevelopmentState;
 };
-
-type Props = { config: TownConfig; signFontClassName?: string };
 
 function sceneStyle(config: TownConfig): CSSProperties {
   return {
@@ -36,35 +32,44 @@ function sceneStyle(config: TownConfig): CSSProperties {
   } as CSSProperties;
 }
 
-function TownDrawing({ config }: { config: TownConfig }) {
-  const { viewBox, station, buildings } = config;
+function TownDrawing({
+  config, state, fresh,
+}: { config: TownConfig; state: DevelopmentState; fresh: string | null }) {
   return (
-    <svg className={styles.svg} viewBox={`0 0 ${viewBox.w} ${viewBox.h}`} aria-hidden="true" focusable="false">
-      <Backdrop viewBox={viewBox} horizonY={station.railY + 10} buildings={buildings} />
-      <Station station={station} width={viewBox.w} />
-      {buildings.map((b) => {
-        const Shape = SHAPES[b.kind];
-        return <Shape key={b.id} bounds={b.bounds} color={b.color} />;
+    <svg className={styles.svg} viewBox={`0 0 ${config.viewBox.w} ${config.viewBox.h}`} aria-hidden="true" focusable="false">
+      <Ground config={config} buildings={config.buildings} />
+      <Station station={config.station} width={config.viewBox.w} />
+      {config.buildings.map((b) => {
+        const stage = stageOf(state, b.id);
+        const Shape = LOOKS[b.look[stage]];
+        return (
+          <g key={b.id} className={fresh === b.id ? styles.grow : undefined}>
+            <Shape bounds={b.bounds} color={b.color} />
+          </g>
+        );
       })}
     </svg>
   );
 }
 
-function BuildingLink({ building, index, config, fontClass }: { building: Building; index: number; config: TownConfig; fontClass: string }) {
-  const style = { ...toPercentBox(building.bounds, config.viewBox), '--town-delay': `${index * 90}ms` } as CSSProperties;
-  return (
-    <Link href={building.href} className={styles.building} style={style} data-building={building.id}>
-      <span className={`${styles.pill} ${fontClass}`}>{building.label}</span>
-    </Link>
-  );
-}
+export function TownScene({ config, signFontClassName = '', initialDevelopment }: Props) {
+  const ids = useMemo(() => config.buildings.map((b) => b.id), [config.buildings]);
+  const { state, fresh, developBuilding } = useDevelopment(ids, initialDevelopment);
 
-export function TownScene({ config, signFontClassName = '' }: Props) {
   return (
     <div className={styles.scene} style={sceneStyle(config)}>
-      <TownDrawing config={config} />
-      {config.buildings.map((b, i) => (
-        <BuildingLink key={b.id} building={b} index={i} config={config} fontClass={signFontClassName} />
+      <TownDrawing config={config} state={state} fresh={fresh} />
+      {config.buildings.map((b) => (
+        <BuildingLot
+          key={b.id}
+          building={b}
+          stage={stageOf(state, b.id)}
+          settings={config.settings}
+          viewBox={config.viewBox}
+          fresh={fresh === b.id}
+          fontClass={signFontClassName}
+          onDevelop={developBuilding}
+        />
       ))}
     </div>
   );
