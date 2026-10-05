@@ -72,3 +72,62 @@ describe('parseTownConfig', () => {
     expect(() => parseTownConfig(input)).toThrow(TownConfigError);
   });
 });
+
+describe('p2 の settings / detail / look / tile', () => {
+  it('同梱 JSON の clickMode は develop-then-enter', () => {
+    const town = parseTownConfig(urawa);
+    expect(town.settings.clickMode).toBe('develop-then-enter');
+    expect(town.settings.enterLabel).toBe('入る');
+    expect(town.settings.hint.length).toBeGreaterThan(0);
+    expect(town.tile.w).toBeGreaterThan(0);
+    expect(town.tile.h).toBeGreaterThan(0);
+  });
+
+  it('各 kind がちょうど1回ずつ現れ、look と detail がある', () => {
+    const town = parseTownConfig(urawa);
+    const kinds = town.buildings.map((b) => b.kind).sort();
+    expect(kinds).toEqual(['arcade', 'cinema', 'home-park', 'livehouse']);
+    for (const b of town.buildings) {
+      expect(b.detail.length).toBeGreaterThanOrEqual(1);
+      expect(b.detail.length).toBeLessThanOrEqual(40);
+      expect(b.look.undeveloped).toMatch(/-small$/);
+      expect(b.look.developed).not.toMatch(/-small$/);
+    }
+  });
+
+  it('未知の clickMode を拒否する', () => {
+    const input = clone();
+    (input.settings as Record<string, unknown>).clickMode = 'teleport';
+    expect(() => parseTownConfig(input)).toThrow(/clickMode/);
+  });
+
+  it('空の enterLabel を拒否する', () => {
+    const input = clone();
+    (input.settings as Record<string, unknown>).enterLabel = ' ';
+    expect(() => parseTownConfig(input)).toThrow(TownConfigError);
+  });
+
+  it('detail が無い／41文字以上／改行入りを拒否する', () => {
+    const noDetail = clone();
+    delete buildingsOf(noDetail)[0].detail;
+    expect(() => parseTownConfig(noDetail)).toThrow(TownConfigError);
+    const long = clone();
+    buildingsOf(long)[0].detail = 'あ'.repeat(41);
+    expect(() => parseTownConfig(long)).toThrow(TownConfigError);
+    const nl = clone();
+    buildingsOf(nl)[0].detail = '一行目\n二行目';
+    expect(() => parseTownConfig(nl)).toThrow(TownConfigError);
+  });
+
+  it('未知の look キーを拒否する', () => {
+    const input = clone();
+    (buildingsOf(input)[0].look as Record<string, string>).undeveloped = 'castle-small';
+    expect(() => parseTownConfig(input)).toThrow(/look/);
+  });
+
+  it('tile の欠落を拒否する', () => {
+    const input = clone();
+    delete input.tile;
+    expect(() => parseTownConfig(input)).toThrow(/tile/);
+  });
+});

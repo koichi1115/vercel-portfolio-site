@@ -18,12 +18,32 @@ export type ClickMode = (typeof CLICK_MODES)[number];
 /** 区画の発展段階は2つだけ */
 export type Stage = 'undeveloped' | 'developed';
 
+export const LOOK_KEYS = [
+  'arcade',
+  'arcade-small',
+  'home-park',
+  'home-park-small',
+  'cinema',
+  'cinema-small',
+  'livehouse',
+  'livehouse-small',
+] as const;
+export type LookKey = (typeof LOOK_KEYS)[number];
+
+export type TownSettings = {
+  clickMode: ClickMode;
+  enterLabel: string;
+  hint: string;
+};
+
 export type Building = {
   id: string;
   kind: BuildingKind;
   label: string;
+  detail: string;
   href: string;
   color: BuildingColor;
+  look: Record<Stage, LookKey>;
   bounds: Rect;
 };
 
@@ -33,7 +53,9 @@ export type TownConfig = {
   id: string;
   terrainNote: string;
   viewBox: { w: number; h: number };
+  tile: { w: number; h: number };
   station: { roof: Rect; railY: number };
+  settings: TownSettings;
   buildings: Building[];
   extraLinks: TownLink[];
 };
@@ -94,6 +116,18 @@ function asInternalHref(value: unknown, where: string): string {
   return href;
 }
 
+/** 1行・短文。改行と長すぎを拒む（詳細カード用） */
+function asShortText(value: unknown, where: string, max = 40): string {
+  const text = asText(value, where);
+  if (text.includes('\n') || text.includes('\r')) {
+    throw new TownConfigError(`${where} に改行は使えません`);
+  }
+  if (text.length > max) {
+    throw new TownConfigError(`${where} は ${max} 文字以内である必要があります`);
+  }
+  return text;
+}
+
 function parseRect(value: unknown, where: string): Rect {
   const o = asObject(value, where);
   return {
@@ -109,14 +143,24 @@ function parseLink(value: unknown, where: string): TownLink {
   return { label: asText(o.label, `${where}.label`), href: asInternalHref(o.href, `${where}.href`) };
 }
 
+function parseLook(value: unknown, where: string): Record<Stage, LookKey> {
+  const o = asObject(value, where);
+  return {
+    undeveloped: asOneOf(o.undeveloped, LOOK_KEYS, `${where}.undeveloped`),
+    developed: asOneOf(o.developed, LOOK_KEYS, `${where}.developed`),
+  };
+}
+
 function parseBuilding(value: unknown, where: string): Building {
   const o = asObject(value, where);
   return {
     id: asText(o.id, `${where}.id`),
     kind: asOneOf(o.kind, BUILDING_KINDS, `${where}.kind`),
     label: asText(o.label, `${where}.label`),
+    detail: asShortText(o.detail, `${where}.detail`),
     href: asInternalHref(o.href, `${where}.href`),
     color: asOneOf(o.color, BUILDING_COLORS, `${where}.color`),
+    look: parseLook(o.look, `${where}.look`),
     bounds: parseRect(o.bounds, `${where}.bounds`),
   };
 }
@@ -134,6 +178,20 @@ function parseStation(value: unknown): TownConfig['station'] {
   return { roof: parseRect(o.roof, 'station.roof'), railY: asNumber(o.railY, 'station.railY') };
 }
 
+function parseSettings(value: unknown): TownSettings {
+  const o = asObject(value, 'settings');
+  return {
+    clickMode: asOneOf(o.clickMode, CLICK_MODES, 'settings.clickMode'),
+    enterLabel: asText(o.enterLabel, 'settings.enterLabel'),
+    hint: asText(o.hint, 'settings.hint'),
+  };
+}
+
+function parseTile(value: unknown): { w: number; h: number } {
+  const o = asObject(value, 'tile');
+  return { w: asPositive(o.w, 'tile.w'), h: asPositive(o.h, 'tile.h') };
+}
+
 export function parseTownConfig(input: unknown): TownConfig {
   const o = asObject(input, 'ルート');
   const view = asObject(o.viewBox, 'viewBox');
@@ -145,7 +203,9 @@ export function parseTownConfig(input: unknown): TownConfig {
     id: asText(o.id, 'id'),
     terrainNote: asText(o.terrainNote, 'terrainNote'),
     viewBox: { w: asPositive(view.w, 'viewBox.w'), h: asPositive(view.h, 'viewBox.h') },
+    tile: parseTile(o.tile),
     station: parseStation(o.station),
+    settings: parseSettings(o.settings),
     buildings,
     extraLinks: asArray(o.extraLinks, 'extraLinks').map((l, i) => parseLink(l, `extraLinks[${i}]`)),
   };
