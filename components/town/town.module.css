@@ -1,0 +1,95 @@
+/*
+ * 街のトップの見た目と動き。
+ * 動きは「看板ピルが弾む」1種類だけ: 表示時に1回、hover/focus で持ち上がり、押下で縮む。
+ * 色は TownScene が CSS 変数（--town-*）で渡す。ここに色の値は置かない。
+ */
+
+.scene {
+  position: relative;
+  width: 100%;
+  border: 2px solid var(--town-outline);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--town-ground);
+  box-shadow: 6px 6px 0 var(--town-outline);
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.building {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 12px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.building:focus-visible {
+  outline: 3px solid var(--town-outline);
+  outline-offset: 2px;
+}
+
+.pill {
+  display: inline-block;
+  min-width: 4.5em;
+  margin-top: -14px;
+  padding: 4px 12px;
+  border: 2px solid var(--town-outline);
+  border-radius: 999px;
+  background: var(--town-pill-bg);
+  color: var(--town-pill-fg);
+  box-shadow: 3px 3px 0 var(--town-outline);
+  font-size: 15px;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+  animation: town-bounce 520ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: var(--town-delay, 0ms);
+  transition: transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.building:hover .pill,
+.building:focus-visible .pill {
+  transform: translateY(-4px);
+}
+
+.building:active .pill {
+  transform: scale(0.97);
+}
+
+@keyframes town-bounce {
+  0% {
+    transform: translateY(-14px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(3px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill,
+  .building {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .building:hover .pill,
+  .building:focus-visible .pill,
+  .building:active .pill {
+    transform: none !important;
+  }
+}
