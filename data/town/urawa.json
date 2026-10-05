@@ -1,0 +1,13 @@
+{
+  "id": "urawa-station-front",
+  "terrainNote": "地形・配置は仮",
+  "viewBox": { "w": 360, "h": 560 },
+  "station": { "roof": { "x": 120, "y": 44, "w": 120, "h": 44 }, "railY": 118 },
+  "buildings": [
+    { "id": "arcade", "kind": "arcade", "label": "作品", "href": "/projects", "color": "arcade", "bounds": { "x": 24, "y": 150, "w": 170, "h": 170 } },
+    { "id": "home-park", "kind": "home-park", "label": "プロフィール", "href": "/profile", "color": "homePark", "bounds": { "x": 212, "y": 150, "w": 124, "h": 170 } },
+    { "id": "cinema", "kind": "cinema", "label": "日記", "href": "/diaries", "color": "cinema", "bounds": { "x": 24, "y": 340, "w": 130, "h": 170 } },
+    { "id": "livehouse", "kind": "livehouse", "label": "問い合わせ", "href": "/contact", "color": "livehouse", "bounds": { "x": 246, "y": 340, "w": 90, "h": 170 } }
+  ],
+  "extraLinks": [{ "label": "レビュー", "href": "/reviews" }]
+}
