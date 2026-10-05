@@ -1,6 +1,9 @@
 import { getDiaryBySlug, getAllDiaries } from '@/lib/content';
 import { DiaryDetail } from '@/components/DiaryDetail';
+import { Floor } from '@/components/floor/Floor';
 import { Footer } from '@/components/Footer';
+import { signFont } from '@/components/town/font';
+import { loadTownConfig, resolveFloor } from '@/lib/town/floors';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -36,16 +39,23 @@ export async function generateMetadata({ params }: DiaryPageProps): Promise<Meta
 export default async function DiaryPage({ params }: DiaryPageProps) {
   const { slug } = await params;
   const diary = await getDiaryBySlug(slug);
+  const floor = resolveFloor(loadTownConfig(), '/diaries');
 
-  if (!diary) {
+  if (!diary || !floor) {
     notFound();
   }
 
   return (
-    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
-      <div className="grain-overlay" />
-      <DiaryDetail diary={diary} />
+    <>
+      <Floor
+        floor={floor}
+        title={diary.title}
+        lead={diary.excerpt}
+        headingFontClassName={signFont.className}
+      >
+        <DiaryDetail diary={diary} />
+      </Floor>
       <Footer />
-    </div>
+    </>
   );
 }
