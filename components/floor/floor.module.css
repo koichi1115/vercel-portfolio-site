@@ -54,21 +54,20 @@
   margin: 0.75rem 0 1.5rem;
 }
 
-.headerBand,
-.sectionBand {
+.headerBand {
   display: flex;
   align-items: center;
   background: color-mix(in srgb, var(--floor-district) 10%, transparent);
-}
-
-.headerBand {
   height: 44px;
   border-left: 4px solid var(--floor-district);
   padding: 0 1rem;
 }
 
 .sectionBand {
+  display: flex;
+  align-items: center;
   height: 40px;
+  background: color-mix(in srgb, var(--floor-district) 10%, transparent);
   border-left: 3px solid var(--floor-district);
   padding: 0 0.875rem;
 }
@@ -179,6 +178,7 @@
 }
 
 .btn {
+  min-height: 48px;
   border: 1px solid var(--floor-text);
   background: var(--floor-text);
   color: var(--floor-card);
