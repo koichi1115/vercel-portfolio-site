@@ -24,7 +24,7 @@ function renderFloor(floor: typeof projectFloor, title: string, lead?: string): 
 describe('フロア枠', () => {
   it('街への導線と背景格子を1つずつ描く', () => {
     const html = renderFloor(projectFloor, '作品');
-    expect(html.match(/<a href="\/"/g) ?? []).toHaveLength(1);
+    expect(html.match(/<a[^>]*href="\/"/g) ?? []).toHaveLength(1);
     expect(html).toContain('← 街に戻る');
     expect(html.match(/data-floor-grid/g) ?? []).toHaveLength(1);
     expect(html).toMatch(/data-floor-grid=""[^>]*aria-hidden="true"/);
