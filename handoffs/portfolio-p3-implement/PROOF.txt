@@ -1,0 +1,24 @@
+P3 floor review follow-up proof
+================================
+
+Environment
+- Node.js: v22.14.0
+- Branch: cursor/p3-floors-4a39
+- Verified code commit: 0f74397
+
+Review fixes
+- Reduced-motion overrides now include the active tap state and force transition, transform, and animation off.
+- District color usage is limited to text selection and the two heading bands.
+- The detail index link and its heading band now provide a 48px target.
+
+Automated verification
+- npm test: 27 files passed, 217 tests passed, 1 conditional companion test skipped.
+- The pre-review 215 passing tests remain green; 2 new static cases cover the review fixes.
+- Forbidden-word scan: passed.
+- Prohibited-name hit count: 0.
+- npm run lint: passed with no warnings or errors.
+- npm run build: passed; 32 static pages generated.
+- npm audit: 30 total, unchanged from the pre-review count.
+- Protected-area diff: 0.
+- package.json, package-lock.json, and vitest.config.ts diff: 0.
+- New dependencies: 0.
