@@ -281,6 +281,51 @@
   text-align: center;
 }
 
+.filterButton {
+  min-height: 48px;
+  border: 1px solid var(--floor-border);
+  border-radius: 999px;
+  background: var(--floor-card);
+  color: var(--floor-text);
+  padding: 0.5rem 1rem;
+}
+
+.filterActive {
+  border-color: var(--floor-text);
+  background: var(--floor-text);
+  color: var(--floor-card);
+}
+
+.thumbnail {
+  position: relative;
+  overflow: hidden;
+  background: var(--floor-border, currentColor);
+}
+
+.video {
+  aspect-ratio: 16 / 9;
+}
+
+.portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.square {
+  aspect-ratio: 1;
+}
+
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallbackText {
+  color: var(--floor-muted, currentColor);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
 .profile {
   display: flex;
   align-items: center;
