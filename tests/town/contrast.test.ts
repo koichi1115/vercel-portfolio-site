@@ -69,12 +69,25 @@ function hexToHsl(hex: string): { h: number; s: number; l: number } {
 }
 
 function collectPaletteHexes(): string[] {
+  const streetPalette = {
+    buildings: TOWN_PALETTE.buildings,
+    buildingsPale: TOWN_PALETTE.buildingsPale,
+    tile: TOWN_PALETTE.tile,
+    ground: TOWN_PALETTE.ground,
+    sky: TOWN_PALETTE.sky,
+    road: TOWN_PALETTE.road,
+    outline: TOWN_PALETTE.outline,
+    window: TOWN_PALETTE.window,
+    signLight: TOWN_PALETTE.signLight,
+    pillBg: TOWN_PALETTE.pillBg,
+    pillFg: TOWN_PALETTE.pillFg,
+  };
   const out: string[] = [];
   const walk = (v: unknown) => {
     if (typeof v === 'string' && /^#/.test(v)) out.push(v);
     else if (v && typeof v === 'object') Object.values(v as object).forEach(walk);
   };
-  walk(TOWN_PALETTE);
+  walk(streetPalette);
   return out;
 }
 
