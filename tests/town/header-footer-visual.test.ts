@@ -22,12 +22,31 @@ describe('モバイルメニューの背景', () => {
   });
 });
 
-describe('フッターの見出しフォント', () => {
-  it('共通の看板見出しフォントを問い合わせ導線に使う', () => {
-    expect(footer).toContain("import { signFont } from './town/font'");
-    const headingAt = footer.indexOf('Let&apos;s build');
-    const headingSource = footer.slice(Math.max(0, headingAt - 500), headingAt);
-    expect(headingSource).toContain('signFont.className');
-    expect(headingSource).not.toContain('font-syne');
+describe('フッターの内容', () => {
+  it('大見出し、リンクラッパー、斜め矢印を描かない', () => {
+    const start = footer.indexOf('Get in touch');
+    const end = footer.indexOf('技術とビジネスの両面から');
+    const leadArea = footer.slice(start, end);
+    expect(footer).not.toContain('Let&apos;s build');
+    expect(footer).not.toContain(' together');
+    expect(footer).not.toContain('↗');
+    expect(footer).not.toContain('signFont');
+    expect(leadArea).not.toContain('<Link');
+    expect(leadArea).not.toContain('<button');
+    expect(leadArea).not.toContain('href="/contact"');
+    expect(leadArea).not.toContain('group-hover');
+    expect(leadArea).not.toContain('text-aurora');
+    expect(leadArea).not.toContain('font-extrabold');
+  });
+
+  it('小見出し、説明、リンク一覧、コピーライト、上部導線を残す', () => {
+    expect(footer).toContain('Get in touch');
+    expect(footer).toContain('技術とビジネスの両面から');
+    expect(footer).toContain('Sitemap');
+    expect(footer).toContain('Social');
+    expect(footer).toContain('© {currentYear}');
+    expect(footer).toContain('Back to top');
+    expect(footer).toContain('onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}');
+    expect(footer).toContain('className="max-w-md text-sm leading-relaxed');
   });
 });
