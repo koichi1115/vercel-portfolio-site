@@ -242,6 +242,45 @@
   object-fit: cover;
 }
 
+.aspectVideo {
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1rem;
+}
+
+.detailImage {
+  min-height: 22rem;
+  margin-bottom: 1rem;
+}
+
+.detailImage .image {
+  object-fit: contain;
+}
+
+.cardTitle {
+  margin: 0 0 0.5rem;
+  color: var(--floor-text);
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.cardText {
+  margin: 0 0 0.75rem;
+  color: var(--floor-muted);
+}
+
+.date {
+  color: var(--floor-muted);
+  font-size: 0.75rem;
+}
+
+.spaced {
+  margin-top: 1rem;
+}
+
+.center {
+  text-align: center;
+}
+
 .profile {
   display: flex;
   align-items: center;
