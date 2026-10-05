@@ -37,3 +37,38 @@ export function readingOrder(buildings: Building[]): string[] {
     .sort((a, b) => a.bounds.y - b.bounds.y || a.bounds.x - b.bounds.x)
     .map((b) => b.id);
 }
+
+/** pattern 1タイル分の菱形2枚（主タイルと半ずらし）の points 文字列 */
+export function diamondCell(tile: ViewBox): [string, string] {
+  const { w, h } = tile;
+  const main = `${w / 2},0 ${w},${h / 2} ${w / 2},${h} 0,${h / 2}`;
+  // 半タイルずらした菱形を、タイル矩形の右下に収まるよう切り出した形
+  const shifted = `${w / 2},${h / 2} ${w},${h / 2} ${w},${h} ${w / 2},${h}`;
+  return [main, shifted];
+}
+
+/** 区画の足元の台座（わずかに斜めの平行四辺形） */
+export function lotPlate(bounds: Rect): string {
+  const { x, y, w, h } = bounds;
+  const top = y + h - 14;
+  const bottom = y + h - 2;
+  const skew = 8;
+  return `${x + skew},${top} ${x + w},${top + 2} ${x + w - skew},${bottom} ${x},${bottom - 2}`;
+}
+
+export type Point = { x: number; y: number };
+
+export function centroid(rect: Rect): Point {
+  return { x: rect.x + rect.w / 2, y: rect.y + rect.h / 2 };
+}
+
+export type Quadrant = 'nw' | 'ne' | 'sw' | 'se';
+
+export function quadrantOf(point: Point, center: Point): Quadrant {
+  const east = point.x >= center.x;
+  const south = point.y >= center.y;
+  if (!east && !south) return 'nw';
+  if (east && !south) return 'ne';
+  if (!east && south) return 'sw';
+  return 'se';
+}
