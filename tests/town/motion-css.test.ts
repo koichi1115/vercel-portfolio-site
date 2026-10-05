@@ -7,7 +7,6 @@ function readCss(): string {
   return readRepoFile(CSS_PATH).replace(/\/\*[\s\S]*?\*\//g, '');
 }
 
-/** `@media (prefers-reduced-motion: reduce) { ... }` の中身（入れ子の波括弧を数えて取り出す） */
 function reducedMotionBlock(css: string): string {
   const start = css.search(/@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)/);
   if (start < 0) return '';
@@ -21,22 +20,25 @@ function reducedMotionBlock(css: string): string {
   return '';
 }
 
-function transitionDurationsMs(css: string): number[] {
-  const decls = [...css.matchAll(/transition(?:-duration)?\s*:\s*([^;]+);/g)].map((m) => m[1]);
-  return decls.flatMap((value) =>
-    [...value.matchAll(/(\d*\.?\d+)(ms|s)\b/g)].map((m) =>
-      m[2] === 's' ? Number(m[1]) * 1000 : Number(m[1]),
+function durationsMs(css: string, prop: RegExp): number[] {
+  return [...css.matchAll(prop)].flatMap((m) =>
+    [...m[1].matchAll(/(\d*\.?\d+)(ms|s)\b/g)].map((d) =>
+      d[2] === 's' ? Number(d[1]) * 1000 : Number(d[1]),
     ),
   );
 }
 
-describe('街の動き（town.module.css）', () => {
-  it('@keyframes はちょうど1つ', () => {
-    expect(readCss().match(/@keyframes\s/g) ?? []).toHaveLength(1);
+describe('街の動き（town.module.css）p2', () => {
+  it('@keyframes はちょうど1つで名前は town-grow', () => {
+    const css = readCss();
+    const keys = [...css.matchAll(/@keyframes\s+([A-Za-z0-9_-]+)/g)].map((m) => m[1]);
+    expect(keys).toEqual(['town-grow']);
   });
 
-  it('infinite（常時アニメ）を使わない', () => {
-    expect(readCss()).not.toMatch(/infinite/);
+  it('infinite と translateY(-4px) を使わない', () => {
+    const css = readCss();
+    expect(css).not.toMatch(/infinite/);
+    expect(css).not.toMatch(/translateY\(-4px\)/);
   });
 
   it('prefers-reduced-motion: reduce で animation/transition/transform を止める', () => {
@@ -46,17 +48,17 @@ describe('街の動き（town.module.css）', () => {
     expect(block).toMatch(/transform\s*:\s*none/);
   });
 
-  it('transition の時間はすべて 160ms 以内', () => {
+  it('animation と transition の時間はすべて 160ms 以内', () => {
     const css = readCss().replace(reducedMotionBlock(readCss()), '');
-    const durations = transitionDurationsMs(css);
-    expect(durations.length).toBeGreaterThan(0);
-    for (const ms of durations) expect(ms).toBeLessThanOrEqual(160);
+    const anim = durationsMs(css, /animation(?:-duration)?\s*:\s*([^;]+);/g);
+    const trans = durationsMs(css, /transition(?:-duration)?\s*:\s*([^;]+);/g);
+    expect([...anim, ...trans].length).toBeGreaterThan(0);
+    for (const ms of [...anim, ...trans]) expect(ms).toBeLessThanOrEqual(160);
   });
 
-  it('hover/focus-visible で持ち上がり、押下で 0.97 に縮む', () => {
+  it(':active で 0.97 に縮み、focus-visible に outline', () => {
     const css = readCss();
-    expect(css).toMatch(/:focus-visible[^{]*\{[^}]*translateY\(-4px\)/);
-    expect(css).toMatch(/:hover[^{]*\{[^}]*translateY\(-4px\)|:hover[^{]*,[^{]*\{[^}]*translateY\(-4px\)/);
     expect(css).toMatch(/:active[^{]*\{[^}]*scale\(0\.97\)/);
+    expect(css).toMatch(/:focus-visible[^{]*\{[^}]*outline/);
   });
 });
