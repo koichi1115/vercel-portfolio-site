@@ -1,0 +1,126 @@
+/*
+ * 街の見た目と動き（p2）。
+ * 動きは発展アニメ（town-grow）1回と、押下の scale 0.97 だけ。
+ * 色は TownScene が CSS 変数（--town-*）で渡す。
+ */
+
+.scene {
+  position: relative;
+  width: 100%;
+  border: 2px solid var(--town-outline);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--town-ground);
+  box-shadow: 6px 6px 0 var(--town-outline);
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.lot {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 8px 6px 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lot:focus-visible {
+  outline: 3px solid var(--town-outline);
+  outline-offset: 2px;
+}
+
+.pill {
+  display: inline-block;
+  min-width: 4.5em;
+  padding: 4px 12px;
+  border: 2px solid var(--town-outline);
+  border-radius: 999px;
+  background: var(--town-pill-bg);
+  color: var(--town-pill-fg);
+  box-shadow: 3px 3px 0 var(--town-outline);
+  font-size: 15px;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+  transition: transform 120ms ease-out;
+}
+
+.lot:active .pill {
+  transform: scale(0.97);
+}
+
+.detail {
+  max-width: 100%;
+  padding: 0 4px;
+  overflow: hidden;
+  color: var(--town-pill-fg);
+  font-size: 13px;
+  line-height: 1.3;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--town-pill-bg) 88%, transparent);
+  border-radius: 6px;
+}
+
+.enter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 2px solid var(--town-outline);
+  border-radius: 999px;
+  background: var(--town-pill-bg);
+  color: var(--town-pill-fg);
+  font-size: 14px;
+  line-height: 1;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.grow {
+  animation: town-grow 160ms ease-out 1;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@keyframes town-grow {
+  0% {
+    opacity: 0.6;
+    transform: scaleY(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grow,
+  .pill,
+  .lot {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .lot:active .pill {
+    transform: none !important;
+  }
+}

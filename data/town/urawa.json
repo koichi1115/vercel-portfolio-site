@@ -1,0 +1,55 @@
+{
+  "id": "urawa-station-front",
+  "terrainNote": "地形・配置は仮",
+  "viewBox": { "w": 360, "h": 560 },
+  "tile": { "w": 60, "h": 30 },
+  "station": { "roof": { "x": 100, "y": 236, "w": 160, "h": 64 }, "railY": 318 },
+  "settings": {
+    "clickMode": "develop-then-enter",
+    "enterLabel": "入る",
+    "hint": "区画を押すと発展します"
+  },
+  "buildings": [
+    {
+      "id": "arcade",
+      "kind": "arcade",
+      "label": "作品",
+      "detail": "個人開発のアプリと制作物",
+      "href": "/projects",
+      "color": "arcade",
+      "look": { "undeveloped": "arcade-small", "developed": "arcade" },
+      "bounds": { "x": 20, "y": 40, "w": 160, "h": 180 }
+    },
+    {
+      "id": "home-park",
+      "kind": "home-park",
+      "label": "プロフィール",
+      "detail": "経歴・スキル・好きなもの",
+      "href": "/profile",
+      "color": "homePark",
+      "look": { "undeveloped": "home-park-small", "developed": "home-park" },
+      "bounds": { "x": 196, "y": 40, "w": 144, "h": 180 }
+    },
+    {
+      "id": "cinema",
+      "kind": "cinema",
+      "label": "日記",
+      "detail": "日々の記録と体験記",
+      "href": "/diaries",
+      "color": "cinema",
+      "look": { "undeveloped": "cinema-small", "developed": "cinema" },
+      "bounds": { "x": 20, "y": 336, "w": 150, "h": 190 }
+    },
+    {
+      "id": "livehouse",
+      "kind": "livehouse",
+      "label": "問い合わせ",
+      "detail": "仕事の相談やメッセージはこちら",
+      "href": "/contact",
+      "color": "livehouse",
+      "look": { "undeveloped": "livehouse-small", "developed": "livehouse" },
+      "bounds": { "x": 190, "y": 336, "w": 150, "h": 190 }
+    }
+  ],
+  "extraLinks": [{ "label": "レビュー", "href": "/reviews" }]
+}

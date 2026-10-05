@@ -1,3 +1,14 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": ["components/town/**/*.{ts,tsx}", "lib/town/**/*.{ts,tsx}"],
+      "rules": {
+        "max-lines-per-function": [
+          "error",
+          { "max": 40, "skipBlankLines": true, "skipComments": true }
+        ]
+      }
+    }
+  ]
 }
