@@ -1,6 +1,6 @@
 /**
  * 街の配色。色の値はこのファイルだけに置き、描画側（components/town）は名前で参照する。
- * 赤（signLight）は看板の灯りにだけ使う。
+ * 赤（signLight）は看板の灯りにだけ使う。紫系は使わない。
  */
 import type { BuildingColor } from './schema';
 
@@ -13,11 +13,23 @@ export const TOWN_PALETTE = {
   signLight: '#E03131',
   pillBg: '#FFFFFF',
   pillFg: '#111111',
+  tile: {
+    grassA: '#DDEBC9',
+    grassB: '#D2E3BA',
+    guide: '#B9CBA0',
+    lot: '#EFE7D2',
+  },
   buildings: {
     arcade: '#22B07A',
     homePark: '#FF8FB1',
     cinema: '#FFC531',
     livehouse: '#2F5BEA',
+  } satisfies Record<BuildingColor, string>,
+  buildingsPale: {
+    arcade: '#BDE5D3',
+    homePark: '#FFD3E0',
+    cinema: '#FFE9AE',
+    livehouse: '#C3CFF7',
   } satisfies Record<BuildingColor, string>,
 } as const;
 

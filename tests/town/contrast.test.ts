@@ -47,3 +47,58 @@ describe('街の配色', () => {
     expect(colors).not.toContain(TOWN_PALETTE.signLight.toUpperCase());
   });
 });
+
+function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  const m = hex.trim().match(/^#([0-9a-f]{6})$/i);
+  if (!m) throw new Error(hex);
+  const n = parseInt(m[1], 16);
+  const r = ((n >> 16) & 255) / 255;
+  const g = ((n >> 8) & 255) / 255;
+  const b = (n & 255) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return { h: 0, s: 0, l };
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let h = 0;
+  if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+  else if (max === g) h = ((b - r) / d + 2) / 6;
+  else h = ((r - g) / d + 4) / 6;
+  return { h: h * 360, s, l };
+}
+
+function collectPaletteHexes(): string[] {
+  const out: string[] = [];
+  const walk = (v: unknown) => {
+    if (typeof v === 'string' && /^#/.test(v)) out.push(v);
+    else if (v && typeof v === 'object') Object.values(v as object).forEach(walk);
+  };
+  walk(TOWN_PALETTE);
+  return out;
+}
+
+describe('p2 の淡色と紫禁止', () => {
+  it('buildingsPale は4色で buildings と重ならず signLight を含まない', () => {
+    const pale = Object.values(TOWN_PALETTE.buildingsPale);
+    expect(pale).toHaveLength(4);
+    const building = new Set(Object.values(TOWN_PALETTE.buildings).map((c) => c.toUpperCase()));
+    for (const c of pale) expect(building.has(c.toUpperCase())).toBe(false);
+    expect(pale.map((c) => c.toUpperCase())).not.toContain(TOWN_PALETTE.signLight.toUpperCase());
+  });
+
+  it('tile に grassA / grassB / guide / lot がある', () => {
+    expect(TOWN_PALETTE.tile.grassA).toMatch(/^#/);
+    expect(TOWN_PALETTE.tile.grassB).toMatch(/^#/);
+    expect(TOWN_PALETTE.tile.guide).toMatch(/^#/);
+    expect(TOWN_PALETTE.tile.lot).toMatch(/^#/);
+  });
+
+  it('palette 全色に色相260〜320かつ彩度0.3超の紫が無い', () => {
+    const purples = collectPaletteHexes().filter((hex) => {
+      const { h, s } = hexToHsl(hex);
+      return h >= 260 && h <= 320 && s > 0.3;
+    });
+    expect(purples).toEqual([]);
+  });
+});
