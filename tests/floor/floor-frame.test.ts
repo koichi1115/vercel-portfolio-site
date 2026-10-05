@@ -13,11 +13,12 @@ const reviewFloor = resolveFloor(config, '/reviews');
 
 function renderFloor(floor: typeof projectFloor, title: string, lead?: string): string {
   return renderToStaticMarkup(
-    createElement(
-      Floor,
-      { floor, title, lead },
-      createElement('p', null, '内容'),
-    ),
+    createElement(Floor, {
+      floor,
+      title,
+      lead,
+      children: createElement('p', null, '内容'),
+    }),
   );
 }
 
