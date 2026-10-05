@@ -50,6 +50,15 @@ describe('フロアCSSの静的制約', () => {
     expect(opacity).toBeLessThanOrEqual(0.1);
   });
 
+  it('ダーク時はインライン変数を上書きせずテーマ別名へ切り替える', () => {
+    const source = css();
+    const dark = rule(source, ':global(.dark) .floor');
+    expect(dark).toContain('--floor-bg: var(--floor-ground-dark)');
+    expect(dark).toContain('--floor-surface: var(--floor-card-dark)');
+    expect(dark).toContain('--floor-ink: var(--floor-text-dark)');
+    expect(rule(source, '.floor')).toContain('background: var(--floor-bg)');
+  });
+
   it('カードと間隔の寸法を固定する', () => {
     const source = css();
     const card = rule(source, '.card');
