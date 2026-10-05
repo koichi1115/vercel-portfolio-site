@@ -44,4 +44,12 @@ describe('街の下の通常リンク一覧（TownLinkList）', () => {
     expect(hrefsIn(html)).toHaveLength(town.buildings.length + town.extraLinks.length);
     expect(html).not.toMatch(/<img|<image|\/images\//);
   });
+
+  it('一覧に button は無く、発展を要求しない', () => {
+    expect(render()).not.toMatch(/<button/);
+  });
 });
+
+  it('一覧に button は無く、発展を要求しない', () => {
+    expect(render()).not.toMatch(/<button/);
+  });

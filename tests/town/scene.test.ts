@@ -44,7 +44,7 @@ describe('TownScene 未発展（初期描画）', () => {
     const svgs = html.match(/<svg[^>]*>/g) ?? [];
     expect(svgs).toHaveLength(1);
     expect(svgs[0]).toContain('aria-hidden="true"');
-    expect(html.match(/<pattern[^>]*>/g) ?? []).toHaveLength(1);
+    expect(html).toContain('data-kind="ground"');
   });
 });
 
