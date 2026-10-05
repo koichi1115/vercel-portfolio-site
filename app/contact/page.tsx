@@ -179,7 +179,7 @@ export default function ContactPage() {
                 </div>
 
                 {formStatus === 'error' && (
-                  <div className="rounded-xl border border-red-400/60 bg-red-500/10 p-4 font-mono text-sm text-red-500 dark:text-red-400">
+                  <div role="alert" className="rounded-xl border border-red-400/60 bg-red-500/10 p-4 font-mono text-sm text-red-500 dark:text-red-400">
                     送信に失敗しました。時間をおいて再度お試しください。
                   </div>
                 )}
