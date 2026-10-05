@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { signFont } from './town/font';
 
 const navigation = [
   { href: "/projects", label: "作品" },
@@ -76,7 +77,7 @@ export function Footer() {
             <p className="overline-chip mb-4">Get in touch</p>
             <Link
               href="/contact"
-              className="group block font-syne text-5xl sm:text-7xl font-extrabold tracking-tight text-abyss dark:text-bone"
+              className={`group block text-5xl sm:text-7xl font-extrabold tracking-tight text-abyss dark:text-bone ${signFont.className}`}
             >
               Let&apos;s build
               <span className="text-aurora"> together</span>
