@@ -12,6 +12,11 @@ function rule(source: string, selector: string): string {
   return source.match(new RegExp(`${escaped}\\s*\\{([^}]+)\\}`))?.[1] ?? '';
 }
 
+function withoutRule(source: string, selector: string): string {
+  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return source.replace(new RegExp(`${escaped}\\s*\\{[^}]+\\}`, 'g'), '');
+}
+
 function remValue(block: string, property: string): number {
   return Number(block.match(new RegExp(`${property}:\\s*([\\d.]+)rem`))?.[1]);
 }
@@ -31,14 +36,25 @@ describe('フロアCSSの静的制約', () => {
     const source = css();
     expect(rule(source, '.tap:active')).toMatch(/transform:\s*scale\(0\.97\)/);
     const reduced = source.match(/prefers-reduced-motion:\s*reduce[\s\S]+$/)?.[0] ?? '';
+    expect(reduced).toMatch(/\.tap,\s*\.tap:active,\s*\.btn,\s*\.btnGhost\s*\{/);
     expect(reduced).toMatch(/transition:\s*none/);
-    expect(reduced).toMatch(/transform:\s*none/);
+    expect(reduced).toMatch(/transform:\s*none\s*!important/);
     expect(reduced).toMatch(/animation:\s*none/);
   });
 
-  it.each(['.back', '.tap', '.btn', '.input'])('%s は48px以上', (selector) => {
+  it.each(['.back', '.tap', '.btn', '.input', '.districtLink'])('%s は48px以上', (selector) => {
     const block = rule(css(), selector);
     expect(block).toMatch(/min-height:\s*(?:48px|3rem)/);
+  });
+
+  it('区画色は選択範囲と見出し帯だけで使う', () => {
+    const selectors = ['.floor ::selection', '.headerBand', '.sectionBand'];
+    let remainder = css();
+    for (const selector of selectors) {
+      expect(rule(remainder, selector)).toContain('var(--floor-district)');
+      remainder = withoutRule(remainder, selector);
+    }
+    expect(remainder).not.toContain('var(--floor-district)');
   });
 
   it('背景格子を1枚の静的CSSとして定義する', () => {

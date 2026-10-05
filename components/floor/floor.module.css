@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   background: color-mix(in srgb, var(--floor-district) 10%, transparent);
-  height: 44px;
+  height: 48px;
   border-left: 4px solid var(--floor-district);
   padding: 0 1rem;
 }
@@ -81,7 +81,7 @@
 
 .districtLink {
   display: inline-flex;
-  min-height: 44px;
+  min-height: 48px;
   align-items: center;
   color: inherit;
   text-decoration: none;
@@ -159,10 +159,10 @@
   --tw-prose-links: var(--floor-ink);
   --tw-prose-bold: var(--floor-ink);
   --tw-prose-counters: var(--floor-subtle);
-  --tw-prose-bullets: var(--floor-district);
+  --tw-prose-bullets: var(--floor-subtle);
   --tw-prose-hr: var(--floor-edge);
   --tw-prose-quotes: var(--floor-ink);
-  --tw-prose-quote-borders: var(--floor-district);
+  --tw-prose-quote-borders: var(--floor-edge);
   --tw-prose-captions: var(--floor-subtle);
   --tw-prose-code: var(--floor-ink);
   --tw-prose-pre-code: var(--floor-surface);
@@ -208,8 +208,8 @@
 }
 
 .input:focus {
-  border-color: var(--floor-district);
-  outline: 2px solid color-mix(in srgb, var(--floor-district) 25%, transparent);
+  border-color: var(--floor-ink);
+  outline: 2px solid color-mix(in srgb, var(--floor-ink) 25%, transparent);
   outline-offset: 1px;
 }
 
@@ -369,10 +369,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tap,
+  .tap:active,
   .btn,
   .btnGhost {
-    transition: none;
-    transform: none;
-    animation: none;
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
