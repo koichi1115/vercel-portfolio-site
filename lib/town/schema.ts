@@ -11,6 +11,13 @@ export type BuildingKind = (typeof BUILDING_KINDS)[number];
 export const BUILDING_COLORS = ['arcade', 'homePark', 'cinema', 'livehouse'] as const;
 export type BuildingColor = (typeof BUILDING_COLORS)[number];
 
+/** 区画を押したときの進み方。JSON の settings.clickMode で差し替える */
+export const CLICK_MODES = ['develop-then-enter', 'direct'] as const;
+export type ClickMode = (typeof CLICK_MODES)[number];
+
+/** 区画の発展段階は2つだけ */
+export type Stage = 'undeveloped' | 'developed';
+
 export type Building = {
   id: string;
   kind: BuildingKind;
