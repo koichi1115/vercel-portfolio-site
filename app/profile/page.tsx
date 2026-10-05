@@ -2,7 +2,10 @@ import { getProfileData } from '@/lib/content';
 import { ProfileDetail } from '@/components/ProfileDetail';
 import { CareerTimeline } from '@/components/CareerTimeline';
 import { SkillsSection } from '@/components/SkillsSection';
+import { Floor } from '@/components/floor/Floor';
 import { Footer } from '@/components/Footer';
+import { signFont } from '@/components/town/font';
+import { loadTownConfig, resolveFloor } from '@/lib/town/floors';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,25 +15,24 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   const profile = await getProfileData();
+  const floor = resolveFloor(loadTownConfig(), '/profile');
 
-  if (!profile) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-bone dark:bg-abyss">
-        <h1 className="font-syne text-2xl font-bold text-abyss dark:text-bone">
-          Profile data not found
-        </h1>
-      </div>
-    );
-  }
+  if (!floor) return null;
 
   return (
-    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
-      <div className="grain-overlay" />
-
-      <ProfileDetail profile={profile} />
-      <CareerTimeline careers={profile.careers} />
-      <SkillsSection skills={profile.skills} />
+    <>
+      <Floor floor={floor} title={floor.label} headingFontClassName={signFont.className}>
+        {profile ? (
+          <>
+            <ProfileDetail profile={profile} headingFontClassName={signFont.className} />
+            <CareerTimeline careers={profile.careers} headingFontClassName={signFont.className} />
+            <SkillsSection skills={profile.skills} headingFontClassName={signFont.className} />
+          </>
+        ) : (
+          <p>プロフィールを読み込めませんでした。</p>
+        )}
+      </Floor>
       <Footer />
-    </div>
+    </>
   );
 }
