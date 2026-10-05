@@ -1,6 +1,6 @@
 /**
  * 区画の発展状態（純粋関数のみ）。
- * 保存先（sessionStorage など）も React も知らないので、ここだけでテストできる。
+ * 保存先も React も知らないので、ここだけでテストできる。
  */
 import type { ClickMode, Stage } from './schema';
 

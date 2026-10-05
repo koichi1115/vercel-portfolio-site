@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * 街の絵（クライアント）。初回は必ず未発展で描き、sessionStorage の復元はマウント後。
+ * 街の絵（クライアント）。初回は必ず未発展で描き、マウント後に保存から復元。
  */
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
