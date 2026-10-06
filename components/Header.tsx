@@ -127,7 +127,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 md:hidden bg-bone dark:bg-abyss aurora-glow"
+            className="fixed inset-0 z-40 md:hidden bg-bone dark:bg-abyss"
           >
             <div className="grid-lines absolute inset-0" />
             <nav className="relative flex h-full flex-col justify-center gap-2 px-10">

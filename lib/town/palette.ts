@@ -31,6 +31,30 @@ export const TOWN_PALETTE = {
     cinema: '#FFE9AE',
     livehouse: '#C3CFF7',
   } satisfies Record<BuildingColor, string>,
+  district: {
+    arcade: '#5B8DEF',
+    homePark: '#6DB87A',
+    cinema: '#C47A3A',
+    livehouse: '#8B6BC7',
+  } satisfies Record<BuildingColor, string>,
+  floor: {
+    ground: '#F5F1E8',
+    card: '#FFFEFB',
+    border: '#E8E2D6',
+    text: '#2C2A26',
+    muted: '#6B6560',
+    line: '#2C2A26',
+    danger: '#B42318',
+  },
+  floorDark: {
+    ground: '#1B1A17',
+    card: '#24221E',
+    border: '#3A362F',
+    text: '#F1EDE4',
+    muted: '#B5AEA3',
+    line: '#F1EDE4',
+    danger: '#F19C92',
+  },
 } as const;
 
 export type TownPalette = typeof TOWN_PALETTE;

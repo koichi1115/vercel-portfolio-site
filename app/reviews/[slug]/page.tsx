@@ -1,6 +1,9 @@
 import { getReviewBySlug, getAllReviews } from '@/lib/content';
 import { ReviewDetail } from '@/components/ReviewDetail';
+import { Floor } from '@/components/floor/Floor';
 import { Footer } from '@/components/Footer';
+import { signFont } from '@/components/town/font';
+import { loadTownConfig, resolveFloor } from '@/lib/town/floors';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -36,16 +39,23 @@ export async function generateMetadata({ params }: ReviewPageProps): Promise<Met
 export default async function ReviewPage({ params }: ReviewPageProps) {
   const { slug } = await params;
   const review = await getReviewBySlug(slug);
+  const floor = resolveFloor(loadTownConfig(), '/reviews');
 
-  if (!review) {
+  if (!review || !floor) {
     notFound();
   }
 
   return (
-    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
-      <div className="grain-overlay" />
-      <ReviewDetail review={review} />
+    <>
+      <Floor
+        floor={floor}
+        title={review.title}
+        lead={review.excerpt}
+        headingFontClassName={signFont.className}
+      >
+        <ReviewDetail review={review} />
+      </Floor>
       <Footer />
-    </div>
+    </>
   );
 }

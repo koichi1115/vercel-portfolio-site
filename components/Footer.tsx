@@ -74,17 +74,7 @@ export function Footer() {
         <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="overline-chip mb-4">Get in touch</p>
-            <Link
-              href="/contact"
-              className="group block font-syne text-5xl sm:text-7xl font-extrabold tracking-tight text-abyss dark:text-bone"
-            >
-              Let&apos;s build
-              <span className="text-aurora"> together</span>
-              <span className="ml-3 inline-block transition-transform duration-300 group-hover:translate-x-2 group-hover:-translate-y-2">
-                ↗
-              </span>
-            </Link>
-            <p className="mt-5 max-w-md text-sm leading-relaxed text-abyss-500 dark:text-bone-400">
+            <p className="max-w-md text-sm leading-relaxed text-abyss-500 dark:text-bone-400">
               技術とビジネスの両面から、本質的な価値創造に取り組んでいます。
               プロジェクトのご相談はお気軽に。
             </p>

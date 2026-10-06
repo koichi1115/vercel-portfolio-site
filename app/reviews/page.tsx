@@ -1,7 +1,9 @@
 import { getAllReviews } from '@/lib/content';
 import { ReviewsList } from '@/components/ReviewsList';
-import { PageHero } from '@/components/PageHero';
+import { Floor } from '@/components/floor/Floor';
 import { Footer } from '@/components/Footer';
+import { signFont } from '@/components/town/font';
+import { loadTownConfig, resolveFloor } from '@/lib/town/floors';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,19 +13,20 @@ export const metadata: Metadata = {
 
 export default async function ReviewsPage() {
   const reviews = await getAllReviews();
+  const floor = resolveFloor(loadTownConfig(), '/reviews');
+  if (!floor) return null;
 
   return (
-    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
-      <div className="grain-overlay" />
-
-      <PageHero
-        overline="Culture Log"
-        title="Reviews"
-        description="音楽、映画、漫画、書籍のレビューコレクション。"
-      />
-
-      <ReviewsList reviews={reviews} />
+    <>
+      <Floor
+        floor={floor}
+        title={floor.label}
+        lead="音楽、映画、漫画、書籍のレビューコレクション。"
+        headingFontClassName={signFont.className}
+      >
+        <ReviewsList reviews={reviews} />
+      </Floor>
       <Footer />
-    </div>
+    </>
   );
 }

@@ -1,7 +1,9 @@
 import { getAllProjects } from '@/lib/content';
 import { ProjectsList } from '@/components/ProjectsList';
-import { PageHero } from '@/components/PageHero';
+import { Floor } from '@/components/floor/Floor';
 import { Footer } from '@/components/Footer';
+import { signFont } from '@/components/town/font';
+import { loadTownConfig, resolveFloor } from '@/lib/town/floors';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,19 +13,20 @@ export const metadata: Metadata = {
 
 export default async function ProjectsPage() {
   const projects = await getAllProjects();
+  const floor = resolveFloor(loadTownConfig(), '/projects');
+  if (!floor) return null;
 
   return (
-    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
-      <div className="grain-overlay" />
-
-      <PageHero
-        overline="Selected Works"
-        title="Projects"
-        description="これまでに取り組んだ個人開発の一覧です。技術的な挑戦と学びの軌跡。"
-      />
-
-      <ProjectsList projects={projects} />
+    <>
+      <Floor
+        floor={floor}
+        title={floor.label}
+        lead="これまでに取り組んだ個人開発の一覧です。技術的な挑戦と学びの軌跡。"
+        headingFontClassName={signFont.className}
+      >
+        <ProjectsList projects={projects} headingFontClassName={signFont.className} />
+      </Floor>
       <Footer />
-    </div>
+    </>
   );
 }

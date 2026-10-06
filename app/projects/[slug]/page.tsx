@@ -1,6 +1,9 @@
 import { getProjectBySlug, getAllProjects } from '@/lib/content';
 import { ProjectDetail } from '@/components/ProjectDetail';
+import { Floor } from '@/components/floor/Floor';
 import { Footer } from '@/components/Footer';
+import { signFont } from '@/components/town/font';
+import { loadTownConfig, resolveFloor } from '@/lib/town/floors';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -36,16 +39,23 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
+  const floor = resolveFloor(loadTownConfig(), '/projects');
 
-  if (!project) {
+  if (!project || !floor) {
     notFound();
   }
 
   return (
-    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
-      <div className="grain-overlay" />
-      <ProjectDetail project={project} />
+    <>
+      <Floor
+        floor={floor}
+        title={project.title}
+        lead={project.description}
+        headingFontClassName={signFont.className}
+      >
+        <ProjectDetail project={project} headingFontClassName={signFont.className} />
+      </Floor>
       <Footer />
-    </div>
+    </>
   );
 }

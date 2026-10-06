@@ -1,7 +1,9 @@
 import { getAllDiaries } from '@/lib/content';
 import { DiariesList } from '@/components/DiariesList';
-import { PageHero } from '@/components/PageHero';
+import { Floor } from '@/components/floor/Floor';
 import { Footer } from '@/components/Footer';
+import { signFont } from '@/components/town/font';
+import { loadTownConfig, resolveFloor } from '@/lib/town/floors';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,19 +13,20 @@ export const metadata: Metadata = {
 
 export default async function DiariesPage() {
   const diaries = await getAllDiaries();
+  const floor = resolveFloor(loadTownConfig(), '/diaries');
+  if (!floor) return null;
 
   return (
-    <div className="min-h-screen bg-bone dark:bg-abyss font-zen text-abyss dark:text-bone selection:bg-volt selection:text-volt-ink">
-      <div className="grain-overlay" />
-
-      <PageHero
-        overline="Journal"
-        title="Diaries"
-        description="日々の気づき、学び、思考の記録。"
-      />
-
-      <DiariesList diaries={diaries} />
+    <>
+      <Floor
+        floor={floor}
+        title={floor.label}
+        lead="日々の気づき、学び、思考の記録。"
+        headingFontClassName={signFont.className}
+      >
+        <DiariesList diaries={diaries} headingFontClassName={signFont.className} />
+      </Floor>
       <Footer />
-    </div>
+    </>
   );
 }

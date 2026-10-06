@@ -2,7 +2,7 @@
   "extends": "next/core-web-vitals",
   "overrides": [
     {
-      "files": ["components/town/**/*.{ts,tsx}", "lib/town/**/*.{ts,tsx}"],
+      "files": ["components/town/**/*.{ts,tsx}", "lib/town/**/*.{ts,tsx}", "components/floor/**/*.{ts,tsx}"],
       "rules": {
         "max-lines-per-function": [
           "error",
